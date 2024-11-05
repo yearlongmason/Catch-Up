@@ -1,2 +1,2 @@
 # Catch-Up
-Discord quote manager!
+Quote storage and exploration software
