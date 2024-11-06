@@ -18,7 +18,12 @@ tree: app_commands.CommandTree = app_commands.CommandTree(client)
 # Starting up bot
 @client.event
 async def on_ready() -> None:
-    await tree.sync(guild=discord.Object(id=1291817041052827649))
+    try:
+        synced_commands = await tree.sync()
+        print(f"Synced {len(synced_commands)} commands")
+    except Exception as e:
+        print(f"An error wit syncing app commands has occured: ", e)
+
     print(f'{client.user} is now running')
 
 
