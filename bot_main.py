@@ -15,25 +15,29 @@ intents.message_content = True
 client: discord.Client = discord.Client(intents=intents)
 tree: app_commands.CommandTree = app_commands.CommandTree(client)
 
+
 # Starting up bot
 @client.event
 async def on_ready() -> None:
+    # syncing up slash commands
     try:
         synced_commands = await tree.sync()
         print(f"Synced {len(synced_commands)} commands")
     except Exception as e:
-        print(f"An error wit syncing app commands has occured: ", e)
+        print(f"An error with syncing app commands has occured: ", e)
 
+    # everything is good!
     print(f'{client.user} is now running')
 
 
 # making a slash command
 @tree.command(
-    name="sayhello",
-    description="Testing",
+    name="quote",
+    description="Say something cool, something inspiring!!!",
 )
-async def first_command(interaction: discord.Interaction):
-    await interaction.response.send_message("Hello!")
+@app_commands.describe(arg = "What is the Quote?")
+async def first_command(interaction: discord.Interaction, arg: str):
+    await interaction.response.send_message(f"\"{arg}\" - {interaction.user}")
 
 
 client.run(token=TOKEN)
