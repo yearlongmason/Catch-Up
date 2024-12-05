@@ -8,7 +8,6 @@ import dotenv
 dotenv.load_dotenv()
 TOKEN: typing.Final[str] = os.getenv('DISCORD_TOKEN')
 
-
 # setting up bot
 intents : discord.Intents = discord.Intents.default()
 intents.message_content = True 
@@ -39,6 +38,4 @@ async def on_ready() -> None:
 async def first_command(interaction: discord.Interaction, arg: str):
     await interaction.response.send_message(f"\"{arg}\" - {interaction.user}")
 
-
 client.run(token=TOKEN)
-
