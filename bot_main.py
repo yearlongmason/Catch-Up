@@ -29,13 +29,26 @@ async def on_ready() -> None:
     print(f'{client.user} is now running')
 
 
-# making a slash command
+# quote command
 @tree.command(
     name="quote",
     description="Say something cool, something inspiring!!!",
 )
 @app_commands.describe(arg = "What is the Quote?")
-async def first_command(interaction: discord.Interaction, arg: str):
+async def quote(interaction: discord.Interaction, arg: str):
     await interaction.response.send_message(f"\"{arg}\" - {interaction.user}")
 
+
+@tree.command(
+    name="getserverid",
+    description="Get the server id of your server"
+)
+@app_commands.describe()
+async def get_server_id(interaction: discord.Interaction):
+    await interaction.response.send_message(f"{interaction.guild_id}")
+
 client.run(token=TOKEN)
+
+
+
+
