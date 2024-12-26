@@ -7,3 +7,5 @@ to run the tailwind compiler (needed when updating the css) run the command
 ./tailwindcss -i ./sim/static/css/input.css -o ./sim/static/css/output.css --watch
 
  but replace the path of ./tailwindcss with the correct path
+
+download tailwind here https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.1

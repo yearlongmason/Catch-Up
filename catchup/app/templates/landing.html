@@ -3,20 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Landing Page</title>
+    <title>Login Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-blue-500 flex justify-center items-center min-h-screen">
 
-    <header>
-        <h1>Catch Up!</h1>
-    </header>
+    <div class="bg-blue-500 p-8 rounded-lg shadow-lg w-96 outline">
+        <h2 class="text-3xl font-bold text-center mb-6 text-white">Catch Up!</h2>
 
-    
+        <form action="#" method="POST">
+            <!-- Email Input -->
+            <div class="mb-4">
+                <label for="serverID" class="block text-sm font-medium text-white">Server ID</label>
+                <input type="serverID" id="serverID" name="serverID" required class="w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
 
-    <footer>
-        <p>maybe put github here!?!?!</p>
-    </footer>
+            <!-- Password Input -->
+            <div class="mb-6">
+                <label for="serverLogin" class="block text-sm font-medium text-white">Server Login</label>
+                <input type="serverLogin" id="serverLogin" name="serverLogin" required class="w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="w-full p-3 bg-gray-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                Log In
+            </button>
+
+        </form>
+    </div>
 
 </body>
 </html>
