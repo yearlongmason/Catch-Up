@@ -3,6 +3,7 @@ from discord import app_commands
 import typing
 import os
 import dotenv
+import sql_connector
 
 # getting token
 dotenv.load_dotenv()
@@ -37,6 +38,7 @@ async def on_ready() -> None:
 @app_commands.describe(arg = "What is the Quote?")
 async def quote(interaction: discord.Interaction, arg: str):
     await interaction.response.send_message(f"\"{arg}\" - {interaction.user}")
+    sql_connector.insert_quote(arg, interaction.guild_id, interaction.user)
 
 
 @tree.command(
