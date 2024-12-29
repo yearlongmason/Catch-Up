@@ -41,6 +41,7 @@ async def quote(interaction: discord.Interaction, arg: str):
     sql_connector.insert_quote(arg, interaction.guild_id, interaction.user)
 
 
+# get server id command
 @tree.command(
     name="getserverid",
     description="Get the server id of your server"
@@ -48,6 +49,9 @@ async def quote(interaction: discord.Interaction, arg: str):
 @app_commands.describe()
 async def get_server_id(interaction: discord.Interaction):
     await interaction.response.send_message(f"{interaction.guild_id}")
+
+
+
 
 client.run(token=TOKEN)
 
