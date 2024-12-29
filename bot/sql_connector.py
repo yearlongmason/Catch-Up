@@ -3,29 +3,21 @@ import os
 import mysql.connector
 from datetime import date
 
+dotenv.load_dotenv()
+
 db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="2ndACR9!1",
-    database="catchupdb"
+    host=os.getenv('MYSQL_HOST'),
+    user=os.getenv('MYSQL_USER'),
+    password=os.getenv('MYSQL_PASS'),
+    database=os.getenv('MYSQL_DB')
     )
 
 cursor = db.cursor()
 
+# main is mostly just for testing stuff this file is not meant to be run
 def main():
-    print(os.getenv('MYSQL_PASS'))
-    #os.getenv('MYSQL_USER')
-    #os.getenv('MYSQL_PASS')
-    #db = mysql.connector.connect(
-    #host="localhost",
-    #user="root",
-    #password="2ndACR9!1",
-    #database="catchupdb"
-    #)
-    #print(db)
-    #cursor = db.cursor()
-    #cursor.execute('INSERT INTO quotes (server_id, quote, author, date_quoted) VALUES ("1234567891011121314", "Dont you dare start crying!", "Frank Canovatchel", "2024-12-14");')
-    #db.commit()
+    print(os.getenv('MYSQL_DB'))
+
 
 def insert_quote(quote: str, server_id: str, author: str):
     print(quote)
@@ -33,5 +25,6 @@ def insert_quote(quote: str, server_id: str, author: str):
     print(cursor.fetchall())
     db.commit()
 
+# main is mostly just for testing stuff this file is not meant to be run
 if  __name__ == "__main__":
     main() 
