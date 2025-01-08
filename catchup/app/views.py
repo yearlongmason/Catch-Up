@@ -5,3 +5,6 @@ def home(request):
 
 def landing(request):
     return render(request, "landing.html") 
+
+def  roster(request):
+    return render(request, "roster.html")
