@@ -13,5 +13,5 @@ INSERT INTO quotes (server_id, quote, author, date_quoted)
 VALUES ("1234567891011121314", "I like movies", "Mason Lee", "2024-12-14");
 
 # Test query
-SELECT * FROM quotes
-JOIN servers ON servers.server_id = quotes.server_id;
+SELECT * FROM quotes;
+#JOIN servers ON servers.server_id = quotes.server_id;

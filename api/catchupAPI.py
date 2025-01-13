@@ -1,4 +1,8 @@
 from fastapi import FastAPI
+import dotenv
+import os
+import mysql.connector
+from datetime import date
 # To run this api: Open a terminal and navigate to the api folder
 # Then run "uvicorn catchupAPI:app --reload"
 # Might have to run "pip install uvicorn" or "pip install fastapi" if not already installed
@@ -24,15 +28,28 @@ testData = {
     }
 }
 
+db = mysql.connector.connect(
+    host=os.getenv('MYSQL_HOST'),
+    user=os.getenv('MYSQL_USER'),
+    password=os.getenv('MYSQL_PASS'),
+    database=os.getenv('MYSQL_DB')
+    )
+
 @app.get("/")
 async def testAPIMessage():
     return {"Catch Up":"Cool app!"}
 
 # We can also have a path url such by changing to @app.get("/servers/{serverID}")
-@app.get("/servers")
-async def getServers(serverID: str=None):
+@app.get("/testServers")
+async def testGetServers(serverID: str=None):
     # If the user specefies a parameter, return only that server
     if serverID:
         return testData[serverID]
     # Otherwise return all servers!
     return testData
+
+@app.get("/servers")
+async def getServers(serverID: str=None):
+    if not serverID:
+        return {"ERROR":"No Server ID"}
+    return testData[serverID]
