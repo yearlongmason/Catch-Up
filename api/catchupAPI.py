@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-import dotenv
+from dotenv import load_dotenv
 import os
 import mysql.connector
 from datetime import date
@@ -7,6 +7,10 @@ from datetime import date
 # Then run "uvicorn catchupAPI:app --reload"
 # Might have to run "pip install uvicorn" or "pip install fastapi" if not already installed
 # Great tutorial for using fastapi: https://www.youtube.com/watch?v=tLKKmouUams
+
+
+#env stuff yo
+load_dotenv(".env")
 
 app = FastAPI()
 
@@ -35,6 +39,8 @@ db = mysql.connector.connect(
     database=os.getenv('MYSQL_DB')
     )
 
+cursor = db.cursor()
+
 @app.get("/")
 async def testAPIMessage():
     return {"Catch Up":"Cool app!"}
@@ -52,4 +58,6 @@ async def testGetServers(serverID: str=None):
 async def getServers(serverID: str=None):
     if not serverID:
         return {"ERROR":"No Server ID"}
-    return testData[serverID]
+    cursor.execute(f'SELECT * FROM servers WHERE server_id={serverID}')
+    db.commit
+    return cursor.fetchall()      #testData[serverID]
