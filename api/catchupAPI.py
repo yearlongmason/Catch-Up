@@ -54,10 +54,22 @@ async def testGetServers(serverID: str=None):
     # Otherwise return all servers!
     return testData
 
-@app.get("/servers")
-async def getServers(serverID: str=None):
+@app.get("/quotes")
+async def getQuotes(serverID: str=None):
     if not serverID:
         return {"ERROR":"No Server ID"}
-    cursor.execute(f'SELECT * FROM servers WHERE server_id={serverID}')
+    cursor.execute(f'''SELECT quotes.server_id, quotes.quote, quotes.author, quotes.date_quoted FROM servers
+                   JOIN quotes ON quotes.server_id = servers.server_id 
+                   WHERE servers.server_id={serverID}''')
     db.commit
-    return cursor.fetchall()      #testData[serverID]
+    allQuotes = cursor.fetchall()
+
+    # If the data that was returned is not empty, format it as a list of dictionaries
+    for i in range(len(allQuotes)):
+        quoteDict = {}
+        quoteDict["quote"] = allQuotes[i][1]
+        quoteDict["author"] = allQuotes[i][2]
+        quoteDict["date"] = allQuotes[i][3]
+        allQuotes[i] = quoteDict
+
+    return allQuotes     #testData[serverID]
