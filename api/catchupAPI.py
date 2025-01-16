@@ -55,7 +55,7 @@ async def testGetServers(serverID: str=None):
     return testData
 
 @app.get("/quotes")
-async def getQuotes(serverID: str=None):
+async def getQuotes(serverID: str):
     if not serverID:
         return {"ERROR":"No Server ID"}
     cursor.execute(f'''SELECT quotes.server_id, quotes.quote, quotes.author, quotes.date_quoted FROM servers
@@ -73,3 +73,23 @@ async def getQuotes(serverID: str=None):
         allQuotes[i] = quoteDict
 
     return allQuotes     #testData[serverID]
+
+@app.get("/logQuote")
+async def logQuote(serverID: str, quote: str, author: str):
+    # Make sure the user passed in parameters
+    if not serverID:
+        return {"ERROR":"No Server ID"}
+    if not quote:
+        return {"ERROR":"No quote provided"}
+    if not author:
+        return {"ERROR":"No author provided"}
+    
+    # Try to add to the database, if it doesn't work, return false
+    try:
+        cursor.execute(f'''INSERT INTO quotes (server_id, quote, author, date_quoted) 
+                    VALUES ("{serverID}", "{quote}", "{author}", "{date.today()}");''')
+        db.commit()
+    except Exception:
+        return "False"
+
+    return "True"
