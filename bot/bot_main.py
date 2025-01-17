@@ -12,6 +12,7 @@ TOKEN: typing.Final[str] = os.getenv('DISCORD_TOKEN')
 # setting up bot
 intents : discord.Intents = discord.Intents.default()
 intents.message_content = True 
+intents.reactions = True
 client: discord.Client = discord.Client(intents=intents)
 tree: app_commands.CommandTree = app_commands.CommandTree(client)
 
@@ -55,7 +56,10 @@ async def get_server_id(interaction: discord.Interaction):
 #on_reaction_add(reaction, user)
 @client.event
 async def on_message(message):
-    await message.channel.send('Response')
+    print("hey")
+    if "@Catch-Up-Bot" in message.content:
+        await message.channel.send("real")
+        return
 
 client.run(token=TOKEN)
 
