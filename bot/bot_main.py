@@ -51,7 +51,11 @@ async def get_server_id(interaction: discord.Interaction):
     await interaction.response.send_message(f"{interaction.guild_id}")
 
 
-
+# trying to get bot to respond to its @
+#on_reaction_add(reaction, user)
+@client.event
+async def on_message(message):
+    await message.channel.send('Response')
 
 client.run(token=TOKEN)
 
