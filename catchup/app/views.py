@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
+from django.contrib.auth import authenticate, login
 import requests
 import dotenv
 import os
@@ -25,6 +26,7 @@ def discord_login(request):
 def discord_login_redirect(request):
     code = request.GET.get("code")
     user = exchange_code(code=code)
+    authenticate(request, user=user)
     return JsonResponse({"user" : user})
 
 def exchange_code(code):
