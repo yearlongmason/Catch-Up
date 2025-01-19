@@ -13,7 +13,7 @@ TOKEN: typing.Final[str] = os.getenv('DISCORD_TOKEN')
 intents : discord.Intents = discord.Intents.default()
 intents.message_content = True 
 intents.reactions = True
-client: discord.Client = discord.Client(intents=intents)
+client: discord.client = discord.Client(intents=intents)
 tree: app_commands.CommandTree = app_commands.CommandTree(client)
 
 
@@ -52,14 +52,18 @@ async def get_server_id(interaction: discord.Interaction):
     await interaction.response.send_message(f"{interaction.guild_id}")
 
 
-# trying to get bot to respond to its @
-#on_reaction_add(reaction, user)
+
+
+# getting message  from reply and mention,  
+# TODO: send this to database like normal quote would be!
 @client.event
 async def on_message(message):
-    print("hey")
-    if "@Catch-Up-Bot" in message.content:
-        await message.channel.send("real")
-        return
+    if client.user in message.mentions and message.reference:
+        if  message.reference.cached_message.content:
+            await message.channel.send(message.reference.cached_message.content)
+        else:
+            await message.channel.send("could not find message, most likely becuase I was bot added to the server when this message was sent!")
+
 
 client.run(token=TOKEN)
 
