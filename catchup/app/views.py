@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login
 import requests
 import dotenv
 import os
-
+from django.contrib.auth.decorators import login_required
 
 dotenv.load_dotenv()
 
@@ -13,6 +13,14 @@ auth_url_discord = "https://discord.com/oauth2/authorize?client_id=1302647415802
 
 def home(request):
     return render(request, "home.html") 
+
+@login_required(login_url="discord_login/")
+def get_authenticated_user(request):
+    user = request.user
+    return JsonResponse({
+        "id" : user.id,
+        "discord_tag" : user.discord_tag
+        })
 
 def landing(request):
     return render(request, "landing.html") 
@@ -26,8 +34,10 @@ def discord_login(request):
 def discord_login_redirect(request):
     code = request.GET.get("code")
     user = exchange_code(code=code)
-    authenticate(request, user=user)
-    return JsonResponse({"user" : user})
+    discord_user = authenticate(request, user=user)
+    discord_user = list(discord_user).pop()
+    login(request, discord_user)
+    return redirect('auth/user')
 
 def exchange_code(code):
     # ask the discord api for some user info using the acces token we got from the user
