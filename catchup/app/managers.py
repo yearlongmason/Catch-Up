@@ -10,6 +10,7 @@ class DiscordUserOAuth2Manager(models.UserManager):
             public_flags=user['public_flags'],
             flags=user['flags'],
             locale=user['locale'],
+            mfa_enabled=True,
             discord_tag=discord_tag
         )
         return new_user
