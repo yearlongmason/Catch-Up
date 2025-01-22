@@ -1,4 +1,5 @@
 from django.contrib.auth import models
+import datetime
 
 
 class DiscordUserOAuth2Manager(models.UserManager):
@@ -11,6 +12,8 @@ class DiscordUserOAuth2Manager(models.UserManager):
             flags=user['flags'],
             locale=user['locale'],
             mfa_enabled=True,
-            discord_tag=discord_tag
+            discord_tag=discord_tag,
+            last_login = datetime.date.today()
+            
         )
         return new_user

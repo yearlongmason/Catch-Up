@@ -10,8 +10,8 @@ class DiscordUser(models.Model):
     public_flags = models.IntegerField()
     flags = models.IntegerField()
     locale = models.CharField(max_length=100)
-    mfa_enabled = models.BooleanField(null=True)
-    last_login = models.DateTimeField(null=True) 
+    mfa_enabled = models.BooleanField()
+    last_login = models.DateTimeField() 
 
     def is_authenticated(self, request):
         return True
