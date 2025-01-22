@@ -36,7 +36,7 @@ def discord_login_redirect(request):
     code = request.GET.get("code")
     user = exchange_code(code=code)
     discord_user = authenticate(request, user=user)
-    discord_user = list(discord_user).pop()
+    #discord_user = list(discord_user).pop()
     login(request, discord_user)
     return redirect('loggedIn')
 
