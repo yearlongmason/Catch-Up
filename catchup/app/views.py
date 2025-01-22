@@ -17,10 +17,11 @@ def home(request):
 @login_required(login_url="discord_login/")
 def get_authenticated_user(request):
     user = request.user
-    return JsonResponse({
+    context ={
         "id" : user.id,
         "discord_tag" : user.discord_tag
-        })
+        }
+    return render(request, "servers.html", context)
 
 def landing(request):
     return render(request, "landing.html") 
@@ -37,7 +38,7 @@ def discord_login_redirect(request):
     discord_user = authenticate(request, user=user)
     discord_user = list(discord_user).pop()
     login(request, discord_user)
-    return redirect('auth/user')
+    return redirect('loggedIn')
 
 def exchange_code(code):
     # ask the discord api for some user info using the acces token we got from the user
