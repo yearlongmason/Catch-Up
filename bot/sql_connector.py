@@ -20,9 +20,7 @@ def main():
 
 
 def insert_quote(quote: str, server_id: str, author: str):
-    print(quote)
     cursor.execute(f'INSERT INTO quotes (server_id, quote, author, date_quoted) VALUES ("{server_id}", "{quote}", "{author}", "{date.today()}");')
-    print(cursor.fetchall())
     db.commit()
 
 # main is mostly just for testing stuff this file is not meant to be run

@@ -54,15 +54,15 @@ async def get_server_id(interaction: discord.Interaction):
 
 
 
-# getting message  from reply and mention,  
-# TODO: send this to database like normal quote would be!
+# getting message from reply and mention,  
 @client.event
 async def on_message(message):
     if client.user in message.mentions and message.reference:
         if  message.reference.cached_message.content:
-            await message.channel.send(message.reference.cached_message.content)
+            await message.channel.send(f"\"{message.reference.cached_message.content}\" - {message.reference.cached_message.author}")
+            sql_connector.insert_quote(message.reference.cached_message.content, message.channel.guild.id, message.reference.cached_message.author)
         else:
-            await message.channel.send("could not find message, most likely becuase I was bot added to the server when this message was sent!")
+            await message.channel.send("Could not find message, most likely becuase I was bot added to the server when this message was sent!")
 
 
 client.run(token=TOKEN)
