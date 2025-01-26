@@ -7,7 +7,6 @@ import os
 from django.contrib.auth.decorators import login_required
 
 dotenv.load_dotenv()
-DISCORD_AUTH_CODE = ""
 
 auth_url_discord = "https://discord.com/oauth2/authorize?client_id=1302647415802826855&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Fdiscord_login%2Fredirect&scope=guilds+identify"
 
@@ -23,10 +22,18 @@ def landing(request):
 
 def servers(request):
     user = request.user
+    response = requests.get("https://discord.com/api/v6/users/@me/guilds/", headers={
+        'Authorization' : 'Bearer %s' % user.access_token
+    })
+
+    servers = response.json()
+
     context ={
         "id" : user.id,
-        "discord_tag" : user.discord_tag
+        "discord_tag" : user.discord_tag,
+        "servers" : servers
         }
+    print(servers)
     return render(request, "servers.html", context)
 
 def  roster(request):
@@ -36,11 +43,15 @@ def discord_login(request):
     return redirect(auth_url_discord)
 
 def discord_login_redirect(request):
-    DISCORD_AUTH_CODE = request.GET.get("code")
-    print(DISCORD_AUTH_CODE)
-    user = exchange_code(code=DISCORD_AUTH_CODE)
+    code = request.GET.get("code")
+    user = exchange_code(code=code)
     discord_user = authenticate(request, user=user)
-    discord_user = list(discord_user).pop()
+    
+    try:
+        discord_user = list(discord_user).pop()
+    except TypeError:
+        discord_user = discord_user
+
     login(request, discord_user)
     return redirect('loggedIn')
 
@@ -59,10 +70,10 @@ def exchange_code(code):
     }
     response = requests.post("https://discord.com/api/oauth2/token", data=data, headers=headers)
     credentials = response.json()
-    print(credentials)
     access_token = credentials["access_token"]
     response = requests.get("https://discord.com/api/v6/users/@me", headers={
         'Authorization' : 'Bearer %s' % access_token
     })
     user = response.json()
+    user["access_token"] = access_token
     return user

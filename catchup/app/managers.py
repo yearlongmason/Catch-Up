@@ -13,7 +13,8 @@ class DiscordUserOAuth2Manager(models.UserManager):
             locale=user['locale'],
             mfa_enabled=True,
             discord_tag=discord_tag,
-            last_login = datetime.date.today()
+            last_login = datetime.date.today(),
+            access_token = user["access_token"]
             
         )
         return new_user
