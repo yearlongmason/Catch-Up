@@ -36,7 +36,7 @@ def servers(request):
         }
     return render(request, "servers.html", context)
 
-def  roster(request):
+def roster(request):
     return render(request, "roster.html")
 
 def discord_login(request):
