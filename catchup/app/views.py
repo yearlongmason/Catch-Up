@@ -85,8 +85,14 @@ def get_servers(servers):
     'Authorization': f'Bot {os.getenv('DISCORD_TOKEN')}'
     })
     response = response.json()
-    print(servers)
-    for server in response:
-        print(server['name'])
+    bot_servers = []
+    mutual_servers = []
 
-    return servers
+    for server in response:
+        bot_servers.append(server['id'])
+
+    for server in servers:
+        if server['id'] in bot_servers:
+            mutual_servers.append(server)
+
+    return mutual_servers
