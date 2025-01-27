@@ -25,13 +25,14 @@ def servers(request):
     response = requests.get("https://discord.com/api/v6/users/@me/guilds", headers={
         'Authorization' : 'Bearer %s' % user.access_token
     })
-
+    
     servers = response.json()
+    mutual_servers = get_servers(servers)
 
     context ={
         "id" : user.id,
         "discord_tag" : user.discord_tag,
-        "servers" : servers
+        "servers" : mutual_servers
         }
     return render(request, "servers.html", context)
 
@@ -76,3 +77,16 @@ def exchange_code(code):
     user = response.json()
     user["access_token"] = access_token
     return user
+
+# returns a list of mutual servers that the bot and user are in
+# make sure to prefix all info requests for the bot with the keyword "bot"!!!!!!
+def get_servers(servers):
+    response = requests.get("https://discord.com/api/v6/users/@me/guilds", headers={
+    'Authorization': f'Bot {os.getenv('DISCORD_TOKEN')}'
+    })
+    response = response.json()
+    print(servers)
+    for server in response:
+        print(server['name'])
+
+    return servers
