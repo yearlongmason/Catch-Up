@@ -22,7 +22,7 @@ def landing(request):
 
 def servers(request):
     user = request.user
-    response = requests.get("https://discord.com/api/v6/users/@me/guilds/", headers={
+    response = requests.get("https://discord.com/api/v6/users/@me/guilds", headers={
         'Authorization' : 'Bearer %s' % user.access_token
     })
 
@@ -33,7 +33,6 @@ def servers(request):
         "discord_tag" : user.discord_tag,
         "servers" : servers
         }
-    print(servers)
     return render(request, "servers.html", context)
 
 def  roster(request):
