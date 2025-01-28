@@ -43,7 +43,7 @@ cursor = db.cursor()
 
 @app.get("/")
 async def testAPIMessage():
-    return {"Catch Up":"Cool app!"}
+    return {"Catch Up":"Ketchup?"}
 
 # We can also have a path url such by changing to @app.get("/servers/{serverID}")
 @app.get("/testServers")
@@ -56,17 +56,22 @@ async def testGetServers(serverID: str=None):
 
 @app.get("/quotes")
 async def getQuotes(serverID: str):
+    """Returns all quotes given a specific serverID"""
+    # If the serverID is not provided
     if not serverID:
         return {"ERROR":"No Server ID"}
-    cursor.execute(f'''SELECT quotes.server_id, quotes.quote, quotes.author, quotes.date_quoted FROM servers
-                   JOIN quotes ON quotes.server_id = servers.server_id 
-                   WHERE servers.server_id={serverID}''')
+    
+    # Get all quotes from the server
+    cursor.execute(f'''SELECT * FROM catchupdb.quotes
+WHERE catchupdb.quotes.server_id = "{serverID}";''')
     db.commit
     allQuotes = cursor.fetchall()
+    print(allQuotes)
 
     # If the data that was returned is not empty, format it as a list of dictionaries
     for i in range(len(allQuotes)):
         quoteDict = {}
+        quoteDict["quoteID"] = allQuotes[i][0]
         quoteDict["quote"] = allQuotes[i][1]
         quoteDict["author"] = allQuotes[i][2]
         quoteDict["date"] = allQuotes[i][3]
@@ -74,8 +79,19 @@ async def getQuotes(serverID: str):
 
     return allQuotes     #testData[serverID]
 
-@app.get("/logQuote")
+@app.get("/servers")
+async def getServers():
+    """Get all unique serverID's from database"""
+    cursor.execute('SELECT DISTINCT(server_id) FROM catchupdb.quotes;')
+    db.commit
+    allServers = cursor.fetchall()
+    # Flatten list so it's formatted as list[string] instead of list[list[string]]
+    allServers = [serverID for serverList in allServers for serverID in serverList]
+    return allServers
+
+@app.post("/logQuote")
 async def logQuote(serverID: str, quote: str, author: str):
+    """Add a new quote to the server using a post request"""
     # Make sure the user passed in parameters
     if not serverID:
         return {"ERROR":"No Server ID"}
