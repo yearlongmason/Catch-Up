@@ -84,7 +84,10 @@ async def getServers():
     """Get all unique serverID's from database"""
     cursor.execute('SELECT DISTINCT(server_id) FROM catchupdb.quotes;')
     db.commit
-    return cursor.fetchall()
+    allServers = cursor.fetchall()
+    # Flatten list so it's formatted as list[string] instead of list[list[string]]
+    allServers = [serverID for serverList in allServers for serverID in serverList]
+    return allServers
 
 @app.post("/logQuote")
 async def logQuote(serverID: str, quote: str, author: str):
