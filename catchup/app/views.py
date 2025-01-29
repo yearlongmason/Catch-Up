@@ -5,6 +5,7 @@ import requests
 import dotenv
 import os
 from django.contrib.auth.decorators import login_required
+from .forms import ServerForm
 
 dotenv.load_dotenv()
 
@@ -29,15 +30,23 @@ def servers(request):
     servers = response.json()
     mutual_servers = get_servers(servers)
 
-    context ={
-        "id" : user.id,
-        "discord_tag" : user.discord_tag,
-        "servers" : mutual_servers
-        }
-    return render(request, "servers.html", context)
+    # form stuff
+    if request.method == 'POST':
+        server_form = ServerForm(request.POST)
+        if server_form.is_valid():
+            val = server_form.cleaned_data.get("btn")
+    else:
+        server_form = ServerForm()
+    
+    try:
+        print(val)
+    except UnboundLocalError:
+        pass
 
-def roster(request):
-    return render(request, "roster.html")
+    return render(request, "servers.html", locals())
+
+def roster(request, server_id):
+    return render(request, "roster.html", server_id)
 
 def discord_login(request):
     return redirect(auth_url_discord)
