@@ -34,19 +34,18 @@ def servers(request):
     if request.method == 'POST':
         server_form = ServerForm(request.POST)
         if server_form.is_valid():
-            val = server_form.cleaned_data.get("btn")
+            server_id = server_form.cleaned_data.get("btn")
+            request.session['server_id'] = server_id
+            return redirect('roster/')
     else:
         server_form = ServerForm()
     
-    try:
-        print(val)
-    except UnboundLocalError:
-        pass
 
     return render(request, "servers.html", locals())
 
-def roster(request, server_id):
-    return render(request, "roster.html", server_id)
+def roster(request):
+    context = {'server_id' : request.session.get('server_id')}
+    return render(request, "roster.html", context)
 
 def discord_login(request):
     return redirect(auth_url_discord)
