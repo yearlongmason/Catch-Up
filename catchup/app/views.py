@@ -6,6 +6,7 @@ import dotenv
 import os
 from django.contrib.auth.decorators import login_required
 from .forms import ServerForm
+from .models import Quotes
 
 dotenv.load_dotenv()
 
@@ -44,7 +45,13 @@ def servers(request):
     return render(request, "servers.html", locals())
 
 def roster(request):
-    context = {'server_id' : request.session.get('server_id')}
+    this_server_id = request.session.get('server_id')
+    
+    mydata = Quotes.objects.filter(server_id=this_server_id).values()
+
+    context = {'server_id' : this_server_id,
+               'data' : mydata
+               }
     return render(request, "roster.html", context)
 
 def testroster(request):
