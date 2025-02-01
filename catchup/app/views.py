@@ -37,6 +37,7 @@ def servers(request):
         if server_form.is_valid():
             server_id = server_form.cleaned_data.get("btn")
             request.session['server_id'] = server_id
+
             return redirect('roster/')
     else:
         server_form = ServerForm()
@@ -111,6 +112,6 @@ def get_servers(servers):
 
     for server in servers:
         if server['id'] in bot_servers:
-            mutual_servers.append(server)
+            mutual_servers.append([server])
 
     return mutual_servers
