@@ -39,6 +39,9 @@ def servers(request):
 def roster(request):
     return render(request, "roster.html")
 
+def testroster(request):
+    return render(request, "testroster.html")
+
 def discord_login(request):
     return redirect(auth_url_discord)
 
