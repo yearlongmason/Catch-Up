@@ -5,6 +5,7 @@ import requests
 import dotenv
 import os
 from django.contrib.auth.decorators import login_required
+from .forms import ServerForm
 
 dotenv.load_dotenv()
 
@@ -29,15 +30,22 @@ def servers(request):
     servers = response.json()
     mutual_servers = get_servers(servers)
 
-    context ={
-        "id" : user.id,
-        "discord_tag" : user.discord_tag,
-        "servers" : mutual_servers
-        }
-    return render(request, "servers.html", context)
+    # form stuff
+    if request.method == 'POST':
+        server_form = ServerForm(request.POST)
+        if server_form.is_valid():
+            server_id = server_form.cleaned_data.get("btn")
+            request.session['server_id'] = server_id
+            return redirect('roster/')
+    else:
+        server_form = ServerForm()
+    
+
+    return render(request, "servers.html", locals())
 
 def roster(request):
-    return render(request, "roster.html")
+    context = {'server_id' : request.session.get('server_id')}
+    return render(request, "roster.html", context)
 
 def testroster(request):
     return render(request, "testroster.html")

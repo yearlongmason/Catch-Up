@@ -11,17 +11,20 @@
 <body class="bg-blue-500 flex justify-center items-center min-h-screen">
     
     <div class="border-2 border-solid border-black p-4 rounded-lg text-white flex flex-col items-center bg-opacity-5 bg-black">
-        <h1 class="text-4xl font-bold mb-4"> {{discord_tag}}'s Servers </h1>
+        <h1 class="text-4xl font-bold mb-4"> {{user.discord_tag}}'s Servers </h1>
+        <form method="POST">
+        {% csrf_token %}
         <table>
-        {% for server in servers %}
+        {% for server in mutual_servers %}
         <tr> 
             <td>
-                <button class="w-full p-3 bg-gray-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                <a href="roster/">{{server.name}}</a>
+                <button type="submit" name="btn" value={{server.id}} class="w-full p-3 bg-gray-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    {{server.name}}
                 </button>
         </td>
         </tr>
             {% endfor %}
+        </form>
     </table>
     </div>
 </body>
