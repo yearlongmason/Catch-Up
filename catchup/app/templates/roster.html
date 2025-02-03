@@ -8,10 +8,12 @@
 </head>
 <body class="bg-gray-100">
     <header class="bg-blue-600 p-4">
-        <h1 class="text-white text-3xl">{{server_id}}'s Quotes</h1>
+        <h1 class="text-white text-3xl">{{server_name}}'s Quotes</h1>
     </header>
     <div class="container mx-auto mt-6">
-        <p>{{data}}</p>
+        <div class="bg-white p-6 rounded shadow-md mb-4">
+            <p class="text-gray-800">{{data.0.quote}}   - {{data.0.author}}</p>
+        </div>
     </div>
 </body>
 </html>

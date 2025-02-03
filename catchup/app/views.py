@@ -24,19 +24,28 @@ def landing(request):
 
 def servers(request):
     user = request.user
+
+    # asking discord api for users servers
     response = requests.get("https://discord.com/api/v6/users/@me/guilds", headers={
         'Authorization' : 'Bearer %s' % user.access_token
     })
     
     servers = response.json()
+    # mutual servers is a list of lists of dictionarys so when we grab data from it we use print(server[0]['name'])
     mutual_servers = get_servers(servers)
 
-    # form stuff
+
+    # this code will do nothing untill the user submits the from 
+    # when the user submits it grabs the data from the form (server id) and redirects to the roster page
     if request.method == 'POST':
         server_form = ServerForm(request.POST)
         if server_form.is_valid():
             server_id = server_form.cleaned_data.get("btn")
+            server_name = get_server_name(mutual_servers, server_id)
+
+            #storing in session
             request.session['server_id'] = server_id
+            request.session['server_name'] = server_name
 
             return redirect('roster/')
     else:
@@ -45,13 +54,26 @@ def servers(request):
 
     return render(request, "servers.html", locals())
 
-def roster(request):
-    this_server_id = request.session.get('server_id')
+# helper function to get server name from server_id from list
+def get_server_name(mutual_servers, server_id):
+    for server in mutual_servers:
+        if server[0]['id'] == server_id:
+            # mutual servers is a list of lists of dictionarys so when we grab data from it we use print(server[0]['name'])
+            return server[0]['name'] 
     
-    mydata = Quotes.objects.filter(server_id=this_server_id).values()
+    #if we don't find the server_id something went very wrong
+    return("server id not found in mutual_servers!!!! get_server_name()")
+
+def roster(request):
+    # getting server id from session cookies
+    this_server_id = request.session.get('server_id')
+    this_server_name = request.session.get('server_name')
+    
+    mydata = Quotes.objects.filter(server_id=this_server_id).values
 
     context = {'server_id' : this_server_id,
-               'data' : mydata
+               'data' : mydata,
+               'server_name' : this_server_name
                }
     return render(request, "roster.html", context)
 
@@ -115,3 +137,6 @@ def get_servers(servers):
             mutual_servers.append([server])
 
     return mutual_servers
+
+#1291817041052827649
+#1291817041052827649
