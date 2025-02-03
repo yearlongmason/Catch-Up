@@ -137,6 +137,3 @@ def get_servers(servers):
             mutual_servers.append([server])
 
     return mutual_servers
-
-#1291817041052827649
-#1291817041052827649

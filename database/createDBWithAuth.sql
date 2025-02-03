@@ -29,7 +29,23 @@ CREATE TABLE IF NOT EXISTS `catchupdb`.`app_discorduser` (
   `locale` VARCHAR(100) NOT NULL,
   `mfa_enabled` TINYINT(1) NOT NULL,
   `last_login` DATETIME(6) NOT NULL,
+  `access_token` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`))
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `catchupdb`.`app_quotes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `catchupdb`.`app_quotes` (
+  `date_quoted` DATE NOT NULL,
+  `author` VARCHAR(30) NOT NULL,
+  `quote` VARCHAR(280) NOT NULL,
+  `quote_id` BIGINT NOT NULL,
+  `server_id` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`quote_id`))
 ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -76,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `catchupdb`.`auth_permission` (
   UNIQUE INDEX `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id` ASC, `codename` ASC) VISIBLE,
   INDEX `auth_permission_content_type_id_2f476e4b` (`content_type_id` ASC) VISIBLE)
 ENGINE = MyISAM
-AUTO_INCREMENT = 29
+AUTO_INCREMENT = 33
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -165,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `catchupdb`.`django_content_type` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label` ASC, `model` ASC) VISIBLE)
 ENGINE = MyISAM
-AUTO_INCREMENT = 8
+AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -180,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `catchupdb`.`django_migrations` (
   `applied` DATETIME(6) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = MyISAM
-AUTO_INCREMENT = 20
+AUTO_INCREMENT = 24
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -195,22 +211,6 @@ CREATE TABLE IF NOT EXISTS `catchupdb`.`django_session` (
   PRIMARY KEY (`session_key`),
   INDEX `django_session_expire_date_a5c62663` (`expire_date` ASC) VISIBLE)
 ENGINE = MyISAM
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `catchupdb`.`quotes`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `catchupdb`.`quotes` (
-  `quote_id` INT NOT NULL AUTO_INCREMENT,
-  `server_id` CHAR(20) NOT NULL,
-  `quote` TEXT NULL DEFAULT NULL,
-  `author` CHAR(30) NULL DEFAULT NULL,
-  `date_quoted` DATE NULL DEFAULT NULL,
-  PRIMARY KEY (`quote_id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
