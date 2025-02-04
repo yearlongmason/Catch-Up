@@ -10,10 +10,12 @@
     <header class="bg-blue-600 p-4">
         <h1 class="text-white text-3xl">{{server_name}}'s Quotes</h1>
     </header>
-    <div class="container mx-auto mt-6">
-        <div class="bg-white p-6 rounded shadow-md mb-4">
-            <p class="text-gray-800">{{data.0.quote}}   - {{data.0.author}}</p>
+    {% for item in data %}
+        <div class="container mx-auto mt-6 w-4/5">
+            <div class="bg-white p-6 rounded shadow-md mb-4">
+                <p class="text-gray-800">{{item.quote}}   - {{item.author}}</p>
+            </div>
         </div>
-    </div>
+    {% endfor %}
 </body>
 </html>
