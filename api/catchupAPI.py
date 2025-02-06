@@ -72,9 +72,10 @@ WHERE catchupdb.quotes.server_id = "{serverID}";''')
     for i in range(len(allQuotes)):
         quoteDict = {}
         quoteDict["quoteID"] = allQuotes[i][0]
-        quoteDict["quote"] = allQuotes[i][1]
-        quoteDict["author"] = allQuotes[i][2]
-        quoteDict["date"] = allQuotes[i][3]
+        quoteDict["serverID"] = allQuotes[i][1]
+        quoteDict["quote"] = allQuotes[i][2]
+        quoteDict["author"] = allQuotes[i][3]
+        quoteDict["date"] = allQuotes[i][4]
         allQuotes[i] = quoteDict
 
     return allQuotes     #testData[serverID]
