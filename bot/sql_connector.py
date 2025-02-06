@@ -30,7 +30,7 @@ def get_quote_id():
     db.commit()
     quote_id = cursor.fetchone()
     #print(quote_id[0])
-    return quote_id[0] + 1
+    return quote_id[0] + 1 if quote_id else 1
 
 # main is mostly just for testing stuff this file is not meant to be run
 if  __name__ == "__main__":
