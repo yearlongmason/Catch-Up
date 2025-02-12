@@ -23,11 +23,12 @@ def landing(request):
     return render(request, "landing.html") 
 
 def servers(request):
-    user = request.user
-
+    if request.session.get('new_access_token'):
+        request.user.access_token = request.session.get('new_access_token')
+    
     # asking discord api for users servers
     response = requests.get("https://discord.com/api/v6/users/@me/guilds", headers={
-        'Authorization' : 'Bearer %s' % user.access_token
+        'Authorization' : 'Bearer %s' % request.user.access_token
     })
     
     servers = response.json()
@@ -94,7 +95,11 @@ def discord_login_redirect(request):
         discord_user = discord_user
 
     login(request, discord_user)
+    request.session['new_access_token'] = user["access_token"]
     return redirect('loggedIn')
+
+
+
 
 def exchange_code(code):
     # ask the discord api for some user info using the acces token we got from the user
@@ -117,6 +122,8 @@ def exchange_code(code):
     })
     user = response.json()
     user["access_token"] = access_token
+    print(access_token)
+
     return user
 
 # returns a list of mutual servers that the bot and user are in
