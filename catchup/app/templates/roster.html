@@ -1,21 +1,39 @@
+{% load static %} <!--Load all files from static folder-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Quotes Roster</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!--Add roster js file-->
+    <script src="{% static 'roster.js' %}"></script>
+
 </head>
 <body class="bg-gray-100">
+
     <header class="bg-blue-600 p-4">
         <h1 class="text-white text-3xl">{{server_name}}'s Quotes</h1>
     </header>
+
+    <!--Test Button-->
+    <div class="container mx-auto mt-6 w-4/5">
+        <button onclick="testJSFunc()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded p-8">
+            Button
+        </button>
+    </div>
+
     {% for item in data %}
         <div class="container mx-auto mt-6 w-4/5">
-            <div class="bg-white p-6 rounded shadow-md mb-4">
-                <p class="text-gray-800">{{item.quote}}   - {{item.author}}</p>
+            <div class="bg-white p-6 rounded shadow-md mb-4 h-16">
+                <p class="text-gray-800 float-left">{{item.quote}}   - {{item.author}}</p>
+                <p class="text-gray-800 float-right">({{item.date_quoted}})</p>
             </div>
         </div>
     {% endfor %}
+
 </body>
 </html>

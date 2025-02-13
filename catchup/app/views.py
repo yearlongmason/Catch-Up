@@ -35,7 +35,6 @@ def servers(request):
     # mutual servers is a list of lists of dictionarys so when we grab data from it we use print(server[0]['name'])
     mutual_servers = get_servers(servers)
 
-
     # this code will do nothing untill the user submits the from 
     # when the user submits it grabs the data from the form (server id) and redirects to the roster page
     if request.method == 'POST':
