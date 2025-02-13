@@ -5,5 +5,5 @@ from .serializers import QuoteSerializer
 
 
 class QuoteCreate(generics.ListCreateAPIView):
-    queryset = Quotes.objects.all
-    seriazlizer_class = QuoteSerializer
+    queryset = Quotes.objects.all()
+    serializer_class = QuoteSerializer
