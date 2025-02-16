@@ -2,6 +2,7 @@ import dotenv
 import os
 import mysql.connector
 from datetime import date
+import requests
 
 dotenv.load_dotenv()
 
@@ -22,8 +23,23 @@ def main():
 
 def insert_quote(quote: str, server_id: str, author: str):
     quote_id = get_quote_id()
-    cursor.execute(f'INSERT INTO app_quotes (quote_id, server_id, quote, author, date_quoted) VALUES ({quote_id}, "{server_id}", "{quote}", "{author}", "{date.today()}");')
-    db.commit()
+    api_url = host=os.getenv('API_URL')
+
+    
+    quote = {
+    "quote_id": quote_id,
+    "server_id": str(server_id),
+    "quote": str(quote),
+    "author": str(author),
+    "date_quoted": str(date.today())
+    }
+
+    response = requests.post(api_url, json=quote)
+    print(response.json())
+    #cursor.execute(f'INSERT INTO app_quotes (quote_id, server_id, quote, author, date_quoted) VALUES ({quote_id}, "{server_id}", "{quote}", "{author}", "{date.today()}");')
+    #db.commit()
+
+
 
 def get_quote_id():
     cursor.execute(f'SELECT quote_id FROM app_quotes WHERE quote_id = (SELECT MAX(quote_id) FROM app_quotes)')
