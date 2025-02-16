@@ -5,3 +5,9 @@ class QuoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Quotes
         fields = ["quote_id", "server_id", "quote", "author", "date_quoted"]
+    
+
+class IdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Quotes
+        fields = ["quote_id"]
