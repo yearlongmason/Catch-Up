@@ -26,14 +26,17 @@
         </button>
     </div>
 
-    {% for item in data %}
-        <div class="container mx-auto mt-6 w-4/5">
-            <div class="bg-white p-6 rounded shadow-md mb-4 h-16">
-                <p class="text-gray-800 float-left">{{item.quote}}   - {{item.author}}</p>
-                <p class="text-gray-800 float-right">({{item.date_quoted}})</p>
+    <div id="allQuotes">
+        {% for item in data %}
+            <div class="container mx-auto mt-6 w-4/5">
+                <div class="bg-white p-6 rounded shadow-md mb-4 h-16 quote">
+                    <p class="text-gray-800 float-left">{{item.quote}} -</p>
+                    <p class="text-gray-800 float-left pl-1">{{item.author}}</p>
+                    <p class="text-gray-800 float-right">({{item.date_quoted}})</p>
+                </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 
 </body>
 </html>
