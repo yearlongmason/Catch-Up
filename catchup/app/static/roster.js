@@ -11,8 +11,13 @@ function testJSFunc() {
 // This function should essentially scrape all the data from the current roster.html
 // This is a workaround to having to pass a json object through contexts
 function getData() {
-    let quotesList = document.getElementById("allQuotes")
-    let allQuotes = document.getElementsByClassName("quote")
-    console.log(quotesList)
-    console.log(allQuotes)
+    let allQuoteTags = document.getElementsByClassName("catchUpQuote")
+
+    // Loop through each quote div it found
+    for(let i = 0; i < allQuoteTags.length; i++){
+        console.log(i, allQuoteTags[i])
+        console.log(allQuoteTags[i].getElementsByClassName("catchUpQuoteText")[0].innerHTML.slice(0, -2))
+        console.log(allQuoteTags[i].getElementsByClassName("catchUpQuoteAuthor")[0].innerHTML)
+        console.log(allQuoteTags[i].getElementsByClassName("catchUpQuoteDate")[0].innerHTML)
+    }
 }
