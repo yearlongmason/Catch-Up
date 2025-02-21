@@ -1,11 +1,32 @@
 // If Django is caching this file, clear your browser cache!
 // In Chrome press ctrl + shift + del and delete cached images and files!
 
-dateAscending = true
+// Define all global variables
+// ALL_DATA is not technically a constant, but should not be changed
+let ALL_DATA
+let currentData
+let dateNewestFirst
+
+window.onload = (event) => {
+    ALL_DATA = getData()
+    dateNewestFirst = true
+};
 
 function testJSFunc() {
     alert("The JS file is connected and working!")
-    dateAscending = false
+}
+
+// This swaps the dateNewestFirst boolean and updates the button text accordingly
+function swapDateOrder() {
+    // If the date is ascending, then swap it to descending
+    if (dateNewestFirst) {
+        document.getElementById("sortDateButton").innerText = "Sort date: Oldest First"
+        dateNewestFirst = false
+    }
+    else {
+        document.getElementById("sortDateButton").innerText = "Sort date: Newest First"
+        dateNewestFirst = true
+    }
 }
 
 // This function should essentially scrape all the data from the current roster.html
@@ -23,7 +44,7 @@ function getData() {
         currText = allQuoteTags[i].getElementsByClassName("catchUpQuoteText")[0].innerHTML.slice(0, -2)
         currAuthor = allQuoteTags[i].getElementsByClassName("catchUpQuoteAuthor")[0].innerHTML
         currDate = allQuoteTags[i].getElementsByClassName("catchUpQuoteDate")[0].innerHTML.slice(1, -1)
-        allQuotes.push({"quote":currText, "author":currAuthor, "date":currDate})
+        allQuotes.push({"quote":currText, "author":currAuthor, "date":currDate, "timestamp":Date.parse(currDate)})
     }
 
     return allQuotes

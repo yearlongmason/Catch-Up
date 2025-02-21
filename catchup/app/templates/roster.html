@@ -11,7 +11,6 @@
 
     <!--Add roster js file-->
     <script src="{% static 'roster.js' %}"></script>
-
 </head>
 <body class="bg-gray-100">
 
@@ -19,13 +18,29 @@
         <h1 class="text-white text-3xl">{{server_name}}'s Quotes</h1>
     </header>
 
-    <!--Test Button-->
-    <div class="container mx-auto mt-6 w-4/5">
-        <button onclick="testJSFunc()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded p-8">
-            Button
+    <div class="container mx-auto mt-6 w-4/5" style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
+
+        <!--Search Bar-->
+        <input type="text" id="searchQuotes" placeholder="Search for quotes here!" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5">
+
+        <!--Dropdown menu-->
+        <button onclick="" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded p-8 w-1/6">
+            People Dropdown
         </button>
+        
+        <!--Swap date button-->
+        <button onclick="swapDateOrder()" id="sortDateButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded p-8 w-1/6">
+            Sort date: Newest First
+        </button>
+
+        <!--Update roster button-->
+        <button onclick="testJSFunc()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded p-8">
+            Apply Updates
+        </button>
+
     </div>
 
+    <!--Loop through all quotes and give them each a nice roster slot-->
     <div id="allQuotes">
         {% for item in data %}
             <div class="container mx-auto mt-6 w-4/5">
