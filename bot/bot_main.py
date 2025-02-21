@@ -36,10 +36,11 @@ async def on_ready() -> None:
     name="quote",
     description="Say something cool, something inspiring!!!",
 )
-@app_commands.describe(arg = "What is the Quote?")
-async def quote(interaction: discord.Interaction, arg: str):
-    await interaction.response.send_message(f"\"{arg}\" - {interaction.user}")
-    sql_connector.insert_quote(arg, interaction.guild_id, interaction.user)
+@app_commands.describe(quote = "What is the Quote?", author = "Author")
+async def quote(interaction: discord.Interaction, quote: str, author: typing.Optional[str] = " "):
+    # if author arg is blank just use the username
+    await interaction.response.send_message(f"\"{quote}\" - {author}")
+    sql_connector.insert_quote(quote, interaction.guild_id, author)
 
 
 # get server id command
