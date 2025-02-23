@@ -14,7 +14,8 @@ class GetID(generics.ListAPIView):
     serializer_class = IdSerializer
     def get_queryset(self):
         
-        server_id = self.request.query_params.get('server_id')
+        server_id = self.request.data['server_id']
         print(server_id)
+        
 
-        return Quotes.objects.values().order_by("quote_id")
+        return Quotes.objects.filter(server_id = server_id)
