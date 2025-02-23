@@ -1,17 +1,17 @@
-import dotenv
 import os
 from datetime import date
 import requests
+import dotenv
 
 dotenv.load_dotenv()
 
 # main is mostly just for testing stuff this file is not meant to be run
 def main():
-    get_quote_id()
+    get_quote_id("1291817041052827649")
 
 
 def insert_quote(quote: str, server_id: str, author: str):
-    quote_id = get_quote_id()
+    quote_id = get_quote_id(server_id)
     api_url = host=os.getenv('QUOTE_API_URL')
 
     
@@ -28,10 +28,12 @@ def insert_quote(quote: str, server_id: str, author: str):
 
 
 
-def get_quote_id():
+def get_quote_id(server_id: str):
     # TODO: change this so it gets max quote from your server!!!
     api_url = host=os.getenv('ID_API_URL')
-    response = requests.get(api_url)
+    data = {"server_id": str(server_id)}
+
+    response = requests.get(api_url, json=data)
     quote_id = response.json()
     print(quote_id[0])
 
