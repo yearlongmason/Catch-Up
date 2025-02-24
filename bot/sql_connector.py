@@ -8,6 +8,7 @@ dotenv.load_dotenv()
 # main is mostly just for testing stuff this file is not meant to be run
 def main():
     get_quote_id("1291817041052827649")
+    #get_quote_id("123")
 
 
 def insert_quote(quote: str, server_id: str, author: str): 
@@ -35,7 +36,10 @@ def get_quote_id(server_id: str):
 
     response = requests.get(api_url, json=data)
     quote_id = response.json()
-    print(quote_id[0])
+    print(quote_id[-1]['quote_id'])
+    new_id = quote_id[-1]['quote_id'] + 1
+
+    return new_id
 
     
 
