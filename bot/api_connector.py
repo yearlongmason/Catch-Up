@@ -30,7 +30,6 @@ def insert_quote(quote: str, server_id: str, author: str):
 
 
 def get_quote_id(server_id: str):
-    # TODO: change this so it gets max quote from your server!!!
     api_url = host=os.getenv('ID_API_URL')
     data = {'server_id': str(server_id)}
 

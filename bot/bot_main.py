@@ -3,7 +3,7 @@ from discord import app_commands
 import typing
 import os
 import dotenv
-import sql_connector
+import api_connector
 
 # getting token
 dotenv.load_dotenv()
@@ -40,7 +40,7 @@ async def on_ready() -> None:
 async def quote(interaction: discord.Interaction, quote: str, author: typing.Optional[str] = " "):
     # if author arg is blank just use the username
     await interaction.response.send_message(f"\"{quote}\" - {author}")
-    sql_connector.insert_quote(quote, interaction.guild_id, author)
+    api_connector.insert_quote(quote, interaction.guild_id, author)
 
 
 # get server id command
@@ -61,7 +61,7 @@ async def on_message(message):
     if client.user in message.mentions and message.reference:
         if  message.reference.cached_message.content:
             await message.channel.send(f"\"{message.reference.cached_message.content}\" - {message.reference.cached_message.author}")
-            sql_connector.insert_quote(message.reference.cached_message.content, message.channel.guild.id, message.reference.cached_message.author)
+            api_connector.insert_quote(message.reference.cached_message.content, message.channel.guild.id, message.reference.cached_message.author)
         else:
             await message.channel.send("Could not find message, most likely becuase I was bot added to the server when this message was sent!")
 
