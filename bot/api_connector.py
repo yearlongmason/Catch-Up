@@ -2,6 +2,7 @@ import os
 from datetime import date
 import requests
 import dotenv
+import random
 
 dotenv.load_dotenv()
 
@@ -9,7 +10,9 @@ dotenv.load_dotenv()
 def main():
     #get_quote_id("1291817041052827649")
     #get_quote_id("123")
+
     get_random_quote("1291817041052827649")
+    #get_random_quote("123")
 
 
 def insert_quote(quote: str, server_id: str, author: str): 
@@ -40,11 +43,13 @@ def get_quote_id(server_id: str):
     return new_id
 
 def get_random_quote(server_id: str):
-    api_url = host=os.getenv('ID_API_URL')
+    api_url = host=os.getenv('RANDOM_API_URL')
     data = {'server_id': str(server_id)}
     response = requests.get(api_url, json=data)
 
-    print(response.json())
+    quotes = response.json()
+    random_num = random.randrange(len(quotes))
+    print(quotes[random_num])
 
     
 

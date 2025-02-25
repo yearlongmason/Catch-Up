@@ -16,9 +16,6 @@ class GetID(generics.ListAPIView):
     def get_queryset(self):
         
         server_id = self.request.data['server_id']
-        print(server_id)
-        
-
         return self.Quotes.objects.filter(server_id = server_id)
 
 class GetRandomQuote(generics.ListAPIView):
@@ -28,6 +25,6 @@ class GetRandomQuote(generics.ListAPIView):
     def get_queryset(self):
         
         server_id = self.request.data['server_id']
-        all = self.Quotes.objects.all.filter(server_id = server_id)
+        all = self.Quotes.objects.all().filter(server_id = server_id)
         print(all)
         return all
