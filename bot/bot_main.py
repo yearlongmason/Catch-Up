@@ -13,6 +13,7 @@ TOKEN: typing.Final[str] = os.getenv('DISCORD_TOKEN')
 intents : discord.Intents = discord.Intents.default()
 intents.message_content = True 
 intents.reactions = True
+intents.members = True
 client: discord.client = discord.Client(intents=intents)
 tree: app_commands.CommandTree = app_commands.CommandTree(client)
 
@@ -36,11 +37,25 @@ async def on_ready() -> None:
     name="quote",
     description="Say something cool, something inspiring!!!",
 )
-@app_commands.describe(quote = "What is the Quote?", author = "Author")
-async def quote(interaction: discord.Interaction, quote: str, author: typing.Optional[str] = " "):
-    # if author arg is blank just use the username
+@app_commands.describe(quote = "What is the Quote?", 
+                       author = "Author")
+async def quote(interaction: discord.Interaction, 
+                quote: str, author: str):
+    author = author.lower()
     await interaction.response.send_message(f"\"{quote}\" - {author}")
     api_connector.insert_quote(quote, interaction.guild_id, author)
+
+@quote.autocomplete("author")
+async def quote_autocompletion(
+    interaction: discord.Interaction,
+    current: str
+) -> typing.List[app_commands.Choice[str]]:
+    data = []
+    for choice in interaction.guild.members:
+        print(choice)
+        if current.lower() in str(choice.global_name).lower():
+            data.append(app_commands.Choice(name=choice.global_name, value=choice.global_name))
+    return data
 
 
 # get server id command

@@ -24,8 +24,7 @@ def insert_quote(quote: str, server_id: str, author: str):
     "date_quoted": str(date.today())
     }
 
-    response = requests.post(api_url, json=quote)
-    print(response.json())
+    requests.post(api_url, json=quote)
 
 
 
@@ -35,7 +34,6 @@ def get_quote_id(server_id: str):
 
     response = requests.get(api_url, json=data)
     quote_id = response.json()
-    print(quote_id[-1]['quote_id'])
     new_id = quote_id[-1]['quote_id'] + 1
 
     return new_id
