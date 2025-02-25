@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .serializers import QuoteSerializer, IdSerializer
+from .serializers import QuoteSerializer, IdSerializer, RandomQuoteSerializer
 import requests
 from django.apps import apps
 
@@ -20,3 +20,14 @@ class GetID(generics.ListAPIView):
         
 
         return self.Quotes.objects.filter(server_id = server_id)
+
+class GetRandomQuote(generics.ListAPIView):
+    Quotes = apps.get_model('app', 'Quotes')
+    serializer_class = RandomQuoteSerializer
+
+    def get_queryset(self):
+        
+        server_id = self.request.data['server_id']
+        all = self.Quotes.objects.all.filter(server_id = server_id)
+        print(all)
+        return all

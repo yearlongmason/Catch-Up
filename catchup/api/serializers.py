@@ -11,3 +11,8 @@ class IdSerializer(serializers.ModelSerializer):
     class Meta:
         model = apps.get_model('app', 'Quotes')
         fields = ["quote_id"]
+
+class RandomQuoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = apps.get_model('app', 'Quotes')
+        fields = ["quote", "server_id", "author"]
