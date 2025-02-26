@@ -11,7 +11,7 @@ def main():
     #get_quote_id("1291817041052827649")
     #get_quote_id("123")
 
-    get_random_quote("1291817041052827649")
+    print(get_random_quote("1291817041052827649"))
     #get_random_quote("123")
 
 
@@ -48,8 +48,8 @@ def get_random_quote(server_id: str):
     response = requests.get(api_url, json=data)
 
     quotes = response.json()
-    random_num = random.randrange(len(quotes))
-    print(quotes[random_num])
+    quote = quotes[random.randrange(len(quotes))]
+    return f'"{quote['quote']}" - {quote['author']}'
 
     
 
