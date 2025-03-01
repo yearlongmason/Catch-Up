@@ -58,15 +58,34 @@ function sortByDate(currentData) {
     return currentData.sort(compareFn).reverse()
 }
 
+// Takes in list of JSON object same as ALL_DATA
+// Returns currentData filtered by the string in the search bar
+// (Only returns quotes that have search string as a substring)
+// Searching is not case sensitive
+function filterBySearchBar(currentData) {
+    // Get the contents of the search bar
+    wordToSearch = document.getElementById("searchQuotes").value.toLowerCase()
+
+    // If the user doesn't have anything in the search bar, just skip it
+    if (wordToSearch == "") {
+        return currentData
+    }
+
+    // Return all quotes that have the search string present in it
+    return currentData.filter((item) => item.quote.toLowerCase().includes(wordToSearch))
+}
+
 // When the user has set their preferences they can apply their changes by pressing the update roster button
 // which calls this function to apply all changes
 function updateRoster(){
     // Make a deepcopy of ALL_DATA
     currentData = structuredClone(ALL_DATA)
     currentData = sortByDate(currentData) // Sort by date
+    currentData = filterBySearchBar(currentData) // Filter by search word
     document.getElementById("allQuotes").innerHTML = formatAsHTML(currentData) // Set inner HTML as new formatted HTML
 }
 
+// beep boop beep boop
 // This function should essentially scrape all the data from the current roster.html
 // This is a workaround to having to pass a json object through contexts
 // Returns a list of objects describing each quote
@@ -87,3 +106,15 @@ function getData() {
 
     return allQuotes
 }
+
+// Adds keypress listener
+document.addEventListener("keypress", function(event) {
+    // If the user presses the enter key click the update roster button
+    if (event.key === "Enter") {
+        // Prevent the defualt action
+        // Not sure if there actually is one right now, but better safe than sorry
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById("updateRosterButton").click();
+    }
+});
