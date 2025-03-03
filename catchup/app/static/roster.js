@@ -1,4 +1,4 @@
-// If Django is caching this file, clear your browser cache!
+// If your browser is caching this file, clear your browser cache!
 // In Chrome press ctrl + shift + del and delete cached images and files!
 
 // Define all global variables
@@ -7,10 +7,49 @@ let ALL_DATA
 let dateNewestFirst
 
 window.onload = (event) => {
-    ALL_DATA = getData().reverse() // Set allData constant
     dateNewestFirst = true
+    ALL_DATA = getData().reverse() // Set allData constant
+    populateDropdown()
     updateRoster() // Call update roster to make sure it's sorted correctly
 };
+
+// Returns an array of unique names in the quote list
+function getUniqueNames() {
+    return Array.from(new Set(ALL_DATA.map((quote) => quote.author)));
+}
+
+// Populates the dropdown menu with names of people being quoted
+function populateDropdown() {
+    // Add the check all button
+    dropdownHTML = `<button id="checkAllButton" onclick="checkAllDropdown()" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer font-bold">Check/Uncheck All</button>`
+    // Add a new checkbox for each unique name in the quote list
+    getUniqueNames().forEach(name => {
+        dropdownHTML += `<label class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer"><input type="checkbox" class="mr-2 option-checkbox" checked>${name}</label>`
+    });
+    document.getElementById("dropdownMenu").innerHTML = dropdownHTML;
+}
+
+// Make the dropdown menu visible when clicked
+function makeDropdownVisible(){
+    const dropdownButton = document.getElementById('dropdownButton');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    const isHidden = dropdownMenu.classList.contains('invisible');
+    dropdownMenu.classList.toggle('opacity-0', !isHidden);
+    dropdownMenu.classList.toggle('invisible', !isHidden);
+    
+    // Place dropdown results right below the button
+    const rect = dropdownButton.getBoundingClientRect();
+    dropdownMenu.style.top = `${rect.bottom + window.scrollY}px`;
+    dropdownMenu.style.left = `${rect.left + window.scrollX}px`;
+}
+
+// This is the functionality for checking all boxes in people dropdown
+function checkAllDropdown() {
+    const checkboxes = document.querySelectorAll('.option-checkbox');
+    const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+    checkboxes.forEach(checkbox => checkbox.checked = !allChecked);
+}
 
 // This swaps the dateNewestFirst boolean and updates the button text accordingly
 function swapDateOrder() {
@@ -116,5 +155,14 @@ document.addEventListener("keypress", function(event) {
         event.preventDefault();
         // Trigger the button element with a click
         document.getElementById("updateRosterButton").click();
+    }
+});
+
+// If dropdown is open and user clicks off screen, make dropdown invisible again
+document.addEventListener('click', (event) => {
+    const dropdownButton = document.getElementById('dropdownButton');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.add('opacity-0', 'invisible');
     }
 });

@@ -23,10 +23,12 @@
         <!--Search Bar-->
         <input type="text" id="searchQuotes" placeholder="Search for quotes here!" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5">
 
-        <!--Dropdown menu-->
-        <button onclick="" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded p-8 w-1/6">
-            People Dropdown
+        <!--People Dropdown menu-->
+        <button id="dropdownButton" onclick="makeDropdownVisible()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none w-1/6">
+            People
         </button>
+        <div id="dropdownMenu" class="absolute left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible transition-all duration-200 p-2">
+        </div>
         
         <!--Swap date button-->
         <button onclick="swapDateOrder()" id="sortDateButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded p-8 w-1/6">
