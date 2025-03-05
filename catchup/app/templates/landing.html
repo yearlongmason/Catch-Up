@@ -6,13 +6,24 @@
     <title>Login Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
+
 <body class="bg-blue-500 flex justify-center items-center min-h-screen">
+    <nav class="bg-blue-550 text-white shadow-md fixed top-0 left-0 w-full z-10">
+        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+          <h2 class="text-4xl font-semibold">Catch Up!</h2>
+          <div class="space-x-4">
+            <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded"><a href="">Home</a></button>
+            <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded"><a href="">About</a></button>
+            <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded"><a href="https://github.com/yearlongmason/Catch-Up">Github</a></button>
+          </div>
+        </div>
+      </nav>
 
     <div class="p-8 rounded-lg shadow-lg w-96 outline bg-opacity-5 bg-black">
-        <h2 class="text-3xl font-bold text-center mb-6 text-white">Catch Up!</h2>
-
+        <img src="../static/appIcon.png" alt="App Icon" class="mx-auto mb-4 rounded">
             <!-- Submit Button -->
-            <button class="w-full p-3 bg-gray-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+            <button class="w-full p-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                 <a href="loggedIn">Log In With Discord</a> 
             </button>
     </div>
