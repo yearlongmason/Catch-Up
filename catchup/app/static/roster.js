@@ -9,6 +9,7 @@ let dateNewestFirst
 window.onload = (event) => {
     dateNewestFirst = true
     ALL_DATA = getData().reverse() // Set allData constant
+    // Format all authors as titled
     populateDropdown()
     updateRoster() // Call update roster to make sure it's sorted correctly
 };
@@ -24,7 +25,7 @@ function populateDropdown() {
     dropdownHTML = `<button id="checkAllButton" onclick="checkAllDropdown()" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer font-bold">Check/Uncheck All</button>`
     // Add a new checkbox for each unique name in the quote list
     getUniqueNames().forEach(name => {
-        dropdownHTML += `<label class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer"><input type="checkbox" class="mr-2 option-checkbox" checked>${name}</label>`
+        dropdownHTML += `<label class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer authorCheckbox"><input type="checkbox" class="mr-2 option-checkbox" checked>${name}</label>`
     });
     document.getElementById("dropdownMenu").innerHTML = dropdownHTML;
 }
@@ -55,11 +56,11 @@ function checkAllDropdown() {
 function swapDateOrder() {
     // If the date is ascending, then swap it to descending
     if (dateNewestFirst) {
-        document.getElementById("sortDateButton").innerText = "Sort date: Oldest First"
+        document.getElementById("sortDateButton").innerText = "Sort date: Ascending"
         dateNewestFirst = false
     }
     else {
-        document.getElementById("sortDateButton").innerText = "Sort date: Newest First"
+        document.getElementById("sortDateButton").innerText = "Sort date: Descending"
         dateNewestFirst = true
     }
 }
@@ -114,6 +115,24 @@ function filterBySearchBar(currentData) {
     return currentData.filter((item) => item.quote.toLowerCase().includes(wordToSearch))
 }
 
+// Return all authors who are checked in the dropdown menu
+function getCheckedAuthors(){
+    // Get all author checkboxes
+    let authors = Array.prototype.slice.call( document.getElementsByClassName("authorCheckbox") )
+    // Filter by authors who are checked
+    authors = authors.filter((author) => author.children[0].checked)
+
+    // Return the author names
+    return authors.map((author) => author.innerHTML.split(">")[author.innerHTML.split(">").length - 1])
+}
+
+// Filter by authors
+function filterByAuthors(currentData) {
+    // Get all checked authors and return quotes by those authors
+    let checkedAuthors = getCheckedAuthors()
+    return currentData.filter((quote) => checkedAuthors.includes(quote.author))
+}
+
 // When the user has set their preferences they can apply their changes by pressing the update roster button
 // which calls this function to apply all changes
 function updateRoster(){
@@ -121,6 +140,7 @@ function updateRoster(){
     currentData = structuredClone(ALL_DATA)
     currentData = sortByDate(currentData) // Sort by date
     currentData = filterBySearchBar(currentData) // Filter by search word
+    currentData = filterByAuthors(currentData) // Filter by authors
     document.getElementById("allQuotes").innerHTML = formatAsHTML(currentData) // Set inner HTML as new formatted HTML
 }
 
