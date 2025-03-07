@@ -41,7 +41,7 @@ async def on_ready() -> None:
                        author = "Author")
 async def quote(interaction: discord.Interaction, 
                 quote: str, author: str):
-    author = author.lower()
+    author = author.title()
     await interaction.response.send_message(f"\"{quote}\" - {author}")
     api_connector.insert_quote(quote, interaction.guild_id, author)
 
@@ -78,8 +78,6 @@ async def get_random_quote(interaction: discord.Interaction):
     await interaction.response.send_message(f'{api_connector.get_random_quote(interaction.guild_id)}')
 
 
-
-
 # getting message from reply and mention,  
 @client.event
 async def on_message(message):
@@ -90,9 +88,4 @@ async def on_message(message):
         else:
             await message.channel.send("Could not find message, most likely becuase I was bot added to the server when this message was sent!")
 
-
 client.run(token=TOKEN)
-
-
-
-
