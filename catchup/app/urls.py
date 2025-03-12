@@ -8,5 +8,6 @@ urlpatterns  = [
     path("servers/testroster/",views.testroster,name="testroster"),
     path("discord_login/",views.discord_login,name="discord_login"),
     path('discord_login/redirect/', views.discord_login_redirect, name="discord_login_redirect"),
-    path('servers/', views.servers, name="servers")
+    path('servers/', views.servers, name="servers"),
+    path('about/', views.about, name="about")
 ]

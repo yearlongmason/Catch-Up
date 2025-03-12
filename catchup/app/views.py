@@ -22,6 +22,9 @@ def get_authenticated_user(request):
 def landing(request):
     return render(request, "landing.html") 
 
+def about(request):
+    return render(request, "about.html")
+
 def servers(request):
     if request.session.get('new_access_token'):
         request.user.access_token = request.session.get('new_access_token')
