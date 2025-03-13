@@ -50,6 +50,12 @@ INSTALLED_APPS = [
     "rest_framework"
 ]
 
+# images stuff
+STATIC_URL = '/static/'
+STATICFILES_DIR =[
+os.path.join(BASE_DIR, 'static')
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
