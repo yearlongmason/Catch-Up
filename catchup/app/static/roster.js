@@ -63,6 +63,16 @@ function swapDateOrder() {
         document.getElementById("sortDateButton").innerText = "Sort date: Descending"
         dateNewestFirst = true
     }
+    updateDateOrderHTML();
+}
+
+// Updates the roster page HTML to be sorted by the date 
+// (This should only be called from swapDateOrder)
+function updateDateOrderHTML() {
+    let currentData = getData() // Gets all the current data
+    currentData = sortByDate(currentData) // Sort by date
+    console.log(dateNewestFirst, currentData)
+    document.getElementById("allQuotes").innerHTML = formatAsHTML(currentData) // Set inner HTML as new formatted HTML
 }
 
 // Takes in list of JSON object same as ALL_DATA
@@ -88,7 +98,7 @@ function formatAsHTML(modifiedData){
 // Returns currentData sorted depending on the dateNewestFirst variable
 function sortByDate(currentData) {
     // Comparison function for sort
-    function compareFn(a, b) { return a - b; }
+    function compareFn(a, b) { return a.timestamp - b.timestamp; }
 
     // If the date is newest first, just return the sorted list
     // Otherwise return the reversed sorted list
