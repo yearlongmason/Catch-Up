@@ -8,6 +8,7 @@
 
     <title>Quotes Roster</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Include trash icon-->
 
     <!--Add roster js file-->
     <script src="{% static 'roster.js' %}"></script>
@@ -42,10 +43,16 @@
 
     </div>
 
+    <!-- Delete button
+    <button class="bg-white hover:bg-red-500 p-2 rounded flex items-center justify-center border border-gray-300 transition duration-200">
+        <i class="fas fa-trash-alt text-gray-600"></i>
+    </button>
+    -->
+
     <!--Loop through all quotes and give them each a nice roster slot-->
     <div id="allQuotes">
         {% for item in data %}
-            <div class="container mx-auto mt-6 w-4/5">
+            <div class="container mx-auto mt-6 w-4/5 hidden">
                 <div class="bg-white p-6 rounded shadow-md mb-4 h-16 catchUpQuote">
                     <p class="text-gray-800 float-left catchUpQuoteText">{{item.quote}} -</p>
                     <p class="text-gray-800 float-left pl-1 catchUpQuoteAuthor">{{item.author}}</p>
@@ -53,6 +60,11 @@
                 </div>
             </div>
         {% endfor %}
+    </div>
+
+    <div class="container mx-auto mt-6 mb-4 w-4/5" style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded p-8 w-1/6">Stats</button>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded p-8 w-1/6">Mini Games</button>
     </div>
 
 </body>
