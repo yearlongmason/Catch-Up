@@ -1,5 +1,6 @@
 from django.db import models
 from .managers import DiscordUserOAuth2Manager
+from django.contrib.auth.models import PermissionsMixin
 
 # Create your models here.
 class DiscordUser(models.Model):

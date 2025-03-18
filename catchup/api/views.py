@@ -5,21 +5,19 @@ import requests
 from django.apps import apps
 from django.contrib.admin.views.decorators import staff_member_required
 from django.views.generic import TemplateView
-from django.utils.decorators import method_decorator
-
-def is_admin(user):
-    return user.is_superuser
+from rest_framework.permissions import IsAuthenticated
 
 
-@method_decorator(staff_member_required, name='dispatch')
+
 class QuoteCreate(generics.ListCreateAPIView):
+    #permission_classes = [IsAuthenticated]
     Quotes = apps.get_model('app', 'Quotes')
     queryset = Quotes.objects.all()
     serializer_class = QuoteSerializer
 
 
-@method_decorator(staff_member_required, name='dispatch')
 class GetID(generics.ListAPIView):
+    #permission_classes = [IsAuthenticated]
     Quotes = apps.get_model('app', 'Quotes')
     serializer_class = IdSerializer
     def get_queryset(self):
@@ -28,8 +26,8 @@ class GetID(generics.ListAPIView):
         return self.Quotes.objects.filter(server_id = server_id)
 
 
-@method_decorator(staff_member_required, name='dispatch')
 class GetRandomQuote(generics.ListAPIView):
+    #permission_classes = [IsAuthenticated]
     Quotes = apps.get_model('app', 'Quotes')
     serializer_class = RandomQuoteSerializer
 
