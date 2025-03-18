@@ -5,6 +5,7 @@
 // ALL_DATA is not technically a constant, but should not be changed
 let ALL_DATA
 let dateNewestFirst
+let currentSearchPhrase = "";
 
 window.onload = (event) => {
     dateNewestFirst = false
@@ -35,15 +36,24 @@ function getData() {
     return allQuotes
 }
 
+// TODO: Sort before populating
 // Populates the dropdown menu with names of people being quoted
 function populateAuthorsDropdown() {
     // Add the check all button
     dropdownHTML = `<button id="checkAllButton" onclick="checkAllDropdown()" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer font-bold">Check/Uncheck All</button>`
     // Add a new checkbox for each unique name in the quote list
     getUniqueNames().forEach(name => {
-        dropdownHTML += `<label class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer authorCheckbox"><input type="checkbox" class="mr-2 option-checkbox" checked>${name}</label>`
+        dropdownHTML += `<label class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer authorCheckbox"><input type="checkbox" onclick="updateRoster()" class="mr-2 option-checkbox" checked>${name}</label>`
     });
     document.getElementById("dropdownMenu").innerHTML = dropdownHTML;
+}
+
+// Updates the authors that are shown and ensures they are sorted correctly
+function updateAuthors() {
+    let currentData = ALL_DATA // Get all the data that's currently there
+    currentData = filterByAuthors(currentData) // Filter by authors
+    currentData = sortByDate(currentData)
+    document.getElementById("allQuotes").innerHTML = formatAsHTML(currentData) // Set inner HTML as new formatted HTML
 }
 
 // Returns an array of unique names in the quote list
@@ -71,6 +81,7 @@ function checkAllDropdown() {
     const checkboxes = document.querySelectorAll('.option-checkbox');
     const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
     checkboxes.forEach(checkbox => checkbox.checked = !allChecked);
+    updateRoster()
 }
 
 // Return all authors who are checked in the dropdown menu
@@ -116,15 +127,7 @@ function swapDateOrder() {
         document.getElementById("sortDateButton").innerText = "Sort date: Descending"
         dateNewestFirst = true
     }
-    updateDateOrderHTML();
-}
-
-// Updates the roster page HTML to be sorted by the date 
-// (This should only be called from swapDateOrder)
-function updateDateOrderHTML() {
-    let currentData = getData() // Gets all the current data
-    currentData = sortByDate(currentData) // Sort by date
-    document.getElementById("allQuotes").innerHTML = formatAsHTML(currentData) // Set inner HTML as new formatted HTML
+    updateRoster();
 }
 
 // Takes in list of JSON object same as ALL_DATA
@@ -132,16 +135,20 @@ function updateDateOrderHTML() {
 // (Only returns quotes that have search string as a substring)
 // Searching is not case sensitive
 function filterBySearchBar(currentData) {
-    // Get the contents of the search bar
-    wordToSearch = document.getElementById("searchQuotes").value.toLowerCase()
-
     // If the user doesn't have anything in the search bar, just skip it
-    if (wordToSearch == "") {
+    if (currentSearchPhrase == "") {
         return currentData
     }
 
     // Return all quotes that have the search string present in it
-    return currentData.filter((item) => item.quote.toLowerCase().includes(wordToSearch))
+    return currentData.filter((item) => item.quote.toLowerCase().includes(currentSearchPhrase))
+}
+
+// Grabs whatever text is in the search bar and sets the global currentSearchPhrase variable
+// Then calls update roster to update the changes
+function searchForQuote() {
+    currentSearchPhrase = document.getElementById("quoteSearchBar").value
+    updateRoster();
 }
 
 // Takes in list of JSON object same as ALL_DATA
