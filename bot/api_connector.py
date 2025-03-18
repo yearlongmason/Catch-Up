@@ -6,6 +6,8 @@ import random
 
 dotenv.load_dotenv()
 
+header = {"Authorization": f'Api-Key {os.getenv('API_KEY')}'}
+
 # main is mostly just for testing stuff this file is not meant to be run
 def main():
     #get_quote_id("1291817041052827649")
@@ -20,7 +22,7 @@ def insert_quote(quote: str, server_id: str, author: str):
     api_url = host=os.getenv('QUOTE_API_URL')
 
     
-    quote = {
+    data = {
     "quote_id": quote_id,
     "server_id": str(server_id),
     "quote": str(quote),
@@ -28,7 +30,7 @@ def insert_quote(quote: str, server_id: str, author: str):
     "date_quoted": str(date.today())
     }
 
-    requests.post(api_url, json=quote)
+    requests.post(api_url, data=data, headers=header)
 
 
 
@@ -36,7 +38,7 @@ def get_quote_id(server_id: str):
     api_url = host=os.getenv('ID_API_URL')
     data = {'server_id': str(server_id)}
 
-    response = requests.get(api_url, json=data)
+    response = requests.get(api_url, data=data, headers=header)
     quote_id = response.json()
     new_id = quote_id[-1]['quote_id'] + 1
 
@@ -45,7 +47,7 @@ def get_quote_id(server_id: str):
 def get_random_quote(server_id: str):
     api_url = host=os.getenv('RANDOM_API_URL')
     data = {'server_id': str(server_id)}
-    response = requests.get(api_url, json=data)
+    response = requests.get(api_url, data=data, headers=header)
 
     quotes = response.json()
     quote = quotes[random.randrange(len(quotes))]
