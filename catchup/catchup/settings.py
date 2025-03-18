@@ -32,9 +32,14 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 AUTHENTICATION_BACKENDS = [
-    'app.auth.DiscordAuthenticationBackend'
+    'app.auth.DiscordAuthenticationBackend',
 ]
 
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework_api_key.permissions.HasAPIKey",
+    ]
+}
 
 # Application definition
 
@@ -47,7 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "app",
     "api",
-    "rest_framework"
+    "rest_framework",
+    "rest_framework_api_key",
 ]
 
 # images stuff
