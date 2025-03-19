@@ -42,7 +42,7 @@ function populateAuthorsDropdown() {
     // Add the check all button
     dropdownHTML = `<button id="checkAllButton" onclick="checkAllDropdown()" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer font-bold">Check/Uncheck All</button>`
     // Add a new checkbox for each unique name in the quote list
-    getUniqueNames().forEach(name => {
+    getUniqueNames().sort().forEach(name => {
         dropdownHTML += `<label class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer authorCheckbox"><input type="checkbox" onclick="updateRoster()" class="mr-2 option-checkbox" checked>${name}</label>`
     });
     document.getElementById("dropdownMenu").innerHTML = dropdownHTML;
