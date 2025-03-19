@@ -1,4 +1,5 @@
 {% block content %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,6 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{{user.discord_tag}}'s Servers</title>
         <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="icon" type="image/x-icon" href="{% static '/catchUpFavicon.png' %}">
     </head>
 
 <body class="bg-blue-500 flex justify-center items-center min-h-screen">
