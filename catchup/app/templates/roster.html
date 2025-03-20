@@ -10,35 +10,37 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Include trash icon-->
     <link rel="icon" type="image/x-icon" href="{% static '/catchUpFavicon.png' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!--Add roster js file-->
     <script src="{% static 'roster.js' %}"></script>
 </head>
 <body class="bg-blue-500">
 
-    <nav class="bg-orange-400 text-white shadow-md p-4">
+    <nav class="flex justify-between items-center bg-orange-400 bg-orange-400 text-white shadow-md p-4">
         <h2 class="text-white text-3xl">{{server_name}}'s Quotes</h2>
+        <button onclick="document.getElementById('homeLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="homeLink" class="text-lg" href="/">Home</a></button>
     </nav>
 
     <div class="container mx-auto mt-6 w-4/5" style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
 
         <!--Search Bar-->
-        <input type="text" id="quoteSearchBar" placeholder="Search for quotes here!" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5">
+        <input type="text" id="quoteSearchBar" placeholder="Search for quotes here!" class="bg-gray-50 border-2 border border-black text-gray-900 text-sm rounded-lg focus:ring-orange-400 focus:border-orange-400 block w-1/3 p-2.5">
 
         <!--Search button-->
-        <button onclick="searchForQuote()" id="updateRosterButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded p-8">
+        <button onclick="searchForQuote()" id="updateRosterButton" class="bg-blue-50 hover:bg-orange-400 text-black py-2 px-4 border border-blue-700 rounded p-8">
             Search
         </button>
 
         <!--People Dropdown menu-->
-        <button id="dropdownButton" onclick="makeDropdownVisible()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none w-1/6">
+        <button id="dropdownButton" onclick="makeDropdownVisible()" class="bg-blue-50 hover:bg-orange-400 text-black py-2 px-4 border border-blue-700 rounded p-8">
             People
         </button>
         <div id="dropdownMenu" class="absolute left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible transition-all duration-200 p-2">
         </div>
         
         <!--Swap date button-->
-        <button onclick="swapDateOrder()" id="sortDateButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded p-8 w-1/6">
+        <button onclick="swapDateOrder()" id="sortDateButton" class="bg-blue-50 hover:bg-orange-400 text-black py-2 px-4 border border-blue-700 rounded p-8 w-1/6">
             Sort date: Descending
         </button>
 
@@ -49,12 +51,12 @@
         <i class="fas fa-trash-alt text-gray-600"></i>
     </button>
     -->
-
+    <!-- shadow-md border-1 border border-black -->
     <!--Loop through all quotes and give them each a nice roster slot-->
-    <div id="allQuotes">
+    <div id="allQuotes" class="">
         {% for item in data %}
-            <div class="container mx-auto mt-6 w-4/5 hidden">
-                <div class="bg-white p-6 rounded shadow-md mb-4 h-16 catchUpQuote">
+            <div>
+                <div class="catchUpQuote">
                     <p class="text-gray-800 float-left catchUpQuoteText">{{item.quote}} -</p>
                     <p class="text-gray-800 float-left pl-1 catchUpQuoteAuthor">{{item.author}}</p>
                     <p class="text-gray-800 float-right catchUpQuoteDate">({{item.date_quoted}})</p>
@@ -64,8 +66,8 @@
     </div>
 
     <div class="container mx-auto mt-6 mb-4 w-4/5" style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded p-8 w-1/6">Stats</button>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded p-8 w-1/6">Mini Games</button>
+        <button class="bg-blue-50 hover:bg-orange-400 text-black py-2 px-4 border border-blue-700 rounded p-8">Stats</button>
+        <button class="bg-blue-50 hover:bg-orange-400 text-black py-2 px-4 border border-blue-700 rounded p-8">Mini Games</button>
     </div>
 
 </body>
