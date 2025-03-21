@@ -27,10 +27,11 @@ function getData() {
         // Individually get the quote (text), author, and date
         // Put all values into an object
         // Append new object to allQuotes array
+        currID = allQuoteTags[i].getElementsByClassName("catchUpQuoteID")[0].innerHTML
         currText = allQuoteTags[i].getElementsByClassName("catchUpQuoteText")[0].innerHTML.slice(0, -2)
         currAuthor = allQuoteTags[i].getElementsByClassName("catchUpQuoteAuthor")[0].innerHTML
         currDate = allQuoteTags[i].getElementsByClassName("catchUpQuoteDate")[0].innerHTML.slice(1, -1)
-        allQuotes.push({"quote":currText, "author":currAuthor, "date":currDate, "timestamp":Date.parse(currDate)})
+        allQuotes.push({"quote_id":currID, "quote":currText, "author":currAuthor, "date":currDate, "timestamp":Date.parse(currDate)})
     }
 
     return allQuotes
@@ -158,13 +159,16 @@ function formatAsHTML(modifiedData){
 
     // Loop through each quote and add that roster element to the new html
     for (let i = 0; i < modifiedData.length; i++) {
-        formattedhtml += '<div class="container mx-auto mt-6 w-4/5 items-center">'
-        formattedhtml += '<div class="bg-white p-5 rounded shadow-md mb-4 h-16 catchUpQuote">'
-        formattedhtml += `<p class="text-gray-800 float-left catchUpQuoteText">${modifiedData[i].quote} - ${modifiedData[i].author}</p>`
-        formattedhtml += `<p class="text-gray-800 float-left pl-1 catchUpQuoteAuthor"></p>` // Need this line, not sure why
-        formattedhtml += `<button onclick="console.log('Deleting quote!')" style="margin-top:-.5%" class="ml-4 bg-white float-right hover:bg-red-500 p-2 rounded flex items-center justify-center border border-gray-300 transition duration-200"><i class="fas fa-trash-alt text-gray-600"></i></button>` // Delete button
-        formattedhtml += `<p class="text-gray-800 float-right catchUpQuoteDate">(${modifiedData[i].date})</p>`
-        formattedhtml += "</div></div>"
+        formattedhtml += `<div class="container mx-auto mt-6 w-4/5 items-center h-auto">`
+        formattedhtml += `<div class="flex flex-row items-center justify-between bg-white p-5 rounded shadow-md mb-4 h-auto min-h-16">`
+        formattedhtml += `<div class="flex flex-row w-4/5">`
+        formattedhtml += `<p class="text-gray-800 float-left">${modifiedData[i].quote} - ${modifiedData[i].author}</p>`
+        formattedhtml += `<p class="text-gray-800 float-left pl-1"></p>`
+        formattedhtml += `</div>`
+        formattedhtml += `<div class="flex flex-row">`
+        formattedhtml += `<p class="text-gray-800">(${modifiedData[i].date})</p>`
+        formattedhtml += `<button onclick="console.log('Deleting quote!')" style="margin-top:-.5%" class="ml-4 bg-white hover:bg-red-500 p-2 max-h-8 rounded flex items-center justify-center border border-gray-300 transition duration-200"><i class="fas fa-trash-alt text-gray-600"></i></button>`
+        formattedhtml += `</div></div></div>`
     }
 
     // Return the data formatted as HTML

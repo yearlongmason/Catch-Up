@@ -17,9 +17,15 @@
 </head>
 <body class="bg-blue-500">
 
-    <nav class="flex justify-between items-center bg-orange-400 bg-orange-400 text-white shadow-md p-4">
-        <h2 class="text-white text-3xl">{{server_name}}'s Quotes</h2>
-        <button onclick="document.getElementById('homeLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="homeLink" class="text-lg" href="/">Home</a></button>
+    <nav class="bg-orange-400 text-white shadow-md top-0 left-0 w-full z-10">
+        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+          <h2 class="text-4xl font-semibold">{{server_name}}'s Quotes</h2>
+          <div class="space-x-4">
+            <button onclick="document.getElementById('homeLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="homeLink" class="text-lg" href="/">Home</a></button>
+            <button onclick="document.getElementById('aboutLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="aboutLink" class="text-lg" href="about/">About</a></button>
+            <button onclick="document.getElementById('githubLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="githubLink" target="_blank" class="text-lg" href="https://github.com/yearlongmason/Catch-Up">Github</a></button>
+          </div>
+        </div>
     </nav>
 
     <div class="container mx-auto mt-6 w-4/5" style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
@@ -46,17 +52,12 @@
 
     </div>
 
-    <!-- Delete button
-    <button class="bg-white hover:bg-red-500 p-2 rounded flex items-center justify-center border border-gray-300 transition duration-200">
-        <i class="fas fa-trash-alt text-gray-600"></i>
-    </button>
-    -->
-    <!-- shadow-md border-1 border border-black -->
     <!--Loop through all quotes and give them each a nice roster slot-->
     <div id="allQuotes" class="">
         {% for item in data %}
-            <div>
+            <div class="hidden">
                 <div class="catchUpQuote">
+                    <p class="catchUpQuoteID">{{item.quote_id}}</p>
                     <p class="text-gray-800 float-left catchUpQuoteText">{{item.quote}} -</p>
                     <p class="text-gray-800 float-left pl-1 catchUpQuoteAuthor">{{item.author}}</p>
                     <p class="text-gray-800 float-right catchUpQuoteDate">({{item.date_quoted}})</p>
@@ -65,22 +66,26 @@
         {% endfor %}
     </div>
 
+    <!--Stats and minigames buttons-->
     <div class="container mx-auto mt-6 mb-4 w-4/5" style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
         <button class="bg-blue-50 hover:bg-orange-400 text-black py-2 px-4 border border-blue-700 rounded p-8">Stats</button>
         <button onclick="document.getElementById('mingamesLink').click();" class="bg-blue-50 hover:bg-orange-400 text-black py-2 px-4 border border-blue-700 rounded p-8"><a id="mingamesLink" class="text-lg" href="minigames">Minigames</a></button>
     </div>
 
-    <!--Test quote block-->
+    <!--Test quote block
     <div class="container mx-auto mt-6 w-4/5 items-center h-auto">
-        <div class="flex flex-row items-center bg-white p-5 rounded shadow-md mb-4 h-auto min-h-16 catchUpQuote">
+        <div class="flex flex-row items-center justify-between bg-white p-5 rounded shadow-md mb-4 h-auto min-h-16">
             <div class="flex flex-row w-4/5">
-                <p class="text-gray-800 float-left catchUpQuoteText">Awagga awagga awagga awagga awagga awagga awagga awagga awagga awagga awagga awagga awagga awagga awagga awagga awagga - John Groton</p>
-                <p class="text-gray-800 float-left pl-1 catchUpQuoteAuthor"></p>
+                <p class="text-gray-800 float-left">Awagga awagga awagga awagga awagga awagga awagga awagga awagga awagga awagga awagga awagga awagga awagga awagga awagga - John Groton</p>
+                <p class="text-gray-800 float-left pl-1"></p>
             </div>
-            <p class="text-gray-800 catchUpQuoteDate">(March 16, 2025)</p>
-            <button onclick="console.log('Deleting quote!')" style="margin-top:-.5%" class="ml-4 bg-white hover:bg-red-500 p-2 max-h-8 rounded flex items-center justify-center border border-gray-300 transition duration-200"><i class="fas fa-trash-alt text-gray-600"></i></button>
+            <div class="flex flex-row">
+                <p class="text-gray-800">(March 16, 2025)</p>
+                <button onclick="console.log('Deleting quote!')" style="margin-top:-.5%" class="ml-4 bg-white hover:bg-red-500 p-2 max-h-8 rounded flex items-center justify-center border border-gray-300 transition duration-200"><i class="fas fa-trash-alt text-gray-600"></i></button>
+            </div>
         </div>
     </div>
+    -->
 
 </body>
 </html>

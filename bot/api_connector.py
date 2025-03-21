@@ -40,7 +40,10 @@ def get_quote_id(server_id: str):
 
     response = requests.get(api_url, data=data, headers=header)
     quote_id = response.json()
-    new_id = quote_id[-1]['quote_id'] + 1
+    try:
+        new_id = quote_id[-1]['quote_id'] + 1
+    except KeyError:
+        new_id = 0
 
     return new_id
 
