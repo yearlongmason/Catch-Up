@@ -160,8 +160,8 @@ function formatAsHTML(modifiedData){
     for (let i = 0; i < modifiedData.length; i++) {
         formattedhtml += '<div class="container mx-auto mt-6 w-4/5 items-center">'
         formattedhtml += '<div class="bg-white p-5 rounded shadow-md mb-4 h-16 catchUpQuote">'
-        formattedhtml += `<p class="text-gray-800 float-left catchUpQuoteText">${modifiedData[i].quote} -</p>`
-        formattedhtml += `<p class="text-gray-800 float-left pl-1 catchUpQuoteAuthor">${modifiedData[i].author}</p>`
+        formattedhtml += `<p class="text-gray-800 float-left catchUpQuoteText">${modifiedData[i].quote} - ${modifiedData[i].author}</p>`
+        formattedhtml += `<p class="text-gray-800 float-left pl-1 catchUpQuoteAuthor"></p>` // Need this line, not sure why
         formattedhtml += `<button onclick="console.log('Deleting quote!')" style="margin-top:-.5%" class="ml-4 bg-white float-right hover:bg-red-500 p-2 rounded flex items-center justify-center border border-gray-300 transition duration-200"><i class="fas fa-trash-alt text-gray-600"></i></button>` // Delete button
         formattedhtml += `<p class="text-gray-800 float-right catchUpQuoteDate">(${modifiedData[i].date})</p>`
         formattedhtml += "</div></div>"
