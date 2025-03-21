@@ -80,6 +80,9 @@ def roster(request):
                }
     return render(request, "roster.html", context)
 
+def mingames(request):
+    return render(request, "minigames.html")
+
 def testroster(request):
     return render(request, "testroster.html")
 

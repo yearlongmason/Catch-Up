@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minigame Selection</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-500 text-gray-800">
+    <nav class="bg-orange-400 text-white shadow-md fixed top-0 left-0 w-full z-10">
+        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+          <h2 class="text-4xl font-semibold">Catch Up!</h2>
+          <div class="space-x-4">
+            <button onclick="document.getElementById('homeLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="homeLink" class="text-lg" href="/">Home</a></button>
+            <button onclick="document.getElementById('aboutLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="aboutLink" class="text-lg" href="../../about/">About</a></button>
+            <button onclick="document.getElementById('githubLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="githubLink" target="_blank" class="text-lg" href="https://github.com/yearlongmason/Catch-Up">Github</a></button>
+          </div>
+        </div>
+    </nav>
+
+  <div class="flex items-center justify-center h-screen">
+    <div class="bg-orange-50 p-8 rounded shadow-md w-full max-w-lg text-center">
+      <h1 class="text-3xl font-bold mb-6">Choose Your Minigame</h1>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Quote Guessing Game -->
+        <div class="p-4 border rounded shadow hover:shadow-md cursor-pointer transform hover:scale-105 transition-all">
+          <h2 class="text-xl font-semibold mb-2">Quote Guessing Game</h2>
+          <p class="text-gray-600 text-sm mb-4">Test your knowledge by guessing quotes' authors!</p>
+          <button 
+            class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            onclick="startGame('Quote Guessing Game')"
+          >
+            Play
+          </button>
+        </div>
+
+        <!-- Word Scramble -->
+        <div class="p-4 border rounded shadow hover:shadow-md cursor-pointer transform hover:scale-105 transition-all">
+          <h2 class="text-xl font-semibold mb-2">Word Scramble</h2>
+          <p class="text-gray-600 text-sm mb-4">Unscramble words from quotes in record time!</p>
+          <button 
+            class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            onclick="startGame('Word Scramble')"
+          >
+            Play
+          </button>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function startGame(gameName) {
+      alert(`Starting ${gameName}!`);
+      // Redirect to the specific minigame page
+      // e.g., window.location.href = `${gameName.toLowerCase().replace(' ', '-')}.html`;
+    }
+  </script>
+</body>
+</html>
