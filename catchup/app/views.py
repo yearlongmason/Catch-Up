@@ -83,6 +83,9 @@ def roster(request):
 def mingames(request):
     return render(request, "minigames.html")
 
+def guessing_game(request):
+    return render(request, "guessinggame.html")
+
 def testroster(request):
     return render(request, "testroster.html")
 

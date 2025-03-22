@@ -11,7 +11,8 @@ urlpatterns  = [
     path('discord_login/redirect/', views.discord_login_redirect, name="discord_login_redirect"),
     path('servers/', views.servers, name="servers"),
     path('about/', views.about, name="about"),
-    path('servers/roster/minigames/', views.mingames, name="mingames")
+    path('servers/roster/minigames/', views.mingames, name="mingames"),
+    path('servers/roster/minigames/guessinggame/', views.guessing_game, name="Guess Author")
 ]
 
 urlpatterns += staticfiles_urlpatterns()
