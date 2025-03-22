@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Minigame Selection</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/x-icon" href="{% static '/catchUpFavicon.png' %}">
 </head>
 <body class="bg-blue-500 text-gray-800">
     <nav class="bg-orange-400 text-white shadow-md fixed top-0 left-0 w-full z-10">
@@ -24,30 +26,28 @@
       
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <!-- Quote Guessing Game -->
-        <div class="p-4 border rounded shadow hover:shadow-md cursor-pointer transform hover:scale-105 transition-all">
-          <h2 class="text-xl font-semibold mb-2">Quote Guessing Game</h2>
+        <div class="p-4 border rounded shadow hover:shadow-md cursor-pointer transform hover:scale-105 transition-all h-52 flex flex-col justify-between">
+          <h2 class="text-xl font-semibold mb-2">Quote Guessing</h2>
           <p class="text-gray-600 text-sm mb-4">Test your knowledge by guessing quotes' authors!</p>
           <button 
             class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            onclick="startGame('Quote Guessing Game')"
+            onclick="document.getElementById('guessGame').click();"
           >
-            Play
+            <a id="guessGame" class="text-lg" href="guessinggame">Play</a>
           </button>
         </div>
-
+      
         <!-- Word Scramble -->
-        <div class="p-4 border rounded shadow hover:shadow-md cursor-pointer transform hover:scale-105 transition-all">
+        <div class="p-4 border rounded shadow hover:shadow-md cursor-pointer transform hover:scale-105 transition-all h-52 flex flex-col justify-between">
           <h2 class="text-xl font-semibold mb-2">Word Scramble</h2>
           <p class="text-gray-600 text-sm mb-4">Unscramble words from quotes in record time!</p>
           <button 
             class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            onclick="startGame('Word Scramble')"
+            onclick="document.getElementById('Unscramble').click();"
           >
-            Play
+            <a id="Unscramble" class="text-lg" href="unscramblegame">Play</a>
           </button>
         </div>
-
-
       </div>
     </div>
   </div>
