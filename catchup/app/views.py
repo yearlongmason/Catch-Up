@@ -137,8 +137,9 @@ def exchange_code(code):
 # returns a list of mutual servers that the bot and user are in
 # make sure to prefix all info requests for the bot with the keyword "bot"!!!!!!
 def get_servers(servers):
+    DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
     response = requests.get("https://discord.com/api/v6/users/@me/guilds", headers={
-    'Authorization': f'Bot {os.getenv('DISCORD_TOKEN')}'
+    'Authorization': f'Bot {DISCORD_TOKEN}'
     })
     response = response.json()
     bot_servers = []
