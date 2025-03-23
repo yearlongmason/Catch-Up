@@ -20,7 +20,7 @@
     <nav class="bg-orange-400 text-white shadow-md top-0 left-0 w-full z-10">
         <div class="container mx-auto px-4 py-2 flex justify-between items-center">
           <h2 class="text-4xl font-semibold">{{server_name}}'s Quotes</h2>
-          <div class="space-x-4">
+          <div class="flex flex-nowrap space-x-4">
             <button onclick="document.getElementById('homeLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="homeLink" class="text-lg" href="/">Home</a></button>
             <button onclick="document.getElementById('aboutLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="aboutLink" class="text-lg" href="about/">About</a></button>
             <button onclick="document.getElementById('githubLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="githubLink" target="_blank" class="text-lg" href="https://github.com/yearlongmason/Catch-Up">Github</a></button>
@@ -31,12 +31,12 @@
     <div class="container mx-auto mt-6 w-4/5" style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
 
         <!--Search Bar-->
-        <input type="text" id="quoteSearchBar" placeholder="Search for quotes here!" class="bg-gray-50 border-2 border border-black text-gray-900 text-sm rounded-lg focus:ring-orange-400 focus:border-orange-400 block w-1/3 p-2.5">
-
-        <!--Search button-->
-        <button onclick="searchForQuote()" id="updateRosterButton" class="bg-blue-50 hover:bg-orange-400 text-black py-2 px-4 border border-blue-700 rounded p-8">
-            Search
-        </button>
+        <div class="flex w-2/5 pr-0 mr-0">
+            <input type="text" id="quoteSearchBar" placeholder="Search for quotes here!" class="bg-gray-50 border-2 border border-black border-r-0 text-gray-900 text-sm rounded-l-lg focus:outline-none block w-full p-2.5">
+            <button onclick="searchForQuote()" id="updateRosterButton" class="bg-gray-50 hover:bg-orange-400 text-black py-2 px-4 border-2 border border-black border-l-0 rounded-r-lg p-8 q-1/5">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
 
         <!--People Dropdown menu-->
         <button id="dropdownButton" onclick="makeDropdownVisible()" class="bg-blue-50 hover:bg-orange-400 text-black py-2 px-4 border border-blue-700 rounded p-8">
@@ -46,9 +46,12 @@
         </div>
         
         <!--Swap date button-->
-        <button onclick="swapDateOrder()" id="sortDateButton" class="bg-blue-50 hover:bg-orange-400 text-black py-2 px-4 border border-blue-700 rounded p-8 w-1/6">
-            Sort date: Descending
+        <button onclick="swapDateOrder()" id="sortDateButton" class="bg-blue-50 hover:bg-orange-400 text-black py-2 px-4 border border-blue-700 rounded p-8">
+            Sort date  <i class="fa-solid fa-arrow-down"></i>
         </button>
+
+        <button onclick="document.getElementById('statsLink').click();" class="bg-blue-50 hover:bg-orange-400 text-black py-2 px-4 border border-blue-700 rounded p-8"><a id="statsLink" href="stats">Stats</a></button>
+        <button onclick="document.getElementById('mingamesLink').click();" class="bg-blue-50 hover:bg-orange-400 text-black py-2 px-4 border border-blue-700 rounded p-8"><a id="mingamesLink" href="minigames">Minigames</a></button>
 
     </div>
 
@@ -64,12 +67,6 @@
                 </div>
             </div>
         {% endfor %}
-    </div>
-
-    <!--Stats and minigames buttons-->
-    <div class="container mx-auto mt-6 mb-4 w-4/5" style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
-        <button onclick="document.getElementById('statsLink').click();" class="bg-blue-50 hover:bg-orange-400 text-black py-2 px-4 border border-blue-700 rounded p-8"><a id="statsLink" class="text-lg" href="stats">Stats</a></button>
-        <button onclick="document.getElementById('mingamesLink').click();" class="bg-blue-50 hover:bg-orange-400 text-black py-2 px-4 border border-blue-700 rounded p-8"><a id="mingamesLink" class="text-lg" href="minigames">Minigames</a></button>
     </div>
 
     <!--Test quote block

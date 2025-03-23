@@ -8,7 +8,7 @@ let dateNewestFirst
 let currentSearchPhrase = "";
 
 window.onload = (event) => {
-    dateNewestFirst = false
+    dateNewestFirst = true
     ALL_DATA = getData() // Set allData constant
     populateAuthorsDropdown()
     updateRoster() // Call update roster to make sure it's sorted correctly
@@ -121,11 +121,11 @@ function sortByDate(currentData) {
 function swapDateOrder() {
     // If the date is ascending, then swap it to descending
     if (dateNewestFirst) {
-        document.getElementById("sortDateButton").innerText = "Sort date: Ascending"
+        document.getElementById("sortDateButton").innerHTML = 'Sort date <i class="fa-solid fa-arrow-up"></i>'
         dateNewestFirst = false
     }
     else {
-        document.getElementById("sortDateButton").innerText = "Sort date: Descending"
+        document.getElementById("sortDateButton").innerHTML = 'Sort date <i class="fa-solid fa-arrow-down"></i>'
         dateNewestFirst = true
     }
     updateRoster();
@@ -148,7 +148,7 @@ function filterBySearchBar(currentData) {
 // Grabs whatever text is in the search bar and sets the global currentSearchPhrase variable
 // Then calls update roster to update the changes
 function searchForQuote() {
-    currentSearchPhrase = document.getElementById("quoteSearchBar").value
+    currentSearchPhrase = document.getElementById("quoteSearchBar").value.toLowerCase()
     updateRoster();
 }
 
