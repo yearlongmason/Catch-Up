@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stats Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/x-icon" href="{% static '/catchUpFavicon.png' %}">
+</head>
+<body class="bg-blue-500 text-gray-800">
+    <nav class="bg-orange-400 text-white shadow-md fixed top-0 left-0 w-full z-10">
+        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+          <h2 class="text-4xl font-semibold">Catch Up!</h2>
+          <div class="space-x-4">
+            <button onclick="document.getElementById('homeLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="homeLink" class="text-lg" href="/">Home</a></button>
+            <button onclick="document.getElementById('aboutLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="aboutLink" class="text-lg" href="../../about/">About</a></button>
+            <button onclick="document.getElementById('githubLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="githubLink" target="_blank" class="text-lg" href="https://github.com/yearlongmason/Catch-Up">Github</a></button>
+          </div>
+        </div>
+    </nav>
+</body>
+</html>

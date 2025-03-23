@@ -80,6 +80,9 @@ def roster(request):
                }
     return render(request, "roster.html", context)
 
+def stats(request):
+    return render(request, "stats.html")
+
 def mingames(request):
     return render(request, "minigames.html")
 
@@ -105,9 +108,6 @@ def discord_login_redirect(request):
     login(request, discord_user)
     request.session['new_access_token'] = user["access_token"]
     return redirect('loggedIn')
-
-
-
 
 def exchange_code(code):
     # ask the discord api for some user info using the acces token we got from the user
