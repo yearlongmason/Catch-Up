@@ -12,16 +12,15 @@ from rest_framework import status
 
 
 class QuoteDelete(APIView):
-    def delete(self, request, quote_id):
+    def delete(self, request, quoteid):
         try:
             Quotes = apps.get_model('app', 'Quotes')
-            Quotes.objects.filter(id=quote_id).delete()
+            print(Quotes.objects.all().filter(quote_id=quoteid))
+            Quotes.objects.all().filter(quote_id=quoteid).delete()
         except:
             return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
 
-
-        #Return a 284 response
-        return Response(status=status.HTTP_284_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class QuoteCreate(generics.ListCreateAPIView):
     #permission_classes = [IsAuthenticated]
