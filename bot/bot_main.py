@@ -52,12 +52,11 @@ async def quote_autocompletion(
 ) -> typing.List[app_commands.Choice[str]]:
     data = []
     for choice in interaction.guild.members:
+        if not choice.global_name:
+            continue
         if current.lower() in str(choice.global_name).lower():
             data.append(app_commands.Choice(name=choice.global_name, value=choice.global_name))
     
-    
-    if not data[0].name:
-        data = data[1:]
             
     return data
 
