@@ -8,7 +8,7 @@ let dateNewestFirst
 let currentSearchPhrase = "";
 
 window.onload = (event) => {
-    dateNewestFirst = true
+    dateNewestFirst = false
     ALL_DATA = getData() // Set allData constant
     populateAuthorsDropdown()
     updateRoster() // Call update roster to make sure it's sorted correctly
@@ -121,11 +121,11 @@ function sortByDate(currentData) {
 function swapDateOrder() {
     // If the date is ascending, then swap it to descending
     if (dateNewestFirst) {
-        document.getElementById("sortDateButton").innerHTML = 'Sort date <i class="fa-solid fa-arrow-up"></i>'
+        document.getElementById("sortDateButton").innerHTML = 'Sort date <i class="fa-solid fa-arrow-down"></i>'
         dateNewestFirst = false
     }
     else {
-        document.getElementById("sortDateButton").innerHTML = 'Sort date <i class="fa-solid fa-arrow-down"></i>'
+        document.getElementById("sortDateButton").innerHTML = 'Sort date <i class="fa-solid fa-arrow-up"></i>'
         dateNewestFirst = true
     }
     updateRoster();
