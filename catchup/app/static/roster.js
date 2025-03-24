@@ -8,8 +8,13 @@
 let ALL_DATA
 let dateNewestFirst
 let currentSearchPhrase = "";
-//const apiKey = process.env.API_KEY;
-//const apiurl = process.env.DELETE_QUOTE_URL;
+
+fetch('../.env')
+  .then(response => response.json())
+  .then(env => {
+    const apiKey = env.API_KEY;
+    const apiurl = env.DELETE_QUOTE_URL;
+  })
 
 window.onload = (event) => {
     dateNewestFirst = false
@@ -215,18 +220,18 @@ document.addEventListener('click', (event) => {
 //function to make an api call to delete a quote
 function deleteQuote(quote_id) {
     // TODO: FIX THIS BULLSHIT!!!
-    const TEMP_URL = `http://127.0.0.1:8000/api/delete_quote/${quote_id}/`;
+    const URL = apiurl + `/${quote_id}/`;
     console.log("Deleting the quote " + quote_id)
     const options = {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Api-Key MtoYCNOz.pTOOYCyQtPE5VvRow7X8cWD3X3IiAvel`,
+          'Authorization': `Api-Key ${apiKey}`,
         },
     };
 
-    //const url_with_id = apiurl + quote_id + "/"
-    fetch(TEMP_URL, options)
+
+    fetch(URL, options)
   .then(response => {
     if (response.ok) {
       return response.json(); // Parse the response data as JSON
