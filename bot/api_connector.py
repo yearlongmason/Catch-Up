@@ -16,12 +16,10 @@ def main():
     print(get_random_quote("1291817041052827649"))
     #get_random_quote("123")
 
-
 def insert_quote(quote: str, server_id: str, author: str): 
     quote_id = get_quote_id(server_id)
-    api_url = host=os.getenv('QUOTE_API_URL')
+    api_url = os.getenv('QUOTE_API_URL')
 
-    
     data = {
     "quote_id": quote_id,
     "server_id": str(server_id),
@@ -32,10 +30,8 @@ def insert_quote(quote: str, server_id: str, author: str):
 
     requests.post(api_url, data=data, headers=header)
 
-
-
 def get_quote_id(server_id: str):
-    api_url = host=os.getenv('ID_API_URL')
+    api_url = os.getenv('ID_API_URL')
     data = {'server_id': str(server_id)}
 
     response = requests.get(api_url, data=data, headers=header)
@@ -48,15 +44,14 @@ def get_quote_id(server_id: str):
     return new_id
 
 def get_random_quote(server_id: str):
-    api_url = host=os.getenv('RANDOM_API_URL')
+    api_url = os.getenv('RANDOM_API_URL')
     data = {'server_id': str(server_id)}
     response = requests.get(api_url, data=data, headers=header)
 
     quotes = response.json()
+    print(quotes)
     quote = quotes[random.randrange(len(quotes))]
     return f'"{quote['quote']}" - {quote['author']}'
-
-    
 
 # main is mostly just for testing stuff this file is not meant to be run
 if  __name__ == "__main__":
