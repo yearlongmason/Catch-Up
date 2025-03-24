@@ -1,11 +1,15 @@
 // If your browser is caching this file, clear your browser cache!
 // In Chrome press ctrl + shift + del and delete cached images and files!
+//require('dotenv').config();
+
 
 // Define all global variables
 // ALL_DATA is not technically a constant, but should not be changed
 let ALL_DATA
 let dateNewestFirst
 let currentSearchPhrase = "";
+//const apiKey = process.env.API_KEY;
+//const apiurl = process.env.DELETE_QUOTE_URL;
 
 window.onload = (event) => {
     dateNewestFirst = false
@@ -167,7 +171,7 @@ function formatAsHTML(modifiedData){
         formattedhtml += `</div>`
         formattedhtml += `<div class="flex flex-row">`
         formattedhtml += `<p class="text-gray-800">(${modifiedData[i].date})</p>`
-        formattedhtml += `<button onclick="console.log('Deleting quote!')" style="margin-top:-.5%" class="ml-4 bg-white hover:bg-red-500 p-2 max-h-8 rounded flex items-center justify-center border border-gray-300 transition duration-200"><i class="fas fa-trash-alt text-gray-600"></i></button>`
+        formattedhtml += `<button onclick="deleteQuote(${modifiedData[i].quote_id})" style="margin-top:-.5%" class="ml-4 bg-white hover:bg-red-500 p-2 max-h-8 rounded flex items-center justify-center border border-gray-300 transition duration-200"><i class="fas fa-trash-alt text-gray-600"></i></button>`
         formattedhtml += `</div></div></div>`
     }
 
@@ -206,3 +210,37 @@ document.addEventListener('click', (event) => {
         dropdownMenu.classList.add('opacity-0', 'invisible');
     }
 });
+
+
+//function to make an api call to delete a quote
+function deleteQuote(quote_id) {
+    // TODO: FIX THIS BULLSHIT!!!
+    TEMP_URL = "http://127.0.0.1:8000/api/delete_quote/" + quote_id + "/"
+    console.log("Deleting the quote " + quote_id)
+    const options = {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Api-Key MtoYCNOz.pTOOYCyQtPE5VvRow7X8cWD3X3IiAvel}`,
+        },
+    };
+
+    //const url_with_id = apiurl + quote_id + "/"
+    
+    fetch(TEMP_URL, options)
+  .then(response => {
+    if (response.ok) {
+      return response.json(); // Parse the response data as JSON
+    } else {
+      throw new Error('API request failed');
+    }
+  })
+  .then(data => {
+    // Process the response data here
+    console.log(data); // Example: Logging the data to the console
+  })
+  .catch(error => {
+    // Handle any errors here
+    console.error(error); // Example: Logging the error to the console
+  });
+}

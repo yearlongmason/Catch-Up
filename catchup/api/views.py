@@ -6,8 +6,22 @@ from django.apps import apps
 from django.contrib.admin.views.decorators import staff_member_required
 from django.views.generic import TemplateView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView 
+from rest_framework.response import Response 
+from rest_framework import status 
 
 
+class QuoteDelete(APIView):
+    def delete(self, request, quote_id):
+        try:
+            Quotes = apps.get_model('app', 'Quotes')
+            Quotes.objects.filter(id=quote_id).delete()
+        except:
+            return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+        #Return a 284 response
+        return Response(status=status.HTTP_284_NO_CONTENT)
 
 class QuoteCreate(generics.ListCreateAPIView):
     #permission_classes = [IsAuthenticated]
