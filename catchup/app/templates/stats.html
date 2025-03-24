@@ -9,7 +9,9 @@
   <link rel="icon" type="image/x-icon" href="{% static '/catchUpFavicon.png' %}">
 </head>
 <body class="bg-blue-500 text-gray-800">
-    <nav class="bg-orange-400 text-white shadow-md fixed top-0 left-0 w-full z-10">
+  
+    <!-- Navbar -->
+    <nav class="bg-orange-400 text-white shadow-md top-0 left-0 w-full z-10">
         <div class="container mx-auto px-4 py-2 flex justify-between items-center">
           <h2 class="text-4xl font-semibold">Catch Up!</h2>
           <div class="flex flex-nowrap space-x-4">
@@ -19,5 +21,37 @@
           </div>
         </div>
     </nav>
+
+    <div class="container mx-auto p-6">
+        <!-- <h1 class="text-3xl text-white mb-8">Stats Page</h1> -->
+    
+        <!-- 2x2 Grid for Visualizations -->
+        <div class="grid grid-cols-2 gap-6">
+            <div class="bg-white p-4 rounded shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Visualization 1</h2>
+                <!-- Placeholder -->
+                <div class="bg-gray-200 h-40 rounded-md"></div>
+            </div>
+    
+            <div class="bg-white p-4 rounded shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Visualization 2</h2>
+                <!-- Placeholder -->
+                <div class="bg-gray-200 h-40 rounded-md"></div>
+            </div>
+    
+            <div class="bg-white p-4 rounded shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Visualization 3</h2>
+                <!-- Placeholder -->
+                <div class="bg-gray-200 h-40 rounded-md"></div>
+            </div>
+    
+            <div class="bg-white p-4 rounded shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Visualization 4</h2>
+                <!-- Placeholder -->
+                <div class="bg-gray-200 h-40 rounded-md"></div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
