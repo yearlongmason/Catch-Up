@@ -9,12 +9,6 @@ let ALL_DATA
 let dateNewestFirst
 let currentSearchPhrase = "";
 
-fetch('../.env')
-  .then(response => response.json())
-  .then(env => {
-    const apiKey = env.API_KEY;
-    const apiurl = env.DELETE_QUOTE_URL;
-  })
 
 window.onload = (event) => {
     dateNewestFirst = false
@@ -219,14 +213,14 @@ document.addEventListener('click', (event) => {
 
 //function to make an api call to delete a quote
 function deleteQuote(quote_id) {
-    // TODO: FIX THIS BULLSHIT!!!
-    const URL = apiurl + `/${quote_id}/`;
+
+    const URL = api_url + `${quote_id}/`;
     console.log("Deleting the quote " + quote_id)
     const options = {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Api-Key ${apiKey}`,
+          'Authorization': `Api-Key ${api_key}`,
         },
     };
 
