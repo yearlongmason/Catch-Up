@@ -8,7 +8,7 @@
 let ALL_DATA
 let dateNewestFirst
 let currentSearchPhrase = "";
-
+let quoteToDeleteID = -1
 
 window.onload = (event) => {
     dateNewestFirst = false
@@ -170,7 +170,7 @@ function formatAsHTML(modifiedData){
         formattedhtml += `</div>`
         formattedhtml += `<div class="flex flex-row">`
         formattedhtml += `<p class="text-gray-800">(${modifiedData[i].date})</p>`
-        formattedhtml += `<button onclick="deleteQuote(${modifiedData[i].quote_id})" style="margin-top:-.5%" class="ml-4 bg-white hover:bg-red-500 p-2 max-h-8 rounded flex items-center justify-center border border-gray-300 transition duration-200"><i class="fas fa-trash-alt text-gray-600"></i></button>`
+        formattedhtml += `<button onclick="deleteButton(${modifiedData[i].quote_id})" style="margin-top:-.5%" class="ml-4 bg-white hover:bg-red-500 p-2 max-h-8 rounded flex items-center justify-center border border-gray-300 transition duration-200"><i class="fas fa-trash-alt text-gray-600"></i></button>`
         formattedhtml += `</div></div></div>`
     }
 
@@ -210,9 +210,32 @@ document.addEventListener('click', (event) => {
     }
 });
 
+// Delete conformation code
+// Show the confirmation modal when the delete button is clicked
+function deleteButton(quote_id) {
+    quoteToDeleteID = quote_id
+    console.log(quoteToDeleteID)
+    confirmationModal.classList.remove('hidden');
+}
+
+// Close the modal when the cancel button is clicked
+function cancelButton() {
+    confirmationModal.classList.add('hidden');
+};
+
+/*// Proceed with the delete action when the confirm button is clicked
+confirmDelete.addEventListener('click', function () {
+    // Perform the delete action (e.g., make an API call or submit a form)
+    // Hide the modal after confirmation
+    confirmationModal.classList.add('hidden');
+});*/
+
+function deleteQuote(){
+
+}
 
 //function to make an api call to delete a quote
-function deleteQuote(quote_id) {
+function deleteQuoteRequest(quote_id) {
 
     const URL = api_url + `${quote_id}/`;
     console.log("Deleting the quote " + quote_id)
@@ -223,7 +246,6 @@ function deleteQuote(quote_id) {
           'Authorization': `Api-Key ${api_key}`,
         },
     };
-
 
     fetch(URL, options)
   .then(response => {
