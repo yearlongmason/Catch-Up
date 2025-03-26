@@ -7,6 +7,9 @@
   <title>Stats Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="icon" type="image/x-icon" href="{% static '/catchUpFavicon.png' %}">
+
+  <!--Add stats js file-->
+  <script src="{% static 'stats.js' %}"></script>
 </head>
 <body class="bg-blue-500 text-gray-800">
   
@@ -22,8 +25,28 @@
         </div>
     </nav>
 
-    <div class="container mx-auto p-6">
-        <!-- <h1 class="text-3xl text-white mb-8">Stats Page</h1> -->
+    <div id="allQuotes" class="">
+        {% for item in data %}
+            <div class="hidden">
+                <div class="catchUpQuote">
+                    <p class="catchUpQuoteID">{{item.quote_id}}</p>
+                    <p class="text-gray-800 float-left catchUpQuoteText">{{item.quote}} -</p>
+                    <p class="text-gray-800 float-left pl-1 catchUpQuoteAuthor">{{item.author}}</p>
+                    <p class="text-gray-800 float-right catchUpQuoteDate">({{item.date_quoted}})</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="dataViz" class="container mx-auto p-6">
+
+        <div class="bg-orange-400 text-white p-6 rounded-lg mb-8 shadow-md flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <span class="text-3xl font-semibold">Most Quoted User:</span>
+                <span id="mostQuotedUser" class="text-3xl font-semibold hidden">John Doe</span>
+            </div>
+            <span id="numberOfQuotes" class="text-3xl font-medium hidden">100 Quotes</span>
+        </div>
     
         <!-- 2x2 Grid for Visualizations -->
         <div class="grid grid-cols-2 gap-6">

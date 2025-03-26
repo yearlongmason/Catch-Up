@@ -80,10 +80,21 @@ def roster(request):
                'api_key' : os.getenv('API_KEY'),
                'api_url' : os.getenv('DELETE_QUOTE_URL')
                }
+    
     return render(request, "roster.html", context)
 
 def stats(request):
-    return render(request, "stats.html")
+    # getting server id from session cookies
+    this_server_id = request.session.get('server_id')
+    this_server_name = request.session.get('server_name')
+    
+    mydata = Quotes.objects.filter(server_id=this_server_id).values
+
+    context = {'server_id' : this_server_id,
+               'data' : mydata,
+               'server_name' : this_server_name}
+    
+    return render(request, "stats.html", context)
 
 def mingames(request):
     return render(request, "minigames.html")

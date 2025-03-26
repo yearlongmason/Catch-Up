@@ -4,7 +4,7 @@
 
 
 // Define all global variables
-// ALL_DATA is not technically a constant, but should not be changed
+// ALL_DATA is not technically a constant, but should not be changed except for quote deletion
 let ALL_DATA
 let dateNewestFirst
 let currentSearchPhrase = "";
