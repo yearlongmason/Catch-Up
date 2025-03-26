@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView 
 from rest_framework.response import Response 
 from rest_framework import status 
+import random
 
 
 class QuoteDelete(APIView):
@@ -45,8 +46,8 @@ class GetRandomQuote(generics.ListAPIView):
     serializer_class = RandomQuoteSerializer
 
     def get_queryset(self):
-        
+        print(self.request.data)
         server_id = self.request.data['server_id']
         all = self.Quotes.objects.all().filter(server_id = server_id)
-        print(all)
+
         return all

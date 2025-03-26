@@ -49,7 +49,6 @@ def get_random_quote(server_id: str):
     response = requests.get(api_url, data=data, headers=header)
 
     quotes = response.json()
-    print(quotes)
     quote = quotes[random.randrange(len(quotes))]
     return f'"{quote['quote']}" - {quote['author']}'
 
