@@ -40,7 +40,6 @@ function getData() {
     return allQuotes
 }
 
-// TODO: Sort before populating
 // Populates the dropdown menu with names of people being quoted
 function populateAuthorsDropdown() {
     // Add the check all button
@@ -213,25 +212,56 @@ document.addEventListener('click', (event) => {
 // Delete conformation code
 // Show the confirmation modal when the delete button is clicked
 function deleteButton(quote_id) {
-    quoteToDeleteID = quote_id
-    console.log(quoteToDeleteID)
-    confirmationModal.classList.remove('hidden');
+    // Make sure quote actually exists
+    if (!quoteExists(quote_id)){
+        return
+    }
+
+    quoteToDeleteID = quote_id // Change global quote to delete
+    quoteToDelete = ALL_DATA.filter((quote) => quote.quote_id == quoteToDeleteID)[0]
+
+    // Update and change modal
+    document.getElementById("areYouSure?").innerText = `Are you sure you want to delete this quote?\n\n"${quoteToDelete.quote}" - ${quoteToDelete.author}`
+    document.getElementById("confirmationModal").classList.remove('hidden');
 }
 
 // Close the modal when the cancel button is clicked
-function cancelButton() {
-    confirmationModal.classList.add('hidden');
+function hideModal() {
+    document.getElementById("confirmationModal").classList.add('hidden');
 };
 
-/*// Proceed with the delete action when the confirm button is clicked
-confirmDelete.addEventListener('click', function () {
-    // Perform the delete action (e.g., make an API call or submit a form)
-    // Hide the modal after confirmation
-    confirmationModal.classList.add('hidden');
-});*/
+// Check to make sure a quote actually exists
+function quoteExists(quote_id){
+    let allQuoteIDs = ALL_DATA.map((quote) => String(quote.quote_id)) // Get all quote ids
+    console.log(allQuoteIDs)
+    if (!allQuoteIDs.includes(String(quote_id))) {
+        console.log("ERROR: Could not find quote")
+        return false
+    }
 
+    return true
+}
+
+// Go through the steps of deleting a quote
+// Check to make sure the quote exists
+// Make a request to delete the quote
+// Update roster
 function deleteQuote(){
+    // Ensure quote ID exists in data
+    if (!quoteExists(quoteToDeleteID)){
+        return
+    }
 
+    // Actually delete quote, like for real
+    deleteQuoteRequest(quoteToDeleteID)
+
+    // Remove quote from ALL_DATA and update roster
+    ALL_DATA = ALL_DATA.filter((quote) => quote.quote_id != quoteToDeleteID)
+    updateRoster();
+
+    // Hide modal and reset quoteToDeleteID to invalid id
+    hideModal()
+    quoteToDeleteID = -1
 }
 
 //function to make an api call to delete a quote
@@ -247,16 +277,14 @@ function deleteQuoteRequest(quote_id) {
         },
     };
 
-    fetch(URL, options)
-  .then(response => {
-    if (response.ok) {
-      return response.json(); // Parse the response data as JSON
-    } else {
-      throw new Error('API request failed');
-    }
-  })
-  .catch(error => {
-    // Handle any errors here
-    console.error(error); // Example: Logging the error to the console
-  });
+    fetch(URL, options).then(response => {
+        if (response.ok) {
+            return response.json(); // Parse the response data as JSON
+        } else {
+            throw new Error('API request failed');
+        }
+    }).catch(error => {
+        // Handle any errors here
+        console.error(error); // Example: Logging the error to the console
+    });
 }
