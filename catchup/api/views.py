@@ -40,14 +40,32 @@ class GetID(generics.ListAPIView):
         return self.Quotes.objects.filter(server_id = server_id)
 
 
-class GetRandomQuote(generics.ListAPIView):
-    #permission_classes = [IsAuthenticated]
-    Quotes = apps.get_model('app', 'Quotes')
-    serializer_class = RandomQuoteSerializer
+# class GetRandomQuote(generics.ListAPIView):
+#     #permission_classes = [IsAuthenticated]
+#     Quotes = apps.get_model('app', 'Quotes')
+#     serializer_class = RandomQuoteSerializer
 
-    def get_queryset(self):
-        print(self.request.data)
-        server_id = self.request.data['server_id']
-        all = self.Quotes.objects.all().filter(server_id = server_id)
+#     def get_queryset(self):
+#         print(self.request.data)
+#         server_id = self.request.data['server_id']
+#         all = self.Quotes.objects.all().filter(server_id = server_id)
 
-        return all
+#         return all
+
+class GetRandomQuote(APIView):
+    def get(self, request, serverid):
+        try:
+            Quotes = apps.get_model('app', 'Quotes')
+            data = Quotes.objects.all().filter(server_id = serverid)
+
+            if not data:
+                return Response({"error": "No quotes found"}, status=status.HTTP_404_NOT_FOUND)
+
+            serialized_data = [{
+                "quote" : q.quote,
+                "author" : q.author
+            } for q in data]
+        except:
+            return Response({"error": "Server Not Found"}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(serialized_data, status=status.HTTP_200_OK)

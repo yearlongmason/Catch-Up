@@ -44,9 +44,11 @@ def get_quote_id(server_id: str):
     return new_id
 
 def get_random_quote(server_id: str):
-    api_url = os.getenv('RANDOM_API_URL')
-    data = {'server_id': str(server_id)}
-    response = requests.get(api_url, data=data, headers=header)
+    api_url = f"{os.getenv('RANDOM_API_URL')}{server_id}/"
+    response = requests.get(url=api_url, headers=header)
+
+    if response.status_code != 200:
+        print("Something went wrong!!!")
 
     quotes = response.json()
     quote = quotes[random.randrange(len(quotes))]

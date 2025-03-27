@@ -13,7 +13,16 @@ const correctAuthor = "Franklin D. Roosevelt";
         },
       };
       
-      fetch(api_url, other_params)
+      fetch(api_url, {
+        method: 'GET', 
+        headers: {
+          'Authorization': `Api-Key ${api_key}`,
+          'Content-Type': 'application/json'
+        },
+        data :JSON.stringify({
+          'server_id' : server_id
+        }),
+       })
         .then(response => {
           if (response.ok) {
             return response.json(); 
