@@ -1,10 +1,9 @@
 const correctAuthor = "Franklin D. Roosevelt";
-var quote;
 var rand_index;
 
-    function randomQuoteRequest() {   
+function randomQuoteRequest() {
       var quote_element = document.getElementById("quote");
-      quote_element.textContent = "Loading Quote..."  
+      quote_element.textContent = "Loading Quote..."
       const other_params = {
         method: 'GET', 
         headers: {
@@ -24,7 +23,10 @@ var rand_index;
         })
         .then(data => {
           rand_index = Math.floor(Math.random() * data.length);
-          quote = data[rand_index]
+          var quote = data[rand_index]
+          console.log(quote);
+          populateQuoteHtml(quote);
+
           //console.log(data[rand_index])
           //console.log(quote)
         })
@@ -33,7 +35,7 @@ var rand_index;
         });
     }
 
-    function populateQuoteHtml() {
+    function populateQuoteHtml(quote) {
       var quote_element = document.getElementById("quote");
       quote_element.textContent = quote["quote"];
     }
@@ -56,10 +58,4 @@ var rand_index;
         guessButton.onclick = checkAnswer;
 
         randomQuoteRequest();
-        
-        // gotta be a better way to do this
-        console.log("Waiting for api call to finish")
-        setTimeout(function(){
-          populateQuoteHtml();
-        }, 2000);
     };
