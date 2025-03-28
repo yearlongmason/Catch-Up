@@ -11,6 +11,7 @@ window.onload = (event) => {
     }
 
     updateMostQuoted()
+    renderNumQuotesByAuthorChart()
 };
 
 // beep boop beep boop
@@ -74,4 +75,48 @@ function updateMostQuoted() {
     numberOfQuotesTag.innerText = `${mostQuotes} Quotes`;
     mostQuotedUserTag.classList.remove('hidden')
     numberOfQuotesTag.classList.remove('hidden')
+}
+
+function getQuoteCountsPerAuthor() {
+    let uniqueAuthors = getUniqueAuthors();
+    let allQuoteAuthors = ALL_DATA.map((quote) => quote.author)
+    let authorCounts = [];
+
+    // Set all authors to 0 initially
+    for (let i = 0; i < uniqueAuthors.length; i++) {
+        currentAuthor = uniqueAuthors[i]
+        authorCounts.push(getNumOccurrences(allQuoteAuthors, currentAuthor))
+    }
+    return uniqueAuthors.map((author, i) => ({
+        author: author,
+        numQuotes: authorCounts[i]})).sort((a, b) => a.numQuotes - b.numQuotes)
+}
+
+// Creates a chart that displays the number of quotes
+function renderNumQuotesByAuthorChart() {
+    let quoteCountsPerAuthor = getQuoteCountsPerAuthor()
+
+    const chartCanvas = document.getElementById('numQuotesByAuthor').getContext('2d');
+    const chart = new Chart(chartCanvas, {
+        type: "bar",
+        data: {
+            labels: quoteCountsPerAuthor.map((author) => author.author), // x axis labels
+            datasets: [{
+                label: 'Number of Quotes',
+                data: quoteCountsPerAuthor.map((author) => author.numQuotes), // Y-axis data
+                backgroundColor: '#fb923c', // Bar color
+                borderColor: '#fb923c', // Border color
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    })
 }
