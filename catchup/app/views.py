@@ -112,6 +112,11 @@ def guessing_game(request):
             }
     return render(request, "guessinggame.html", context)
 
+@login_required(login_url="discord_login/")
+def word_scramble(request):
+
+    return render(request, "wordScramble.html")
+
 def testroster(request):
     return render(request, "testroster.html")
 

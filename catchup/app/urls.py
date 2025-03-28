@@ -13,7 +13,8 @@ urlpatterns  = [
     path('about/', views.about, name="about"),
     path('servers/roster/stats/', views.stats, name="stats"),
     path('servers/roster/minigames/', views.mingames, name="mingames"),
-    path('servers/roster/minigames/guessinggame/', views.guessing_game, name="Guess Author")
+    path('servers/roster/minigames/guessinggame/', views.guessing_game, name="Guess Author"),
+    path('servers/roster/minigames/wordScramble/', views.word_scramble, name="Word Scramble")
 ]
 
 urlpatterns += staticfiles_urlpatterns()
