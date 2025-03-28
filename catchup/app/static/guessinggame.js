@@ -1,8 +1,10 @@
-const correctAuthor = "Franklin D. Roosevelt";
+var correctAuthor = "";
 var rand_index;
 
 function randomQuoteRequest() {
       var quote_element = document.getElementById("quote");
+      togleButtonVisibility(false)
+
       quote_element.textContent = "Loading Quote..."
       const other_params = {
         method: 'GET', 
@@ -24,11 +26,7 @@ function randomQuoteRequest() {
         .then(data => {
           rand_index = Math.floor(Math.random() * data.length);
           var quote = data[rand_index]
-          console.log(quote);
           populateQuoteHtml(quote);
-
-          //console.log(data[rand_index])
-          //console.log(quote)
         })
         .catch(error => {
           console.error(error);
@@ -38,6 +36,9 @@ function randomQuoteRequest() {
     function populateQuoteHtml(quote) {
       var quote_element = document.getElementById("quote");
       quote_element.textContent = quote["quote"];
+      correctAuthor = quote["author"];
+
+      togleButtonVisibility(true)
     }
 
     function checkAnswer() {
@@ -53,9 +54,38 @@ function randomQuoteRequest() {
       }
     }
 
+    function togleButtonVisibility(shouldEnable)
+    {
+      var guessButton = document.getElementById('guessButton');
+      var refreshButton = document.getElementById('refreshButton');
+
+      if (shouldEnable)
+      {
+        guessButton.disabled = false;
+        guessButton.style.visibility = 'visible';
+        refreshButton.disabled = false;
+        refreshButton.style.visibility = 'visible';
+      }
+      else
+      {
+        guessButton.disabled = true;
+        guessButton.style.visibility = 'hidden';
+        refreshButton.disabled = true;
+        refreshButton.style.visibility = 'hidden';
+      }
+
+    }
+
+    function refreshQuote() {
+      randomQuoteRequest();
+    }
+
     window.onload = (event) => {
         var guessButton = document.getElementById('guessButton');
         guessButton.onclick = checkAnswer;
+        
+        var refreshButton = document.getElementById('refreshButton');
+        refreshButton.onclick = refreshQuote;
 
         randomQuoteRequest();
     };
