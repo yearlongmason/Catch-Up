@@ -25,6 +25,7 @@ def landing(request):
 def about(request):
     return render(request, "about.html")
 
+@login_required(login_url="discord_login/")
 def servers(request):
     if request.session.get('new_access_token'):
         request.user.access_token = request.session.get('new_access_token')
@@ -67,6 +68,7 @@ def get_server_name(mutual_servers, server_id):
     #if we don't find the server_id something went very wrong
     return("server id not found in mutual_servers!!!! get_server_name()")
 
+@login_required(login_url="discord_login/")
 def roster(request):
     # getting server id from session cookies
     this_server_id = request.session.get('server_id')
@@ -83,6 +85,7 @@ def roster(request):
     
     return render(request, "roster.html", context)
 
+@login_required(login_url="discord_login/")
 def stats(request):
     # getting server id from session cookies
     this_server_id = request.session.get('server_id')
@@ -96,9 +99,11 @@ def stats(request):
     
     return render(request, "stats.html", context)
 
+@login_required(login_url="discord_login/")
 def mingames(request):
     return render(request, "minigames.html")
 
+@login_required(login_url="discord_login/")
 def guessing_game(request):
     this_server_id = request.session.get('server_id')
     context = {'api_key' : os.getenv('API_KEY'),
