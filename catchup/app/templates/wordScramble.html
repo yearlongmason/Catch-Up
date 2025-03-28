@@ -15,7 +15,7 @@
           <h2 class="text-4xl font-semibold">Catch Up!</h2>
           <div class="flex flex-nowrap space-x-4">
             <button onclick="document.getElementById('homeLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="homeLink" class="text-lg" href="/">Home</a></button>
-            <button onclick="document.getElementById('aboutLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="aboutLink" class="text-lg" href="../../about/">About</a></button>
+            <button onclick="document.getElementById('aboutLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="aboutLink" class="text-lg" href="../../../../about/">About</a></button>
             <button onclick="document.getElementById('githubLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="githubLink" target="_blank" class="text-lg" href="https://github.com/yearlongmason/Catch-Up">Github</a></button>
           </div>
         </div>
@@ -23,7 +23,7 @@
 
     <div class="bg-white p-8 rounded-lg shadow-lg max-w-md text-center">
         <h1 class="text-2xl font-bold mb-4">Sentence Scramble Minigame</h1>
-        <p class="text-gray-600 mb-6">Rearrange the scrambled sentence into its correct order:</p>
+        <p class="text-gray-600 mb-6">Rearrange the scrambled sentence into its correct order</p>
         <div id="scrambledSentence" class="text-xl font-semibold text-blue-500 mb-4"></div>
         <input type="text" id="userGuess" placeholder="Type the correct sentence here"
                class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4">
@@ -37,6 +37,12 @@
             Next Sentence
         </button>
     </div>
+
+    <script>
+        var api_key = "{{api_key}}";
+        var api_url = "{{api_url}}";
+        var server_id = "{{server_id}}";
+      </script>
 
 </body>
 </html>

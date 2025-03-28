@@ -1,18 +1,42 @@
-const sentences = [
-    "The quick brown fox jumps over the lazy dog",
-    "A journey of a thousand miles begins with a single step",
-    "To be or not to be that is the question",
-    "All that glitters is not gold",
-    "Practice makes perfect"
-];
-let currentIndex = 0;
-
 function scrambleSentence(sentence) {
     return sentence.split(' ').sort(() => 0.5 - Math.random()).join(' ');
 }
+var currentQuote = ""
 
-function displaySentence() {
-    let scrambledSentence = scrambleSentence(sentences[currentIndex]);
+function getQuote()
+{
+    document.getElementById('scrambledSentence').textContent = "Loading Quote...";
+    const other_params = {
+        method: 'GET', 
+        headers: {
+          'Authorization': `Api-Key ${api_key}`,
+          'Content-Type': 'application/json'
+        }
+      };
+      const URL = api_url + `${server_id}/`;
+      
+      fetch(URL, other_params)
+        .then(response => {
+          if (response.ok) {
+            return response.json(); 
+          } else {
+            throw new Error('API request failed');
+          }
+        })
+        .then(data => {
+          rand_index = Math.floor(Math.random() * data.length);
+          var quote = data[rand_index];
+          console.log(quote['quote'])
+          displaySentence(quote['quote']);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+}
+
+function displaySentence(quote) {
+    currentQuote = quote;
+    let scrambledSentence = scrambleSentence(quote);
     document.getElementById('scrambledSentence').textContent = scrambledSentence;
     document.getElementById('userGuess').value = '';
     document.getElementById('result').textContent = '';
@@ -22,7 +46,7 @@ function checkAnswer() {
     const userGuess = document.getElementById('userGuess').value.trim();
     const result = document.getElementById('result');
 
-    if (userGuess.toLowerCase() === sentences[currentIndex].toLowerCase()) {
+    if (userGuess.toLowerCase() === currentQuote.toLowerCase()) {
         result.textContent = "Correct! Well done!";
         result.className = "text-green-500";
         document.getElementById('nextSentence').classList.remove('hidden');
@@ -33,19 +57,11 @@ function checkAnswer() {
 }
 
 function nextScrambledSentence() {
-    currentIndex++;
-    if (currentIndex < sentences.length) {
-        displaySentence();
-        document.getElementById('nextSentence').classList.add('hidden');
-    } else {
-        document.getElementById('scrambledSentence').textContent = "Game Over!";
-        document.getElementById('result').textContent = "You completed all the sentences!";
-        document.getElementById('result').className = "text-blue-500";
-        document.getElementById('nextSentence').classList.add('hidden');
-    }
+    getQuote()
+    document.getElementById('nextSentence').classList.add('hidden');
 }
 
 window.onload = (event) => {
-    displaySentence();
+    getQuote()
 };
 

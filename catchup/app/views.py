@@ -114,8 +114,12 @@ def guessing_game(request):
 
 @login_required(login_url="discord_login/")
 def word_scramble(request):
-
-    return render(request, "wordScramble.html")
+    this_server_id = request.session.get('server_id')
+    context = {'api_key' : os.getenv('API_KEY'),
+               'api_url' : os.getenv('RANDOM_API_URL'),
+               'server_id' : this_server_id
+            }
+    return render(request, "wordScramble.html", context)
 
 def testroster(request):
     return render(request, "testroster.html")
