@@ -15,6 +15,7 @@ window.onload = (event) => {
     renderNumQuotesByAuthorChart()
     renderWordCountsChart()
     renderQuotesOverTime()
+    renderQuoteLengthDistribution()
 };
 
 // beep boop beep boop
@@ -233,4 +234,62 @@ function getMonthYear(timestamp){
     let monthName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const timestampDate = new Date(timestamp)
     return `${monthName[timestampDate.getMonth()]} ${timestampDate.getFullYear()}`
+}
+
+function getWordCount(quote) {
+    return quote.split(" ").length
+}
+
+function renderQuoteLengthDistribution(){
+    const NUM_BINS = 10
+    const NUM_WORDS_PER_BIN = 3
+
+    // Get all word counts as well as grouped word counts in ranges
+    let groupedQuoteWordCounts = getGroupedQuoteWordCounts(NUM_BINS, NUM_WORDS_PER_BIN);
+
+    const chartCanvas = document.getElementById('quotesLengthDistribution').getContext('2d')
+    const chart = new Chart(chartCanvas, {
+        type: "bar",
+        data: {
+            labels: groupedQuoteWordCounts.map(wordCount => wordCount.element), // x axis labels
+            datasets: [{
+                label: 'Quote Frequency',
+                data: groupedQuoteWordCounts.map(wordCount => wordCount.frequency), // Y-axis data
+                backgroundColor: '#fb923c', // Bar color
+                borderColor: '#fb923c', // Border color
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    })
+}
+
+// Return grouped quote word counts
+function getGroupedQuoteWordCounts(NUM_BINS, NUM_WORDS_PER_BIN) {
+    // Get all word counts
+    let quoteWordCounts = ALL_DATA.map(quote => getWordCount(quote.quote));
+
+    // Group the word counts into NUM_BINS bins of size NUM_WORDS_PER_BIN
+    let groupedQuoteWordCounts = [];
+    for (let i = 0; i < NUM_BINS; i++) {
+        groupedQuoteWordCounts.push({
+            element: `${i * NUM_WORDS_PER_BIN} - ${(i + 1) * NUM_WORDS_PER_BIN} Words`,
+            frequency: quoteWordCounts.filter(x => i * NUM_WORDS_PER_BIN < x && x <= (i + 1) * NUM_WORDS_PER_BIN).length
+        });
+    }
+    
+    return groupedQuoteWordCounts;
 }
