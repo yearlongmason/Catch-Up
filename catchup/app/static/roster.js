@@ -272,8 +272,8 @@ function deleteQuoteRequest(quote_id) {
     const options = {
         method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Api-Key ${api_key}`,
+            'Content-Type': 'application/json',
+            'Authorization': `Api-Key ${api_key}`,
         },
     };
 

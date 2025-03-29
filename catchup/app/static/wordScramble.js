@@ -1,7 +1,8 @@
+var currentQuote = ""
+
 function scrambleSentence(sentence) {
     return sentence.split(' ').sort(() => 0.5 - Math.random()).join(' ');
 }
-var currentQuote = ""
 
 function getQuote()
 {

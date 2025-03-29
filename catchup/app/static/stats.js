@@ -25,7 +25,7 @@ function getData() {
     let allQuotes = []
 
     // Loop through each quote div
-    for(let i = 0; i < allQuoteTags.length; i++){
+    for (let i = 0; i < allQuoteTags.length; i++) {
         // Individually get the quote (text), author, and date
         // Put all values into an object
         // Append new object to allQuotes array
@@ -33,7 +33,7 @@ function getData() {
         currText = allQuoteTags[i].getElementsByClassName("catchUpQuoteText")[0].innerHTML
         currAuthor = allQuoteTags[i].getElementsByClassName("catchUpQuoteAuthor")[0].innerHTML
         currDate = allQuoteTags[i].getElementsByClassName("catchUpQuoteDate")[0].innerHTML
-        allQuotes.push({"quote_id":currID, "quote":currText, "author":currAuthor, "date":currDate, "timestamp":Date.parse(currDate)})
+        allQuotes.push({ "quote_id": currID, "quote": currText, "author": currAuthor, "date": currDate, "timestamp": Date.parse(currDate) })
     }
 
     return allQuotes
@@ -123,9 +123,9 @@ function renderNumQuotesByAuthorChart() {
 // "mason and john are cool" -> "Mason And John Are Cool"
 function titleCase(s) {
     return s.toLowerCase()
-            .split(' ')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ');
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
 }
 
 // Gets word counts of all quotes combined
