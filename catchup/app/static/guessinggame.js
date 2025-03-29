@@ -5,6 +5,10 @@ function randomQuoteRequest() {
 	var quote_element = document.getElementById("quote");
 	togleButtonVisibility(false)
 
+	// Reset result tag and input
+	document.getElementById("result").innerText = ""
+	document.getElementById('guess').value = ""
+
 	quote_element.textContent = "Loading Quote..."
 	const other_params = {
 	method: 'GET',
@@ -85,3 +89,15 @@ window.onload = (event) => {
 
 	randomQuoteRequest();
 };
+
+// Adds keypress listener
+document.addEventListener("keypress", function(event) {
+    // If the user presses the enter key click the update roster button
+    if (event.key === "Enter") {
+        // Prevent the defualt action
+        // Not sure if there actually is one right now, but better safe than sorry
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById("guessButton").click();
+    }
+});
