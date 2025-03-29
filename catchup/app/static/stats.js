@@ -11,9 +11,10 @@ window.onload = (event) => {
     }
 
     // Render visualizations
-    updateMostQuoted()
+    renderMostQuotedUser()
     renderNumQuotesByAuthorChart()
     renderWordCountsChart()
+    renderQuotesOverTime()
 };
 
 // beep boop beep boop
@@ -67,7 +68,7 @@ function getFrequencies(array) {
 }
 
 // Gets the most quoted author and display them on the banner at the top
-function updateMostQuoted() {
+function renderMostQuotedUser() {
     // Get the most quoted author
     let quoteCounts = getFrequencies(ALL_DATA.map((quote) => quote.author))
     let mostQuotedAuthor = quoteCounts[quoteCounts.length - 1];
@@ -110,9 +111,7 @@ function renderNumQuotesByAuthorChart() {
             },
             scales: {
                 y: {
-                    beginAtZero: true,
-                    //min: 0,
-                    //max: Math.max(quoteCountsPerAuthor.map((author) => author.frequency)) + 1
+                    beginAtZero: true
                 }
             }
         }
@@ -168,11 +167,70 @@ function renderWordCountsChart() {
             },
             scales: {
                 y: {
-                    beginAtZero: true,
-                    //min: 0,
-                    //max: Math.max(quoteCountsPerAuthor.map((author) => author.frequency)) + 1
+                    beginAtZero: true
                 }
             }
         }
     })
+}
+
+function renderQuotesOverTime() {
+    // Get previous 12 months as an array
+    let last12Months = getLast12Months();
+    let monthQuotes = ALL_DATA.map(quote => getMonthYear(quote.timestamp));
+    let monthFrequencies = last12Months.map(month => { return {element: month, frequency: getNumOccurrences(monthQuotes, month)} })
+
+    const chartCanvas = document.getElementById('quotesOverTime').getContext('2d');
+
+    const chart = new Chart(chartCanvas, {
+        type: "line",
+        data: {
+            labels: last12Months, // x axis labels
+            datasets: [{
+                label: 'Quote Frequency',
+                data: monthFrequencies.map(month => month.frequency), // Y-axis data
+                backgroundColor: '#fb923c', // Bar color
+                borderColor: '#fb923c', // Border color
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    })
+}
+
+// Returns an array containing the last 12 months formatted as "Full Month Full Year"
+// Sorted by oldest month first
+function getLast12Months() {
+    let last12Months = [];
+    let monthName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let date = new Date();
+    date.setDate(1);
+    for (i = 0; i <= 11; i++) {
+        last12Months.push(monthName[date.getMonth()] + ' ' + date.getFullYear());
+        date.setMonth(date.getMonth() - 1);
+    }
+    
+    last12Months = last12Months.reverse();
+    
+    return last12Months;
+}
+
+// Returns the month and year given a timestamp
+function getMonthYear(timestamp){
+    let monthName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const timestampDate = new Date(timestamp)
+    return `${monthName[timestampDate.getMonth()]} ${timestampDate.getFullYear()}`
 }
