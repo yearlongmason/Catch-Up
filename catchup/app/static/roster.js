@@ -31,9 +31,9 @@ function getData() {
         // Put all values into an object
         // Append new object to allQuotes array
         currID = allQuoteTags[i].getElementsByClassName("catchUpQuoteID")[0].innerHTML
-        currText = allQuoteTags[i].getElementsByClassName("catchUpQuoteText")[0].innerHTML.slice(0, -2)
+        currText = allQuoteTags[i].getElementsByClassName("catchUpQuoteText")[0].innerHTML
         currAuthor = allQuoteTags[i].getElementsByClassName("catchUpQuoteAuthor")[0].innerHTML
-        currDate = allQuoteTags[i].getElementsByClassName("catchUpQuoteDate")[0].innerHTML.slice(1, -1)
+        currDate = allQuoteTags[i].getElementsByClassName("catchUpQuoteDate")[0].innerHTML
         allQuotes.push({"quote_id":currID, "quote":currText, "author":currAuthor, "date":currDate, "timestamp":Date.parse(currDate)})
     }
 

@@ -3,13 +3,14 @@ let ALL_DATA
 let MIN_NUM_QUOTES = 3
 
 window.onload = (event) => {
-    ALL_DATA = getData() // Set allData constant
+    ALL_DATA = getData() // Set ALL_DATA constant
 
     // Check for minimum quote requirement
     if (ALL_DATA.length < MIN_NUM_QUOTES) {
         document.getElementById("dataViz").innerHTML = `<h1 class="text-3xl text-white mb-8">Sorry, a server must have at least ${MIN_NUM_QUOTES} quotes to see the stats page!</h1>`
     }
 
+    // Render visualizations
     updateMostQuoted()
     renderNumQuotesByAuthorChart()
 };
@@ -22,15 +23,15 @@ function getData() {
     let allQuoteTags = document.getElementsByClassName("catchUpQuote")
     let allQuotes = []
 
-    // Loop through each quote div it found
+    // Loop through each quote div
     for(let i = 0; i < allQuoteTags.length; i++){
         // Individually get the quote (text), author, and date
         // Put all values into an object
         // Append new object to allQuotes array
         currID = allQuoteTags[i].getElementsByClassName("catchUpQuoteID")[0].innerHTML
-        currText = allQuoteTags[i].getElementsByClassName("catchUpQuoteText")[0].innerHTML.slice(0, -2)
+        currText = allQuoteTags[i].getElementsByClassName("catchUpQuoteText")[0].innerHTML
         currAuthor = allQuoteTags[i].getElementsByClassName("catchUpQuoteAuthor")[0].innerHTML
-        currDate = allQuoteTags[i].getElementsByClassName("catchUpQuoteDate")[0].innerHTML.slice(1, -1)
+        currDate = allQuoteTags[i].getElementsByClassName("catchUpQuoteDate")[0].innerHTML
         allQuotes.push({"quote_id":currID, "quote":currText, "author":currAuthor, "date":currDate, "timestamp":Date.parse(currDate)})
     }
 
@@ -44,39 +45,28 @@ function getUniqueAuthors() {
 
 // Get the number of times an element occurs in an array
 function getNumOccurrences(array, element) {
-    let numOccurrences = 0;
-    for (let i = 0; i < array.length; i++) {
-        if (array[i] == element){
-            numOccurrences += 1
-        }
-    }
-
-    return numOccurrences
+    return array.filter(x => x === element).length;
 }
 
 // Gets the most quoted author and display them on the banner at the top
 function updateMostQuoted() {
-    mostQuotedAuthor = ""
-    uniqueAuthors = getUniqueAuthors()
-    mostQuotes = 0
-    allQuoteAuthors = ALL_DATA.map((quote) => quote.author)
+    // Get the most quoted author
+    let quoteCounts = getQuoteCountsPerAuthor()
+    let mostQuotedAuthor = quoteCounts[quoteCounts.length - 1];
 
-    // Loop through all unique authors
-    for (let i = 0; i < uniqueAuthors.length; i++) {
-        if (getNumOccurrences(allQuoteAuthors, uniqueAuthors[i]) > mostQuotes){
-            mostQuotes = getNumOccurrences(allQuoteAuthors, uniqueAuthors[i])
-            mostQuotedAuthor = uniqueAuthors[i]
-        }
-    }
-
+    // Update most quoted user banner
     let mostQuotedUserTag = document.getElementById("mostQuotedUser")
     let numberOfQuotesTag = document.getElementById("numberOfQuotes")
-    mostQuotedUserTag.innerText = mostQuotedAuthor;
-    numberOfQuotesTag.innerText = `${mostQuotes} Quotes`;
+    mostQuotedUserTag.innerText = mostQuotedAuthor.author;
+    numberOfQuotesTag.innerText = `${mostQuotedAuthor.numQuotes} Quotes`;
+
+    // Make banner text visible
     mostQuotedUserTag.classList.remove('hidden')
     numberOfQuotesTag.classList.remove('hidden')
 }
 
+// Returns array of all author quote counts
+// e.g. [{author: "Mason", numQuotes: 117}, {author: "John", numQuotes: 343}]
 function getQuoteCountsPerAuthor() {
     let uniqueAuthors = getUniqueAuthors();
     let allQuoteAuthors = ALL_DATA.map((quote) => quote.author)
@@ -87,6 +77,8 @@ function getQuoteCountsPerAuthor() {
         currentAuthor = uniqueAuthors[i]
         authorCounts.push(getNumOccurrences(allQuoteAuthors, currentAuthor))
     }
+
+    // Return sorted array
     return uniqueAuthors.map((author, i) => ({
         author: author,
         numQuotes: authorCounts[i]})).sort((a, b) => a.numQuotes - b.numQuotes)

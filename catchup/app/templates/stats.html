@@ -14,6 +14,20 @@
   <script src="{% static 'stats.js' %}"></script>
 </head>
 <body class="bg-blue-500 text-gray-800">
+
+    <!--This is used to get all quotes to the JavaScript-->
+    <div id="allQuotes" class="">
+        {% for item in data %}
+            <div class="hidden">
+                <div class="catchUpQuote">
+                    <p class="catchUpQuoteID">{{item.quote_id}}</p>
+                    <p class="text-gray-800 float-left catchUpQuoteText">{{item.quote}}</p>
+                    <p class="text-gray-800 float-left pl-1 catchUpQuoteAuthor">{{item.author}}</p>
+                    <p class="text-gray-800 float-right catchUpQuoteDate">{{item.date_quoted}}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
   
     <!-- Navbar -->
     <nav class="bg-orange-400 text-white shadow-md top-0 left-0 w-full z-10">
@@ -27,27 +41,15 @@
         </div>
     </nav>
 
-    <div id="allQuotes" class="">
-        {% for item in data %}
-            <div class="hidden">
-                <div class="catchUpQuote">
-                    <p class="catchUpQuoteID">{{item.quote_id}}</p>
-                    <p class="text-gray-800 float-left catchUpQuoteText">{{item.quote}} -</p>
-                    <p class="text-gray-800 float-left pl-1 catchUpQuoteAuthor">{{item.author}}</p>
-                    <p class="text-gray-800 float-right catchUpQuoteDate">({{item.date_quoted}})</p>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
     <div id="dataViz" class="container mx-auto p-6">
 
+        <!--Most quoted user banner-->
         <div class="bg-orange-400 text-white p-6 rounded-lg mb-8 shadow-md flex items-center justify-between">
             <div class="flex items-center space-x-4">
                 <span class="text-3xl font-semibold">Most Quoted User:</span>
                 <span id="mostQuotedUser" class="text-3xl font-semibold hidden">John Doe</span>
             </div>
-            <span id="numberOfQuotes" class="text-3xl font-medium hidden">100 Quotes</span>
+            <span id="numberOfQuotes" class="text-3xl font-medium hidden">N Quotes</span>
         </div>
     
         <!-- 2x2 Grid for Visualizations -->
@@ -55,7 +57,7 @@
             <div class="bg-white p-4 rounded shadow-md">
                 <h2 class="text-xl font-semibold mb-4">Number of Quotes per Author</h2>
                 <!-- Placeholder -->
-                <div class="bg-gray-200 h-240 rounded-md relative">
+                <div class="bg-white h-240 rounded-md relative">
                     <canvas id="numQuotesByAuthor" class="w-full h-full"></canvas>
                 </div>
             </div>
