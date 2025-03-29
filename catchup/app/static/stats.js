@@ -13,6 +13,7 @@ window.onload = (event) => {
     // Render visualizations
     updateMostQuoted()
     renderNumQuotesByAuthorChart()
+    renderWordCountsChart()
 };
 
 // beep boop beep boop
@@ -48,54 +49,52 @@ function getNumOccurrences(array, element) {
     return array.filter(x => x === element).length;
 }
 
+// Returns array of all element frequencies from an array
+// e.g. [{element: "Mason", frequency: 117}, {element: "John", frequency: 343}]
+function getFrequencies(array) {
+    let uniqueElements = Array.from(new Set(array));
+    let frequencies = [];
+
+    // Get the count of each element in the array
+    uniqueElements.forEach(element => { frequencies.push(getNumOccurrences(array, element)) });
+
+    // Return sorted array
+    return uniqueElements.map((element, i) => ({
+        element: element,
+        frequency: frequencies[i]
+    })
+    ).sort((a, b) => a.frequency - b.frequency)
+}
+
 // Gets the most quoted author and display them on the banner at the top
 function updateMostQuoted() {
     // Get the most quoted author
-    let quoteCounts = getQuoteCountsPerAuthor()
+    let quoteCounts = getFrequencies(ALL_DATA.map((quote) => quote.author))
     let mostQuotedAuthor = quoteCounts[quoteCounts.length - 1];
 
     // Update most quoted user banner
     let mostQuotedUserTag = document.getElementById("mostQuotedUser")
     let numberOfQuotesTag = document.getElementById("numberOfQuotes")
-    mostQuotedUserTag.innerText = mostQuotedAuthor.author;
-    numberOfQuotesTag.innerText = `${mostQuotedAuthor.numQuotes} Quotes`;
+    mostQuotedUserTag.innerText = mostQuotedAuthor.element;
+    numberOfQuotesTag.innerText = `${mostQuotedAuthor.frequency} Quotes`;
 
     // Make banner text visible
     mostQuotedUserTag.classList.remove('hidden')
     numberOfQuotesTag.classList.remove('hidden')
 }
 
-// Returns array of all author quote counts
-// e.g. [{author: "Mason", numQuotes: 117}, {author: "John", numQuotes: 343}]
-function getQuoteCountsPerAuthor() {
-    let uniqueAuthors = getUniqueAuthors();
-    let allQuoteAuthors = ALL_DATA.map((quote) => quote.author)
-    let authorCounts = [];
-
-    // Set all authors to 0 initially
-    for (let i = 0; i < uniqueAuthors.length; i++) {
-        currentAuthor = uniqueAuthors[i]
-        authorCounts.push(getNumOccurrences(allQuoteAuthors, currentAuthor))
-    }
-
-    // Return sorted array
-    return uniqueAuthors.map((author, i) => ({
-        author: author,
-        numQuotes: authorCounts[i]})).sort((a, b) => a.numQuotes - b.numQuotes)
-}
-
-// Creates a chart that displays the number of quotes
+// Creates a chart that displays the number of quotes by author
 function renderNumQuotesByAuthorChart() {
-    let quoteCountsPerAuthor = getQuoteCountsPerAuthor()
+    let quoteCountsPerAuthor = getFrequencies(ALL_DATA.map((quote) => quote.author))
 
     const chartCanvas = document.getElementById('numQuotesByAuthor').getContext('2d');
     const chart = new Chart(chartCanvas, {
         type: "bar",
         data: {
-            labels: quoteCountsPerAuthor.map((author) => author.author), // x axis labels
+            labels: quoteCountsPerAuthor.map((author) => author.element), // x axis labels
             datasets: [{
                 label: 'Number of Quotes',
-                data: quoteCountsPerAuthor.map((author) => author.numQuotes), // Y-axis data
+                data: quoteCountsPerAuthor.map((author) => author.frequency), // Y-axis data
                 backgroundColor: '#fb923c', // Bar color
                 borderColor: '#fb923c', // Border color
                 borderWidth: 1
@@ -104,9 +103,74 @@ function renderNumQuotesByAuthorChart() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    //min: 0,
+                    //max: Math.max(quoteCountsPerAuthor.map((author) => author.frequency)) + 1
+                }
+            }
+        }
+    })
+}
+
+// Set string to title case
+// "mason and john are cool" -> "Mason And John Are Cool"
+function titleCase(s) {
+    return s.toLowerCase()
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+}
+
+// Gets word counts of all quotes combined
+function getWordCounts() {
+    // Get all quotes as a single string with no punctuation and all lowercase
+    let formattedQuotesString = ALL_DATA.map((currentQuote) => currentQuote.quote).join(" ")
+    formattedQuotesString = formattedQuotesString.replace(/[^a-zA-Z ]/g, "").toLowerCase()
+    return getFrequencies(formattedQuotesString.split(" "))
+}
+
+// Creates a chart that displays the number of quotes
+function renderWordCountsChart() {
+    let quoteCountsPerAuthor = getWordCounts()
+
+    // If more than 10 words, only take the top 10 most frequent words
+    if (quoteCountsPerAuthor.length > 10) {
+        quoteCountsPerAuthor = quoteCountsPerAuthor.slice(Math.max(quoteCountsPerAuthor.length - 10))
+    }
+
+    const chartCanvas = document.getElementById('wordFrequencyChart').getContext('2d');
+    const chart = new Chart(chartCanvas, {
+        type: "bar",
+        data: {
+            labels: quoteCountsPerAuthor.map((word) => titleCase(word.element)), // x axis labels
+            datasets: [{
+                label: 'Word Frequency',
+                data: quoteCountsPerAuthor.map((word) => word.frequency), // Y-axis data
+                backgroundColor: '#fb923c', // Bar color
+                borderColor: '#fb923c', // Border color
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    //min: 0,
+                    //max: Math.max(quoteCountsPerAuthor.map((author) => author.frequency)) + 1
                 }
             }
         }
