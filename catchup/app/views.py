@@ -12,9 +12,6 @@ dotenv.load_dotenv()
 
 auth_url_discord = "https://discord.com/oauth2/authorize?client_id=1302647415802826855&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Fdiscord_login%2Fredirect&scope=guilds+identify"
 
-def home(request):
-    return render(request, "home.html") 
-
 @login_required(login_url="discord_login/")
 def get_authenticated_user(request):
     return redirect('servers/')
@@ -76,6 +73,8 @@ def roster(request):
     
     mydata = Quotes.objects.filter(server_id=this_server_id).values
 
+    # TODO If this_server_id == None redirect to error page
+
     context = {'server_id' : this_server_id,
                'data' : mydata,
                'server_name' : this_server_name,
@@ -120,9 +119,6 @@ def word_scramble(request):
                'server_id' : this_server_id
             }
     return render(request, "wordScramble.html", context)
-
-def testroster(request):
-    return render(request, "testroster.html")
 
 def discord_login(request):
     return redirect(auth_url_discord)
