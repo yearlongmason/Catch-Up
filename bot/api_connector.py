@@ -6,7 +6,8 @@ import random
 
 dotenv.load_dotenv()
 
-header = {"Authorization": f'Api-Key {os.getenv('API_KEY')}'}
+api_key = os.getenv('API_KEY')
+header = {"Authorization": f'Api-Key {api_key}'}
 
 # main is mostly just for testing stuff this file is not meant to be run
 def main():
@@ -52,7 +53,9 @@ def get_random_quote(server_id: str):
 
     quotes = response.json()
     quote = quotes[random.randrange(len(quotes))]
-    return f'"{quote['quote']}" - {quote['author']}'
+    quoteString = quote['quote']
+    quoteAuthor = quote['author']
+    return f'"{quoteString}" - {quoteAuthor}'
 
 # main is mostly just for testing stuff this file is not meant to be run
 if  __name__ == "__main__":
