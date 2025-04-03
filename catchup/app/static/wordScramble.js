@@ -4,9 +4,29 @@ function scrambleSentence(sentence) {
     return sentence.split(' ').sort(() => 0.5 - Math.random()).join(' ');
 }
 
+function togleButtonVisibility(shouldEnable) {
+	var guessButton = document.getElementById('submitbutton');
+	var refreshButton = document.getElementById('nextSentence');
+
+	if (shouldEnable) {
+		guessButton.disabled = false;
+		guessButton.style.visibility = 'visible';
+		refreshButton.disabled = false;
+		refreshButton.style.visibility = 'visible';
+	}
+	else {
+		guessButton.disabled = true;
+		guessButton.style.visibility = 'hidden';
+		refreshButton.disabled = true;
+		refreshButton.style.visibility = 'hidden';
+	}
+}
+
 function getQuote()
 {
     document.getElementById('scrambledSentence').textContent = "Loading Quote...";
+    togleButtonVisibility(false);
+
     const other_params = {
         method: 'GET', 
         headers: {
@@ -41,6 +61,7 @@ function displaySentence(quote) {
     document.getElementById('scrambledSentence').textContent = scrambledSentence;
     document.getElementById('userGuess').value = '';
     document.getElementById('result').textContent = '';
+    togleButtonVisibility(true);
 }
 
 function checkAnswer() {
@@ -50,7 +71,6 @@ function checkAnswer() {
     if (userGuess.toLowerCase() === currentQuote.toLowerCase()) {
         result.textContent = "Correct! Well done!";
         result.className = "text-green-500";
-        document.getElementById('nextSentence').classList.remove('hidden');
     } else {
         result.textContent = "Oops! Try again.";
         result.className = "text-red-500";
@@ -59,7 +79,6 @@ function checkAnswer() {
 
 function nextScrambledSentence() {
     getQuote()
-    document.getElementById('nextSentence').classList.add('hidden');
 }
 
 window.onload = (event) => {
