@@ -73,7 +73,8 @@ def roster(request):
     
     mydata = Quotes.objects.filter(server_id=this_server_id).values
 
-    # TODO If this_server_id == None redirect to error page
+    if this_server_id == None:
+        return render(request, "404.html")
 
     context = {'server_id' : this_server_id,
                'data' : mydata,
@@ -119,6 +120,9 @@ def word_scramble(request):
                'server_id' : this_server_id
             }
     return render(request, "wordScramble.html", context)
+
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
 
 def discord_login(request):
     return redirect(auth_url_discord)

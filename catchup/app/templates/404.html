@@ -1,15 +1,13 @@
-<!DOCTYPE html>
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catch Up!</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>404!!!</title>
     <link rel="icon" type="image/x-icon" href="{% static '/catchUpFavicon.png' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
-
 <body class="bg-blue-500 flex justify-center items-center min-h-screen">
     <nav class="bg-orange-400 text-white shadow-md fixed top-0 left-0 w-full z-10">
         <div class="container mx-auto px-4 py-2 flex justify-between items-center">
@@ -18,17 +16,19 @@
             <button onclick="document.getElementById('homeLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="homeLink" class="text-lg" href="/">Home</a></button>
             <button onclick="document.getElementById('aboutLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="aboutLink" class="text-lg" href="about/">About</a></button>
             <button onclick="document.getElementById('githubLink').click();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded"><a id="githubLink" target="_blank" class="text-lg" href="https://github.com/yearlongmason/Catch-Up">Github</a></button>
+            <button onclick="history.back();" class="text-blue-600 hover:text-blue-50 bg-blue-50 hover:bg-blue-700 px-4 py-2 rounded text-lg">Back</button>
           </div>
         </div>
     </nav>
-
-    <div class="p-8 rounded-lg shadow-lg w-96 outline bg-orange-400">
-        <img src="{% static '/catchUpLogo.png' %}" alt="App Icon" class="mx-auto mb-4 rounded">
-            <!-- Submit Button -->
-            <button onclick="document.getElementById('loginLink').click();" class="hover:text-blue-50 w-full p-3 bg-blue-50 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                <a href="loggedIn" id="loginLink">Log In With Discord</a> 
-            </button>
+    
+    <div>
+        <img src="{% static '/404error.png' %}" alt="404!!!">
+        <div class="p-8 rounded-lg shadow-lg w-96 outline bg-orange-400">
+            <p class="text-lg">We could not find the page you are looking for.</p>
+        </div>
     </div>
-
+    
+    
+    
 </body>
 </html>
