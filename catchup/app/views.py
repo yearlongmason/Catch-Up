@@ -148,7 +148,7 @@ def exchange_code(code):
         "client_secret" : os.getenv('CLIENT_SECRET'),
         "grant_type" : "authorization_code",
         "code" : code,
-        "redirect_uri" : "http://127.0.0.1:8000/discord_login/redirect",
+        "redirect_uri" : os.getenv('DISCORD_LOGIN_REDIRECT'),
         "scope" : "identify guilds"
     }
     headers = {
