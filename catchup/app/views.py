@@ -161,7 +161,6 @@ def exchange_code(code):
     })
     user = response.json()
     user["access_token"] = access_token
-    print(access_token)
 
     return user
 
