@@ -10,8 +10,7 @@ from .models import Quotes
 
 dotenv.load_dotenv()
 
-auth_url_discord = "https://discord.com/oauth2/authorize?client_id=1302647415802826855&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Fdiscord_login%2Fredirect&scope=guilds+identify"
-
+auth_url_discord = os.getenv('DISCORD_AUTH_LINK')
 @login_required(login_url="discord_login/")
 def get_authenticated_user(request):
     return redirect('servers/')
