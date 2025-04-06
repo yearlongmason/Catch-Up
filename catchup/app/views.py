@@ -123,6 +123,9 @@ def word_scramble(request):
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
 
+def custom_500(request, exception):
+    return render(request, '500.html', status=500)
+
 def discord_login(request):
     return redirect(auth_url_discord)
 

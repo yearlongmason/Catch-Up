@@ -4,6 +4,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls import handler404
 
 handler404 = views.custom_404
+handler500 = views.custom_500
 
 urlpatterns  = [
     path("", views.landing, name="landing"),
