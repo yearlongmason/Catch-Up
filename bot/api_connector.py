@@ -37,6 +37,9 @@ def get_quote_id(server_id: str):
 
     response = requests.get(api_url, data=data, headers=header)
     quote_id = response.json()
+    if len(quote_id) == 0:
+        return 1
+    
     try:
         new_id = quote_id[-1]['quote_id'] + 1
     except KeyError:
@@ -49,6 +52,7 @@ def get_random_quote(server_id: str):
     response = requests.get(url=api_url, headers=header)
 
     if response.status_code != 200:
+        print(response)
         print("Something went wrong!!!")
 
     quotes = response.json()
