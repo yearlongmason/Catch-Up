@@ -1,0 +1,27 @@
+First run the command
+	pip intall requirements.txt
+
+Then to run website
+	python catchup/manage.py runserver
+
+Or to run the bot 
+	python bot/bot_main.py
+
+You will also need an env to run it, the .env file should be placed at the base dir of the project
+It should have the following fields.
+	DISCORD_TOKEN=
+	MYSQL_HOST=
+	MYSQL_USER=
+	MYSQL_PASS=""
+	MYSQL_DB=
+	APPLICATION_ID=
+	CLIENT_SECRET=
+	SECRET_KEY=
+	QUOTE_API_URL=
+	ID_API_URL=
+	RANDOM_API_URL=
+	API_KEY=
+	DELETE_QUOTE_URL=
+	DISCORD_LOGIN_REDIRECT=
+	DISCORD_AUTH_LINK=
+	
