@@ -47,20 +47,20 @@ function getQuote()
         .then(data => {
           rand_index = Math.floor(Math.random() * data.length);
           var quote = data[rand_index];
-          console.log(quote['quote'])
-          displaySentence(quote['quote']);
+          displaySentence(quote['quote'], quote['author']);
         })
         .catch(error => {
           console.error(error);
         });
 }
 
-function displaySentence(quote) {
+function displaySentence(quote, author) {
     currentQuote = quote;
     let scrambledSentence = scrambleSentence(quote);
     document.getElementById('scrambledSentence').textContent = scrambledSentence;
     document.getElementById('userGuess').value = '';
     document.getElementById('result').textContent = '';
+    document.getElementById('author').textContent = "Said by: " + author;
     togleButtonVisibility(true);
 }
 
