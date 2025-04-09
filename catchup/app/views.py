@@ -157,6 +157,10 @@ def exchange_code(code):
         'Content-Type' : 'application/x-www-form-urlencoded'
     }
     response = requests.post("https://discord.com/api/oauth2/token", data=data, headers=headers)
+    
+    if response.status_code != 200:
+        print("Error Response Text:", response.text)
+
     credentials = response.json()
     access_token = credentials["access_token"]
     response = requests.get("https://discord.com/api/v8/users/@me", headers={
