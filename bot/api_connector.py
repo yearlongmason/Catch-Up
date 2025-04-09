@@ -53,6 +53,8 @@ def get_random_quote(server_id: str):
 
     if response.status_code != 200:
         print(response)
+        print(response.text)
+        print(response.headers)
         print("Something went wrong!!!")
 
     quotes = response.json()
