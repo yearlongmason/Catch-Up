@@ -160,6 +160,7 @@ def exchange_code(code):
     
     if response.status_code != 200:
         print("Error Response Text:", response.text)
+        print(response.status_code)
 
     credentials = response.json()
     access_token = credentials["access_token"]
