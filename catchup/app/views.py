@@ -7,6 +7,7 @@ import os
 from django.contrib.auth.decorators import login_required
 from .forms import ServerForm
 from .models import Quotes
+from time import sleep
 
 dotenv.load_dotenv()
 
@@ -131,15 +132,14 @@ def discord_login(request):
 
 def discord_login_redirect(request):
     code = request.GET.get("code")
+    # Check if token is already cached in session to avoid re-exchange
+    if request.session.get('new_access_token'):
+        return redirect('loggedIn')
+    
     user = exchange_code(code=code)
     discord_user = authenticate(request, user=user)
-    
-    try:
-        discord_user = list(discord_user).pop()
-    except TypeError:
-        discord_user = discord_user
-
     login(request, discord_user)
+    # Store the token in session after successful exchange
     request.session['new_access_token'] = user["access_token"]
     return redirect('loggedIn')
 
@@ -156,10 +156,13 @@ def exchange_code(code):
     headers = {
         'Content-Type' : 'application/x-www-form-urlencoded'
     }
-    response = requests.post("https://discord.com/api/oauth2/token", data=data, headers=headers)
+    response = requests.post("https://discord.com/api/v8/oauth2/token", data=data, headers=headers)
     
-    if response.status_code != 200:
-        print("Error Response Text:", response.text)
+    if response.status_code == 429:
+        # we are getting rate limited!!!
+        print(response.headers)
+        print(response)
+
 
     credentials = response.json()
     access_token = credentials["access_token"]
@@ -167,6 +170,7 @@ def exchange_code(code):
         'Authorization' : 'Bearer %s' % access_token
     })
     user = response.json()
+    print(user)
     user["access_token"] = access_token
 
     return user

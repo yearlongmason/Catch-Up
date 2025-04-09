@@ -9,7 +9,7 @@ class DiscordAuthenticationBackend(BaseBackend):
             new_user = models.DiscordUser.objects.create_new_discord_user(user)
             print(new_user)
             return new_user
-        return find_user
+        return find_user.first()
     
     def get_user(self, user_id):
         try:

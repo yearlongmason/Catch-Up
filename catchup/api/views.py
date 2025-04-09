@@ -54,6 +54,7 @@ class GetID(generics.ListAPIView):
 
 class GetRandomQuote(APIView):
     def get(self, request, serverid):
+        print("Someone made a random quote request!!!")
         try:
             Quotes = apps.get_model('app', 'Quotes')
             data = Quotes.objects.all().filter(server_id = serverid)

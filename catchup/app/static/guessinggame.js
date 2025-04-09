@@ -17,13 +17,14 @@ function randomQuoteRequest() {
 		'Content-Type': 'application/json'
 	}
 	};
-	const URL = api_url + `${server_id}/`;
+	var full_url = api_url + `${server_id}/`;
 
-	fetch(URL, other_params)
+	fetch(full_url, other_params)
 	.then(response => {
 		if (response.ok) {
 			return response.json();
 		} else {
+			console.error(response.status);
 			throw new Error('API request failed');
 		}
 	})
