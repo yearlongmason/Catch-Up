@@ -17,7 +17,7 @@ function randomQuoteRequest() {
 		'Content-Type': 'application/json'
 	}
 	};
-	const URL = api_url + `${server_id}/`;
+	var URL = api_url + `${server_id}/`;
 
 	fetch(URL, other_params)
 	.then(response => {
