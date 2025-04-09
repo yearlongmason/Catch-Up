@@ -42,6 +42,9 @@ async def on_ready() -> None:
 async def quote(interaction: discord.Interaction, 
                 quote: str, author: str):
     author = author.title()
+    if len(quote) >= 280:
+        await interaction.response.send_message(f"Quote is above character limit!!! (280)")
+        return 
     await interaction.response.send_message(f"\"{quote}\" - {author}")
     api_connector.insert_quote(quote, interaction.guild_id, author)
 

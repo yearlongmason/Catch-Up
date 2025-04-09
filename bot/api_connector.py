@@ -52,10 +52,7 @@ def get_random_quote(server_id: str):
     response = requests.get(url=api_url, headers=header)
 
     if response.status_code != 200:
-        print(response)
-        print(response.text)
-        print(response.headers)
-        print("Something went wrong!!!")
+        print(response.headers.items())
 
     quotes = response.json()
     quote = quotes[random.randrange(len(quotes))]
