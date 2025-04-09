@@ -36,9 +36,10 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.AllowAny",
-    ]
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',  # Allow every request without checking credentials
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [],  # No authentication mechanisms enabled
 }
 
 # Application definition
