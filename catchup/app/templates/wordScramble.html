@@ -41,13 +41,11 @@
         </button>
     </div>
 
-
-    <script data-apikey="{{api_key}} data-apiurl{{api_url}} data-serverid={{server_id}}">
-        const data = document.currentScript.dataset;
-        const api_key = data.apikey;
-        const api_url = data.api_url
-        const server_id = data.server_id
-    </script>
+    <script>
+        var api_key = "{{api_key}}";
+        var api_url = "{{api_url}}";
+        var server_id = "{{server_id}}";
+      </script>
 
 </body>
 </html>
