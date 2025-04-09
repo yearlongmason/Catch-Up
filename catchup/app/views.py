@@ -163,8 +163,8 @@ def exchange_code(code):
         # we are getting rate limited!!!
         time_to_wait = float(response.headers.get("Retry-After")) / 1000
         print(f'We got rate  limited, wating for {time_to_wait+1} seconds')
-        sleep(time_to_wait+1)
-        response = requests.post("https://discord.com/api/oauth2/token", data=data, headers=headers)
+        print(response.headers)
+        print(response)
 
 
     credentials = response.json()
