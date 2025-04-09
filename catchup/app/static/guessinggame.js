@@ -19,7 +19,7 @@ function randomQuoteRequest() {
 	};
 	var URL = api_url + `${server_id}/`;
 
-	fetch(URL, other_params)
+	fetch(URL(), other_params)
 	.then(response => {
 		if (response.ok) {
 			return response.json();
