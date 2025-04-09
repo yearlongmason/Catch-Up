@@ -52,7 +52,6 @@ class GetID(generics.ListAPIView):
 #         return all
 
 class GetRandomQuote(APIView):
-    permission_classes = [rest_framework.permissions.AllowAny]
     def get(self, request, serverid):
         print("Someone made a random quote request!!!")
         try:
