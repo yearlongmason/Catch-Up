@@ -22,37 +22,7 @@ function togleButtonVisibility(shouldEnable) {
 	}
 }
 
-function getQuote()
-{
-    document.getElementById('scrambledSentence').textContent = "Loading Quote...";
-    togleButtonVisibility(false);
 
-    const other_params = {
-        method: 'GET', 
-        headers: {
-          'Authorization': `Api-Key ${api_key}`,
-          'Content-Type': 'application/json'
-        }
-      };
-      var full_url = api_url + `${server_id}/`;
-      
-      fetch(full_url, other_params)
-        .then(response => {
-          if (response.ok) {
-            return response.json(); 
-          } else {
-            throw new Error('API request failed');
-          }
-        })
-        .then(data => {
-          rand_index = Math.floor(Math.random() * data.length);
-          var quote = data[rand_index];
-          displaySentence(quote['quote'], quote['author']);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-}
 
 function displaySentence(quote, author) {
     currentQuote = quote;
