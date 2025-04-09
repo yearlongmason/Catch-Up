@@ -143,54 +143,37 @@ def discord_login_redirect(request):
     request.session['new_access_token'] = user["access_token"]
     return redirect('loggedIn')
 
-def exchange_code(code, max_retries=3):
+def exchange_code(code):
+    # ask the discord api for some user info using the acces token we got from the user
     data = {
-        "client_id": os.getenv('APPLICATION_ID'),
-        "client_secret": os.getenv('CLIENT_SECRET'),
-        "grant_type": "authorization_code",
-        "code": code,
-        "redirect_uri": os.getenv('DISCORD_LOGIN_REDIRECT'),
-        "scope": "identify guilds"
+        "client_id" :  os.getenv('APPLICATION_ID'),
+        "client_secret" : os.getenv('CLIENT_SECRET'),
+        "grant_type" : "authorization_code",
+        "code" : code,
+        "redirect_uri" : os.getenv('DISCORD_LOGIN_REDIRECT'),
+        "scope" : "identify guilds"
     }
-    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-    
-    retry_attempts = 0
-    while retry_attempts < max_retries:
-        response = requests.post("https://discord.com/api/v8/oauth2/token", data=data, headers=headers)
-        if response.status_code != 429:
-            break
-        retry_after_header = response.headers.get("Retry-After")
-        if retry_after_header:
-            try:
-                # Convert to seconds. Some endpoints return milliseconds.
-                retry_after = float(retry_after_header)
-                # If the number is unusually high (say > 60), assume it's in milliseconds.
-                if retry_after > 60:
-                    retry_after /= 1000
-                retry_after += 0.5  # small buffer
-            except ValueError:
-                retry_after = 5
-        else:
-            retry_after = 5  # default wait time if header not provided
-        
-        print(f'Rate limited on token exchange, waiting {retry_after:.2f} seconds...')
-        sleep(retry_after)
-        retry_attempts += 1
+    headers = {
+        'Content-Type' : 'application/x-www-form-urlencoded'
+    }
+    response = requests.post("https://discord.com/api/v8/oauth2/token", data=data, headers=headers)
     
     if response.status_code == 429:
-        raise Exception("Exceeded maximum retries for token exchange.")
-    
-    credentials = response.json()  # Break if not JSON
-    access_token = credentials.get("access_token")
-    if not access_token:
-        raise Exception(f"Token exchange failed: {credentials}")
-    
-    user_response = requests.get(
-        "https://discord.com/api/v8/users/@me",
-        headers={'Authorization': f'Bearer {access_token}'}
-    )
-    user = user_response.json()
+        # we are getting rate limited!!!
+        time_to_wait = float(response.headers.get("Retry-After")) / 1000
+        print(f'We got rate  limited, wating for {time_to_wait+1} seconds')
+        print(response.headers)
+        print(response)
+
+
+    credentials = response.json()
+    access_token = credentials["access_token"]
+    response = requests.get("https://discord.com/api/v8/users/@me", headers={
+        'Authorization' : 'Bearer %s' % access_token
+    })
+    user = response.json()
     user["access_token"] = access_token
+
     return user
 
 # returns a list of mutual servers that the bot and user are in
