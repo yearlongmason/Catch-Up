@@ -41,10 +41,11 @@
         </button>
     </div>
 
-    <script>
+    <script data-api_key="{{api_key}}">
         function getQuote()
         {
-        var api_key = "{{api_key}}";
+        var data = document.currentScript.dataset
+        var api_key = data.api_key;
         var api_url = "{{api_url}}";
         var server_id = "{{server_id}}";
         document.getElementById('scrambledSentence').textContent = "Loading Quote...";
