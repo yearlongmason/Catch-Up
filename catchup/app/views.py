@@ -157,15 +157,9 @@ def exchange_code(code):
         'Content-Type' : 'application/x-www-form-urlencoded'
     }
     response = requests.post("https://discord.com/api/oauth2/token", data=data, headers=headers)
-    print(response)
-    print(response)
-    print(response)
-    print(response)
-    print(response)
-    print(response)
     credentials = response.json()
     access_token = credentials["access_token"]
-    response = requests.get("https://discord.com/api/v6/users/@me", headers={
+    response = requests.get("https://discord.com/api/v8/users/@me", headers={
         'Authorization' : 'Bearer %s' % access_token
     })
     user = response.json()
