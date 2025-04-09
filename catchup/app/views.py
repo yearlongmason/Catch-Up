@@ -170,9 +170,10 @@ def exchange_code(code):
         'Authorization' : 'Bearer %s' % access_token
     })
     user = response.json()
+    print(user)
     user["access_token"] = access_token
 
-    return user[0]
+    return user
 
 # returns a list of mutual servers that the bot and user are in
 # make sure to prefix all info requests for the bot with the keyword "bot"!!!!!!
