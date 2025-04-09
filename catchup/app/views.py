@@ -132,15 +132,14 @@ def discord_login(request):
 
 def discord_login_redirect(request):
     code = request.GET.get("code")
+    # Check if token is already cached in session to avoid re-exchange
+    if request.session.get('new_access_token'):
+        return redirect('loggedIn')
+    
     user = exchange_code(code=code)
     discord_user = authenticate(request, user=user)
-    
-    try:
-        discord_user = list(discord_user).pop()
-    except TypeError:
-        discord_user = discord_user
-
     login(request, discord_user)
+    # Store the token in session after successful exchange
     request.session['new_access_token'] = user["access_token"]
     return redirect('loggedIn')
 
