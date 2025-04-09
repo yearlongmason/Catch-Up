@@ -3,7 +3,7 @@ from . import models
 
 class DiscordAuthenticationBackend(BaseBackend):
     def authenticate(self, request, user) -> models.DiscordUser:
-        find_user = models.DiscordUser.objects.filter(id=user['id'])
+        find_user = models.DiscordUser.objects.filter(id=user['id']).first()
         if len(find_user) == 0:
             print("User was not found. Saving...")
             new_user = models.DiscordUser.objects.create_new_discord_user(user)
