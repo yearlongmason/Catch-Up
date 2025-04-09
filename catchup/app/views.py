@@ -161,7 +161,8 @@ def exchange_code(code):
     if response.status_code != 200:
         print("Error Response Text:", response.text)
         print(response.status_code)
-
+        print(response.headers.get("Retry-After"))
+        
     credentials = response.json()
     access_token = credentials["access_token"]
     response = requests.get("https://discord.com/api/v8/users/@me", headers={
