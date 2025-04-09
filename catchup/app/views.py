@@ -7,6 +7,7 @@ import os
 from django.contrib.auth.decorators import login_required
 from .forms import ServerForm
 from .models import Quotes
+from time import sleep
 
 dotenv.load_dotenv()
 
@@ -158,11 +159,13 @@ def exchange_code(code):
     }
     response = requests.post("https://discord.com/api/oauth2/token", data=data, headers=headers)
     
-    if response.status_code != 200:
-        print("Error Response Text:", response.text)
-        print(response.status_code)
-        print(response.headers.get("Retry-After"))
-        
+    if response.status_code == 429:
+        # we are getting rate limited!!!
+        time_to_wait = float(response.headers.get("Retry-After")) / 1000
+        print(f'We got rate  limited, wating for {time_to_wait} seconds')
+        sleep(time_to_wait)
+
+
     credentials = response.json()
     access_token = credentials["access_token"]
     response = requests.get("https://discord.com/api/v8/users/@me", headers={
