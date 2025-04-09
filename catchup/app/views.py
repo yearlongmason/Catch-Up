@@ -160,8 +160,6 @@ def exchange_code(code):
     
     if response.status_code == 429:
         # we are getting rate limited!!!
-        time_to_wait = float(response.headers.get("Retry-After")) / 1000
-        print(f'We got rate  limited, wating for {time_to_wait+1} seconds')
         print(response.headers)
         print(response)
 
@@ -174,7 +172,7 @@ def exchange_code(code):
     user = response.json()
     user["access_token"] = access_token
 
-    return user
+    return user[0]
 
 # returns a list of mutual servers that the bot and user are in
 # make sure to prefix all info requests for the bot with the keyword "bot"!!!!!!
