@@ -249,19 +249,23 @@ function quoteExists(quote_id){
 function deleteQuote(){
     // Ensure quote ID exists in data
     if (!quoteExists(quoteToDeleteID)){
-        return
+        document.getElementById("confirmDelete").value = -1;
+        return;
     }
 
     // Actually delete quote, like for real
-    deleteQuoteRequest(quoteToDeleteID)
+    //deleteQuoteRequest(quoteToDeleteID)
+
+    // Setting value delete  button to quote id or -1 to cancel
+    document.getElementById("confirmDelete").value = quoteToDeleteID;
 
     // Remove quote from ALL_DATA and update roster
-    ALL_DATA = ALL_DATA.filter((quote) => quote.quote_id != quoteToDeleteID)
+    ALL_DATA = ALL_DATA.filter((quote) => quote.quote_id != quoteToDeleteID);
     updateRoster();
 
     // Hide modal and reset quoteToDeleteID to invalid id
-    hideModal()
-    quoteToDeleteID = -1
+    hideModal();
+    quoteToDeleteID = -1;
 }
 
 //function to make an api call to delete a quote

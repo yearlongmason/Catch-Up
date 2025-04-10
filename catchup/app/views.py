@@ -5,7 +5,7 @@ import requests
 import dotenv
 import os
 from django.contrib.auth.decorators import login_required
-from .forms import ServerForm, QuoteForm
+from .forms import ServerForm, QuoteDeleteForm
 from .models import Quotes
 from time import sleep
 from random import randrange, shuffle
@@ -78,7 +78,10 @@ def roster(request):
         return render(request, "404.html")
 
     if request.method == 'POST':
-        delete_quote(0)
+        del_form = QuoteDeleteForm(request.POST)
+        quote_id = del_form.cleaned_data.get("delbtn")
+        if quote_id != -1:
+            delete_quote(quoteid=quote_id)
 
     context = {'server_id' : this_server_id,
                'data' : mydata,
@@ -238,10 +241,9 @@ def scramble_sentence_or_word(text):
 
 # to delete a quote..... ya!!!!
 def delete_quote(quoteid) -> bool:
-    return True
-    #try:
-        #Quotes.objects.all().filter(quote_id=quoteid).delete()
-    #except:
-        #return False
+    try:
+        Quotes.objects.all().filter(quote_id=quoteid).delete()
+    except:
+        return False
 
-    #return True
+    return True
