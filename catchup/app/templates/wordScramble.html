@@ -26,8 +26,8 @@
     <div class="bg-white p-8 rounded-lg shadow-lg max-w-md text-center">
         <h1 class="text-2xl font-bold mb-4">Sentence Scramble Minigame</h1>
         <p class="text-gray-600 mb-6">Rearrange the scrambled sentence into its correct order</p>
-        <div id="scrambledSentence" class="text-xl font-semibold text-blue-500 mb-4"></div>
-        <div id="author" class="text-xl font-semibold text-blue-500 mb-4">Said by: </div>
+        <div id="scrambledSentence" class="text-xl font-semibold text-blue-500 mb-4">{{scrambled}}</div>
+        <div id="author" class="text-xl font-semibold text-blue-500 mb-4">Said by: {{author}}</div>
         <textarea class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" name="textarea" id="userGuess" placeholder="Type the correct sentence here"></textarea>
         <br>
         <button id="submitbutton" onclick="checkAnswer()"
@@ -35,47 +35,14 @@
             Submit
         </button>
         <p id="result" class="mt-4 font-semibold"></p>
-        <button id="nextSentence" onclick="nextScrambledSentence()"
+        <button id="nextSentence" onclick="getNewQuote()"
                 class="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 focus:outline-none mt-4">
             Next Sentence
         </button>
     </div>
 
     <script >
-        function getQuote()
-        {
-        var api_key = "{{api_key}}";
-        var api_url = "{{api_url}}";
-        var server_id = "{{server_id}}";
-        document.getElementById('scrambledSentence').textContent = "Loading Quote...";
-        togleButtonVisibility(false);
-
-        const other_params = {
-            method: 'GET', 
-            headers: {
-            'Authorization': `Api-Key ${api_key}`,
-            'Content-Type': 'application/json'
-            }
-        };
-        var full_url = api_url + `${server_id}/`;
-      
-        fetch(full_url, other_params)
-            .then(response => {
-            if (response.ok) {
-                return response.json(); 
-            } else {
-                throw new Error('API request failed');
-            }
-        })
-            .then(data => {
-              rand_index = Math.floor(Math.random() * data.length);
-              var quote = data[rand_index];
-              displaySentence(quote['quote'], quote['author']);
-            })
-            .catch(error => {
-              console.error(error);
-            });
-        }
+        var original = "{{orginal}}"
       </script>
 
 </body>

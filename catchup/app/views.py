@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import ServerForm, QuoteForm
 from .models import Quotes
 from time import sleep
-from random import randrange
+from random import randrange, shuffle
 
 dotenv.load_dotenv()
 
@@ -107,31 +107,21 @@ def mingames(request):
 @login_required(login_url="discord_login/")
 def guessing_game(request):
     quote = getRandomQuote(request)
-    this_server_id = request.session.get('server_id')
     context = {'quote' : quote["quote"],
                'author' : quote["author"],
             }
-    if request.method == 'POST':
-        server_form = QuoteForm(request.POST)
-        if server_form.is_valid():
-            quote = getRandomQuote(request)
-            newcontext = {'quote' : quote["quote"],
-               'author' : quote["author"],
-            }
-            context = newcontext
-            return render(request, "guessinggame.html", context)
-    else:
-        server_form = QuoteForm()
-        return render(request, "guessinggame.html", context)
+
+    return render(request, "guessinggame.html", context)
 
 
 @login_required(login_url="discord_login/")
 def word_scramble(request):
-    this_server_id = request.session.get('server_id')
-    context = {'api_key' : os.getenv('API_KEY'),
-               'api_url' : os.getenv('RANDOM_API_URL'),
-               'server_id' : this_server_id
+    quote = getRandomQuote(request)
+    context = {'orginal' : quote["quote"],
+               'scrambled' : scramble_sentence(quote["quote"]),
+               'author' : quote["author"],
             }
+    
     return render(request, "wordScramble.html", context)
 
 def custom_404(request, exception):
@@ -223,4 +213,10 @@ def getRandomQuote(request):
     index = randrange(0, len(serialized_data))
 
     return serialized_data[index]
+
+def scramble_sentence(sentence):
+    words = sentence.split()
+    shuffle(words)
+    scrambled = " ".join(words)
+    return scrambled
     
