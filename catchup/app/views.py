@@ -215,6 +215,7 @@ def getRandomQuote(request):
     return serialized_data[index]
 
 def scramble_sentence(sentence):
+    sentence = sentence.replace("'", "")
     words = sentence.split()
     shuffle(words)
     scrambled = " ".join(words)
