@@ -253,9 +253,6 @@ function deleteQuote(){
         return;
     }
 
-    // Actually delete quote, like for real
-    //deleteQuoteRequest(quoteToDeleteID)
-
     // Setting value delete  button to quote id or -1 to cancel
     document.getElementById("confirmDelete").value = quoteToDeleteID;
 
@@ -266,29 +263,4 @@ function deleteQuote(){
     // Hide modal and reset quoteToDeleteID to invalid id
     hideModal();
     quoteToDeleteID = -1;
-}
-
-//function to make an api call to delete a quote
-function deleteQuoteRequest(quote_id) {
-
-    const URL = api_url + `${quote_id}/`;
-    console.log("Deleting the quote " + quote_id)
-    const options = {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Api-Key ${api_key}`,
-        },
-    };
-
-    fetch(URL, options).then(response => {
-        if (response.ok) {
-            return response.json(); // Parse the response data as JSON
-        } else {
-            throw new Error('API request failed');
-        }
-    }).catch(error => {
-        // Handle any errors here
-        console.error(error); // Example: Logging the error to the console
-    });
 }

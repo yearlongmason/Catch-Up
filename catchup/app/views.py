@@ -88,9 +88,7 @@ def roster(request):
 
     context = {'server_id' : this_server_id,
                'data' : mydata,
-               'server_name' : this_server_name,
-               'api_key' : os.getenv('API_KEY'),
-               'api_url' : os.getenv('DELETE_QUOTE_URL')
+               'server_name' : this_server_name
                }
     
     return render(request, "roster.html", context)
@@ -249,4 +247,5 @@ def delete_quote(quoteid) -> bool:
     except:
         return False
 
+    print("worked!!!")
     return True
