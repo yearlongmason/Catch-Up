@@ -219,7 +219,7 @@ def scramble_sentence(sentence):
     words = sentence.split()
 
     #if its  just one word, scramble the word!!!
-    if len(words == 1):
+    if len(words) == 1:
         return "".join(shuffle(words.split))
     
     shuffle(words)
