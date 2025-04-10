@@ -23,6 +23,6 @@ document.addEventListener("keypress", function(event) {
         // Not sure if there actually is one right now, but better safe than sorry
         event.preventDefault();
         // Trigger the button element with a click
-        document.getElementById("nextSentence").click();
+        document.getElementById("submitbutton").click();
     }
 });
