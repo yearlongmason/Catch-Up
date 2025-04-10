@@ -78,7 +78,7 @@ def roster(request):
         return render(request, "404.html")
 
     if request.method == 'POST':
-        delete_quote()
+        delete_quote(0)
 
     context = {'server_id' : this_server_id,
                'data' : mydata,
