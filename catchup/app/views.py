@@ -118,6 +118,7 @@ def guessing_game(request):
             context = {'quote' : quote["quote"],
                'author' : quote["author"],
             }
+            return render(request, "guessinggame.html", context)
     else:
         server_form = ServerForm()
 

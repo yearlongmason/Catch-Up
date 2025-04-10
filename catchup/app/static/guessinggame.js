@@ -37,10 +37,6 @@ function togleButtonVisibility(shouldEnable) {
 window.onload = (event) => {
 	var guessButton = document.getElementById('guessButton');
 	guessButton.onclick = checkAnswer;
-
-	var refreshButton = document.getElementById('refreshButton');
-	refreshButton.onclick = refreshQuote;
-
 };
 
 // Adds keypress listener
