@@ -214,15 +214,16 @@ def getRandomQuote(request):
 
     return serialized_data[index]
 
-def scramble_sentence(sentence):
-    sentence = sentence.replace("'", "")
-    words = sentence.split()
-
-    #if its  just one word, scramble the word!!!
+def scramble_sentence_or_word(text):
+    words = text.split()
     if len(words) == 1:
-        return "".join(shuffle(words.split))
-    
-    shuffle(words)
-    scrambled = " ".join(words)
+        # Single word case: scramble its letters
+        word = list(words[0])
+        shuffle(word)
+        scrambled = "".join(word)
+    else:
+        # Multiple words case: shuffle the words
+        shuffle(words)
+        scrambled = " ".join(words)
     return scrambled
     
