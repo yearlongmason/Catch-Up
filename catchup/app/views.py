@@ -6,7 +6,7 @@ import dotenv
 import os
 from django.contrib.auth.decorators import login_required
 from .forms import ServerForm
-import models
+from .models import Quotes
 from time import sleep
 from random import randrange
 
@@ -209,7 +209,6 @@ def get_servers(servers):
 
 def getRandomQuote(request):
     this_server_id = request.session.get('server_id')
-    Quotes = get_model('app', 'Quotes')
     data = Quotes.objects.all().filter(server_id = this_server_id)
 
     if not data:
