@@ -118,7 +118,7 @@ def guessing_game(request):
 def word_scramble(request):
     quote = getRandomQuote(request)
     context = {'orginal' : quote["quote"].replace("'", ""),
-               'scrambled' : scramble_sentence(quote["quote"]),
+               'scrambled' : scramble_sentence_or_word(quote["quote"]),
                'author' : quote["author"],
             }
     
