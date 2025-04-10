@@ -117,7 +117,7 @@ def guessing_game(request):
 @login_required(login_url="discord_login/")
 def word_scramble(request):
     quote = getRandomQuote(request)
-    context = {'orginal' : quote["quote"],
+    context = {'orginal' : quote["quote"].replace("'", ""),
                'scrambled' : scramble_sentence(quote["quote"]),
                'author' : quote["author"],
             }
