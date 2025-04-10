@@ -1,60 +1,16 @@
 var correctAuthor = "";
 var rand_index;
 
-function randomQuoteRequest() {
-	var quote_element = document.getElementById("quote");
-	togleButtonVisibility(false)
-
-	// Reset result tag and input
-	document.getElementById("result").innerText = ""
-	document.getElementById('guess').value = ""
-
-	quote_element.textContent = "Loading Quote..."
-	const other_params = {
-	method: 'GET',
-	headers: {
-		'Authorization': `Api-Key ${api_key}`,
-		'Content-Type': 'application/json'
-	}
-	};
-	var full_url = api_url + `${server_id}/`;
-
-	fetch(full_url, other_params)
-	.then(response => {
-		if (response.ok) {
-			return response.json();
-		} else {
-			console.error(response.status);
-			throw new Error('API request failed');
-		}
-	})
-	.then(data => {
-		rand_index = Math.floor(Math.random() * data.length);
-		var quote = data[rand_index]
-		populateQuoteHtml(quote);
-	})
-	.catch(error => {
-		console.error(error);
-	});
-}
-
-function populateQuoteHtml(quote) {
-	var quote_element = document.getElementById("quote");
-	quote_element.textContent = quote["quote"];
-	correctAuthor = quote["author"];
-
-	togleButtonVisibility(true)
-}
 
 function checkAnswer() {
 	const userGuess = document.getElementById("guess").value.trim();
 
 	const result = document.getElementById("result");
-	if (userGuess.toLowerCase() === correctAuthor.toLowerCase()) {
+	if (userGuess.toLowerCase() === author.toLowerCase()) {
 		result.textContent = "Correct! 🎉";
 		result.className = "mt-4 text-lg font-semibold text-green-500";
 	} else {
-		result.textContent = "Oops! The correct answer is " + correctAuthor + ".";
+		result.textContent = "Oops! The correct answer is " + author + ".";
 		result.className = "mt-4 text-lg font-semibold text-red-500";
 	}
 }
@@ -77,9 +33,6 @@ function togleButtonVisibility(shouldEnable) {
 	}
 }
 
-function refreshQuote() {
-	randomQuoteRequest();
-}
 
 window.onload = (event) => {
 	var guessButton = document.getElementById('guessButton');
@@ -88,7 +41,6 @@ window.onload = (event) => {
 	var refreshButton = document.getElementById('refreshButton');
 	refreshButton.onclick = refreshQuote;
 
-	randomQuoteRequest();
 };
 
 // Adds keypress listener

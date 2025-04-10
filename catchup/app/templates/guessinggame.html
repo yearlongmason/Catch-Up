@@ -25,7 +25,7 @@
   <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md text-center">
     <h1 class="text-2xl font-bold text-gray-800 mb-4">Who Said It?</h1>
     <p class="text-gray-600 mb-6">Guess the user who said this quote.</p>
-    <p id="quote" class="text-xl font-semibold text-blue-500 mb-4"></p>
+    <p id="quote" class="text-xl font-semibold text-blue-500 mb-4">"{{quote}}"</p>
     <div class="mb-4">
       <input 
         type="text" 
@@ -41,7 +41,9 @@
       Submit
     </button>
     <br>
+    {% csrf_token %}
     <button 
+      type="submit"
       id="refreshButton"
       class="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 focus:outline-none mt-4"
     >
@@ -52,9 +54,7 @@
 
 </body>
 <script>
-  var api_key = "{{api_key}}";
-  var api_url = "{{api_url}}";
-  var server_id = "{{server_id}}";
+  var author = "{{author}}"
 </script>
 
 </html>
