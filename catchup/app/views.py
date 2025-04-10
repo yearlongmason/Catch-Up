@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import ServerForm
 from .models import Quotes
 from time import sleep
+from random import randrange
 
 dotenv.load_dotenv()
 
@@ -110,6 +111,13 @@ def guessing_game(request):
                'api_url' : os.getenv('RANDOM_API_URL'),
                'server_id' : this_server_id
             }
+    if request.method == 'POST':
+        server_form = ServerForm(request.POST)
+        if server_form.is_valid():
+            print("do stuff")
+    else:
+        server_form = ServerForm()
+
     return render(request, "guessinggame.html", context)
 
 @login_required(login_url="discord_login/")
@@ -194,3 +202,21 @@ def get_servers(servers):
             mutual_servers.append([server])
 
     return mutual_servers
+
+
+def getRandomQuote():
+    server_id = request.session.get('server_id')
+    Quotes = get_model('app', 'Quotes')
+    data = Quotes.objects.all().filter(server_id = serverid)
+
+    if not data:
+        return "Could not find a quote."
+
+    serialized_data = [{
+        "quote" : q.quote,
+        "author" : q.author
+    } for q in data]
+    index = randrange(0, len(serialized_data))
+
+    return serialized_data[index]
+    
