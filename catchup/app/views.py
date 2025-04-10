@@ -6,7 +6,7 @@ import dotenv
 import os
 from django.contrib.auth.decorators import login_required
 from .forms import ServerForm
-from .models import Quotes
+import models
 from time import sleep
 from random import randrange
 
@@ -106,7 +106,7 @@ def mingames(request):
 
 @login_required(login_url="discord_login/")
 def guessing_game(request):
-    quote = getRandomQuote()
+    quote = getRandomQuote(request)
     this_server_id = request.session.get('server_id')
     context = {'quote' : quote["quote"],
                'author' : quote["author"],
@@ -114,7 +114,7 @@ def guessing_game(request):
     if request.method == 'POST':
         server_form = ServerForm(request.POST)
         if server_form.is_valid():
-            quote = getRandomQuote()
+            quote = getRandomQuote(request)
             context = {'quote' : quote["quote"],
                'author' : quote["author"],
             }
@@ -207,10 +207,10 @@ def get_servers(servers):
     return mutual_servers
 
 
-def getRandomQuote():
-    server_id = request.session.get('server_id')
+def getRandomQuote(request):
+    this_server_id = request.session.get('server_id')
     Quotes = get_model('app', 'Quotes')
-    data = Quotes.objects.all().filter(server_id = serverid)
+    data = Quotes.objects.all().filter(server_id = this_server_id)
 
     if not data:
         return "Could not find a quote."
