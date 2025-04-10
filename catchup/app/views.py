@@ -77,6 +77,9 @@ def roster(request):
     if this_server_id == None:
         return render(request, "404.html")
 
+    if request.method == 'POST':
+        delete_quote()
+
     context = {'server_id' : this_server_id,
                'data' : mydata,
                'server_name' : this_server_name,
@@ -199,6 +202,7 @@ def get_servers(servers):
     return mutual_servers
 
 
+# helper  function for minigames
 def getRandomQuote(request):
     this_server_id = request.session.get('server_id')
     data = Quotes.objects.all().filter(server_id = this_server_id)
@@ -210,12 +214,16 @@ def getRandomQuote(request):
         "quote" : q.quote,
         "author" : q.author
     } for q in data]
-    index = randrange(0, len(serialized_data))
 
-    return serialized_data[index]
+    randIndex = randrange(0, len(serialized_data))
+    randomQuote = serialized_data[randIndex]
 
+    return randomQuote
+
+# helper  function for minigames
 def scramble_sentence_or_word(text):
     words = text.split()
+
     if len(words) == 1:
         # Single word case: scramble its letters
         word = list(words[0])
@@ -225,5 +233,9 @@ def scramble_sentence_or_word(text):
         # Multiple words case: shuffle the words
         shuffle(words)
         scrambled = " ".join(words)
+
     return scrambled
-    
+
+# to delete a quote..... ya!!!!
+def delete_quote():
+    raise NotImplementedError
