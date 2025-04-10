@@ -79,9 +79,12 @@ def roster(request):
 
     if request.method == 'POST':
         del_form = QuoteDeleteForm(request.POST)
-        quote_id = del_form.cleaned_data.get("delbtn")
-        if quote_id != -1:
-            delete_quote(quoteid=quote_id)
+        if del_form.is_valid():
+            quote_id = del_form.cleaned_data.get("delbtn")
+            if quote_id != -1:
+                delete_quote(quoteid=quote_id)
+        else:
+            del_form = QuoteDeleteForm()
 
     context = {'server_id' : this_server_id,
                'data' : mydata,
