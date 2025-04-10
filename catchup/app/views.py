@@ -5,7 +5,7 @@ import requests
 import dotenv
 import os
 from django.contrib.auth.decorators import login_required
-from .forms import ServerForm
+from .forms import ServerForm, QuoteForm
 from .models import Quotes
 from time import sleep
 from random import randrange
@@ -112,17 +112,18 @@ def guessing_game(request):
                'author' : quote["author"],
             }
     if request.method == 'POST':
-        server_form = ServerForm(request.POST)
+        server_form = QuoteForm(request.POST)
         if server_form.is_valid():
             quote = getRandomQuote(request)
-            context = {'quote' : quote["quote"],
+            newcontext = {'quote' : quote["quote"],
                'author' : quote["author"],
             }
+            context = newcontext
             return render(request, "guessinggame.html", context)
     else:
-        server_form = ServerForm()
+        server_form = QuoteForm()
+        return render(request, "guessinggame.html", context)
 
-    return render(request, "guessinggame.html", context)
 
 @login_required(login_url="discord_login/")
 def word_scramble(request):
