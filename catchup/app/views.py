@@ -217,6 +217,11 @@ def getRandomQuote(request):
 def scramble_sentence(sentence):
     sentence = sentence.replace("'", "")
     words = sentence.split()
+
+    #if its  just one word, scramble the word!!!
+    if len(words == 1):
+        return "".join(shuffle(words.split))
+    
     shuffle(words)
     scrambled = " ".join(words)
     return scrambled
