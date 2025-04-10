@@ -237,5 +237,11 @@ def scramble_sentence_or_word(text):
     return scrambled
 
 # to delete a quote..... ya!!!!
-def delete_quote():
-    raise NotImplementedError
+def delete_quote(quoteid) -> bool:
+    return True
+    #try:
+        #Quotes.objects.all().filter(quote_id=quoteid).delete()
+    #except:
+        #return False
+
+    #return True
