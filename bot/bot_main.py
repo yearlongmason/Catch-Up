@@ -84,6 +84,16 @@ async def get_random_quote(interaction: discord.Interaction):
     await interaction.response.send_message(f'{api_connector.get_random_quote(interaction.guild_id)}')
 
 
+# get link to website  command
+@tree.command (
+        name="getlinktowebsite",
+        description="Get the link to the website to view quotes!"
+)
+@app_commands.describe()
+async def get_website_link(interaction: discord.Interaction):
+    await interaction.response.send_message("https://catchupquotes.pythonanywhere.com/")
+
+
 # getting message from reply and mention,  
 @client.event
 async def on_message(message):
